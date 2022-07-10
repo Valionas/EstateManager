@@ -45,12 +45,6 @@ const App = () => {
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
         </Sider>
         <Layout className="site-layout">
-          <Header
-            className="site-layout-background"
-            style={{
-              padding: 0,
-            }}
-          />
           <Content
             style={{
               margin: '0 16px',
