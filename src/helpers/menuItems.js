@@ -22,18 +22,15 @@ function setMenuItem(label, key, icon, children) {
     };
 }
 
-export const userMenuItems = [
+export const publicMenuItems = [
     setMenuItem(<Link to="/">Home</Link>, '1', <PieChartOutlined />),
     setMenuItem(<Link to="/login">Login</Link>, '2', <AiOutlineUserSwitch />),
     setMenuItem(<Link to="/register">Register</Link>, '3', <AiOutlineUserAdd />),
     setMenuItem(<Link to="/rents">Rents</Link>, '4', <MdOutlinePayment />),
-    setMenuItem(<Link to="/logout">Logout</Link>, '5', <DesktopOutlined />),
 ];
 
-export const agencyMenuItems = [
+export const authenticatedMenuItems = [
     setMenuItem(<Link to="/">Home</Link>, '1', <PieChartOutlined />),
-    setMenuItem(<Link to="/login">Login</Link>, '2', <AiOutlineUserSwitch />),
-    setMenuItem(<Link to="/register">Register</Link>, '3', <AiOutlineUserAdd />),
     setMenuItem(<Link to="/agency-rents">Rents</Link>, '4', <MdOutlinePayment />),
     setMenuItem(<Link to="/agency-sales">Sales</Link>, '5', <MdOutlineSell />),
     setMenuItem(<Link to="/reports">Reports</Link>, '6', <HiOutlineDocumentReport />),

@@ -1,8 +1,8 @@
+import { useState, useEffect } from 'react';
 import { Col, Row } from 'antd';
 import './Home.css';
 
 function Home() {
-
 
     return (
         <div className="homePageWrapper">

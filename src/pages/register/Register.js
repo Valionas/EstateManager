@@ -6,27 +6,28 @@ import { authenticate } from '../../store/slices/auth/authSlice';
 
 import { Col, Row, Button, Checkbox, Form, Input } from 'antd';
 import { Space, Table, Tag } from 'antd';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 
-function Login() {
+function Register() {
     const dispatch = useDispatch();
     const authentication = getAuth();
     const navigate = useNavigate();
-
     const [rents, setRents] = useState();
 
     const onFinish = async (values) => {
-        const { email, password } = values;
-
-        try {
-            let user = await signInWithEmailAndPassword(authentication, email, password);
-            localStorage.setItem('Auth Token', user._tokenResponse.refreshToken);
-            dispatch(authenticate());
-            navigate('/rents');
-        } catch (error) {
-            alert(error);
+        const { email, password, repeatPassword } = values;
+        if (password !== repeatPassword) {
+            alert('Passwords are not equal');
+        } else {
+            try {
+                let user = await createUserWithEmailAndPassword(authentication, email, password);
+                localStorage.setItem('Auth Token', user._tokenResponse.refreshToken);
+                dispatch(authenticate());
+                navigate('/rents');
+            } catch (error) {
+                alert(error);
+            }
         }
-
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -39,10 +40,10 @@ function Login() {
                 <Form
                     name="basic"
                     labelCol={{
-                        span: 8,
+                        span: 10,
                     }}
                     wrapperCol={{
-                        span: 16,
+                        span: 14,
                     }}
                     initialValues={{
                         remember: true,
@@ -63,6 +64,7 @@ function Login() {
                     >
                         <Input />
                     </Form.Item>
+
                     <Form.Item
                         label="Password"
                         name="password"
@@ -76,11 +78,18 @@ function Login() {
                         <Input.Password />
                     </Form.Item>
                     <Form.Item
-                        wrapperCol={{
-                            offset: 8,
-                            span: 16,
-                        }}
+                        label="Repeat Password"
+                        name="repeatPassword"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your password!',
+                            },
+                        ]}
                     >
+                        <Input.Password />
+                    </Form.Item>
+                    <Form.Item>
                         <Button type="primary" htmlType="submit">
                             Submit
                         </Button>
@@ -91,4 +100,4 @@ function Login() {
     )
 }
 
-export default Login
+export default Register
