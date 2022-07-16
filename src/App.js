@@ -10,6 +10,7 @@ import Rents from './pages/rents/Rents';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
+import NotFoundPage from './pages/not-found/NotFoundPage';
 
 import { publicMenuItems, authenticatedMenuItems } from './helpers/menuItems';
 const { Header, Content, Footer, Sider } = Layout;
@@ -78,6 +79,7 @@ const App = () => {
                   <Route exact path="/logout" element={<Register />} />
                 </>
               }
+              <Route exact path="*" element={<NotFoundPage />} />
             </Routes>
           </div>
         </Content>
