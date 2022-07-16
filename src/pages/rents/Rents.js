@@ -33,4 +33,4 @@ function Rents() {
     )
 }
 
-export default Rents
+export default Rents;
