@@ -31,18 +31,18 @@ function Rents() {
 
     return (
         <>
-            <Row justify='center'>
+            <Row justify='center' >
                 <h1>Rents</h1>
             </Row>
-            <Row justify='center'>
+            <Row justify='center' style={{ marginBottom: '10px' }}>
                 <Button type="primary" onClick={openRentModalHandler}>
                     Add Rentable Estate
                 </Button>
             </Row>
             <Row justify="center">
                 <Col>
-                    {rents && rents.map((rent) => (
-                        <RentCard rentObject={rent}></RentCard>
+                    {rents && rents.map((rent, index) => (
+                        <RentCard key={index} rentObject={rent}></RentCard>
                     ))}
                 </Col>
             </Row>

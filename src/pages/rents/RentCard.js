@@ -10,7 +10,7 @@ function RentCard({ rentObject }) {
                 <Col span={4} style={{ display: 'flex', justifyContent: "center", alignItems: 'center' }}>
                     <Image
                         height={"100%"}
-                        src={rentObject.imageUrl}
+                        src={rentObject.image}
                     />
                 </Col>
                 <Col span={13} offset={1}>
@@ -21,7 +21,13 @@ function RentCard({ rentObject }) {
                 </Col>
                 <Col span={4} offset={1}>
                     <Row>
-                        <p style={{ fontSize: "3vh" }}><b>Price:</b> ${rentObject.rent}/monthly</p>
+                        <p style={{ fontSize: "2vh" }}><b>Price:</b> ${rentObject.rent}/monthly</p>
+                    </Row>
+                    <Row>
+                        <p style={{ fontSize: "2vh" }}><b>Minimal rental time:</b> ${rentObject.minimalRentalTime}</p>
+                    </Row>
+                    <Row>
+                        <p style={{ fontSize: "2vh" }}><b>Acceptable currencies:</b> ${rentObject.currencies}</p>
                     </Row>
                     <Row>
                         <Button type="primary" shape="round" style={{ width: "100%", marginBottom: '5%' }}>REQUEST RENT</Button>
