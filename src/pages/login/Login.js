@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { authenticate } from '../../store/slices/auth/authSlice';
+import { authenticate } from '../../store/slices/authSlice';
 
 import { Col, Row, Button, Checkbox, Form, Input } from 'antd';
 import { Space, Table, Tag } from 'antd';

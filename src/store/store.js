@@ -1,7 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import authReducer from './slices/auth/authSlice'
+
+import authReducer from './slices/authSlice';
+import rentReducer from './slices/rentSlice';
+
 export default configureStore({
   reducer: {
-    auth: authReducer
+    auth: authReducer,
+    rent: rentReducer
   },
 })

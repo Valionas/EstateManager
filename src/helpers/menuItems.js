@@ -31,10 +31,9 @@ export const publicMenuItems = [
 
 export const authenticatedMenuItems = [
     setMenuItem(<Link to="/">Home</Link>, '1', <PieChartOutlined />),
-    setMenuItem(<Link to="/agency-rents">Rents</Link>, '4', <MdOutlinePayment />),
-    setMenuItem(<Link to="/agency-sales">Sales</Link>, '5', <MdOutlineSell />),
+    setMenuItem(<Link to="/rents">Rents</Link>, '4', <MdOutlinePayment />),
+    setMenuItem(<Link to="/sales">Sales</Link>, '5', <MdOutlineSell />),
     setMenuItem(<Link to="/reports">Reports</Link>, '6', <HiOutlineDocumentReport />),
-    setMenuItem(<Link to="/publish-estate">Publish Estate</Link>, '7', <MdCreate />),
     setMenuItem(<Link to="/logout">Logout</Link>, '8', <BiLogOut />),
 ];
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Route, Routes, Link, useNavigate } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { authenticate } from './store/slices/auth/authSlice';
+import { authenticate } from './store/slices/authSlice';
 
 import 'antd/dist/antd.css';
 import { Breadcrumb, Layout, Menu } from 'antd';
@@ -64,21 +64,18 @@ const App = () => {
               {!authenticated ?
                 <>
                   <Route exact path="/" element={<Home />} />
-                  <Route exact path="/rents" element={<Rents />} />
                   <Route exact path="/login" element={<Login />} />
                   <Route exact path="/register" element={<Register />} />
                 </>
                 :
                 <>
                   <Route exact path="/" element={<Home />} />
-                  <Route exact path="/my-rents" element={<Rents />} />
                   <Route exact path="/sales" element={<Login />} />
                   <Route exact path="/reports" element={<Register />} />
-                  <Route exact path="/reports" element={<Register />} />
-                  <Route exact path="/publish-estate" element={<Register />} />
                   <Route exact path="/logout" element={<Register />} />
                 </>
               }
+              <Route exact path="/rents" element={<Rents />} />
               <Route exact path="*" element={<NotFoundPage />} />
             </Routes>
           </div>
