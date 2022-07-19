@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { openRequestRentModal, closeRequestRentModal } from '../../store/slices/rentSlice';
+import { openRequestRentModal, openReviewRentModal, openRentModal } from '../../store/slices/rentSlice';
 
 import { Col, Row, Image } from 'antd';
 import { Space, Table, Tag, Button } from 'antd';
@@ -8,13 +8,29 @@ import './Rents.css';
 
 
 import RequestRentModal from './modals/RequestRentModal';
+import ReviewRentModal from './modals/ReviewRentModal';
+import AddEditRentModal from './modals/AddEditRentModal';
+
+import { deleteRent } from '../../services/rents-service';
 
 function RentCard({ rentObject }) {
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state.auth.currentUser);
 
-    const openRentModalHandler = () => {
+    const openRequestRentModalHandler = () => {
         dispatch(openRequestRentModal());
+    }
+
+    const openReviewRentModalHandler = () => {
+        dispatch(openReviewRentModal());
+    }
+
+    const deleteRentHandler = async (id) => {
+        await deleteRent(id);
+    }
+
+    const updateRentHandler = (id) => {
+        dispatch(openRentModal());
     }
 
     return (
@@ -45,14 +61,21 @@ function RentCard({ rentObject }) {
                         </Row>
                         {currentUser && currentUser.id !== rentObject.owner &&
                             <Row>
-                                <Button type="primary" shape="round" style={{ width: "100%", marginBottom: '5%' }} onClick={openRentModalHandler}>REQUEST RENT</Button>
-                                <Button type="primary" shape="round" style={{ width: "100%" }}>REVIEW</Button>
+                                <Button type="primary" shape="round" style={{ width: "100%", marginBottom: '5%' }} onClick={openRequestRentModalHandler}>REQUEST RENT</Button>
+                                <Button type="primary" shape="round" style={{ width: "100%" }} onClick={openReviewRentModalHandler}>REVIEW</Button>
+                            </Row>
+                        }
+                        {currentUser && currentUser.id === rentObject.owner &&
+                            <Row>
+                                <Button type="primary" shape="round" style={{ width: "100%", marginBottom: '5%' }} onClick={updateRentHandler}>UPDATE RENT</Button>
+                                <Button type="primary" shape="round" style={{ width: "100%" }} onClick={() => deleteRentHandler(rentObject.id)}>DELETE RENT</Button>
                             </Row>
                         }
                     </Col>
                 </Row>
             </div>
             <RequestRentModal />
+            <ReviewRentModal />
         </>
     )
 }

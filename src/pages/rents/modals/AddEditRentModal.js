@@ -8,6 +8,7 @@ import { AiOutlineUpload } from 'react-icons/ai';
 import { Space, Table, Tag, Row, Modal, Button, Form, Input, Select, Upload } from 'antd';
 
 import { addRent } from '../../../services/rents-service';
+import { serverTimestamp } from 'firebase/firestore';
 
 function AddEditRentModal() {
     const dispatch = useDispatch();
@@ -32,6 +33,7 @@ function AddEditRentModal() {
     const onFinish = async (values) => {
         let rentObject = values;
         rentObject.owner = currentUser.id;
+        rentObject.created = serverTimestamp();
         try {
             const result = await addRent(values);
             dispatch(closeRentModal());

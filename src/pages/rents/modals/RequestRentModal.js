@@ -21,12 +21,6 @@ function RequestRentModal() {
 
     const onCancelHandler = () => {
         dispatch(closeRequestRentModal());
-        // setFields([
-        // //     {
-        // //         name: ['name'],
-        // //         value: data.name
-        // //     }
-        // // ])
     }
 
     const onFinish = async (values) => {
