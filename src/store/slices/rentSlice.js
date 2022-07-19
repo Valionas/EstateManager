@@ -4,6 +4,7 @@ export const rentSlice = createSlice({
     name: 'rent',
     initialState: {
         isOpenedRentModal: false,
+        isOpenedRequestRentModal: false
     },
     reducers: {
         openRentModal: (state, action) => {
@@ -12,10 +13,16 @@ export const rentSlice = createSlice({
         closeRentModal: (state, action) => {
             state.isOpenedRentModal = false
         },
+        openRequestRentModal: (state, action) => {
+            state.isOpenedRequestRentModal = true
+        },
+        closeRequestRentModal: (state, action) => {
+            state.isOpenedRequestRentModal = false
+        },
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { openRentModal, closeRentModal } = rentSlice.actions
+export const { openRentModal, closeRentModal, openRequestRentModal, closeRequestRentModal } = rentSlice.actions
 
 export default rentSlice.reducer

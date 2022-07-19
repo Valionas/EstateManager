@@ -24,8 +24,10 @@ const App = () => {
 
   useEffect(() => {
     let authToken = localStorage.getItem('Auth Token');
+    let userId = localStorage.getItem('userId');
+    let email = localStorage.getItem('email');
     if (authToken) {
-      dispatch(authenticate());
+      dispatch(authenticate({ id: userId, email: email }));
     }
   }, []);
 

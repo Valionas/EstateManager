@@ -21,7 +21,13 @@ function Login() {
         try {
             let user = await signInWithEmailAndPassword(authentication, email, password);
             localStorage.setItem('Auth Token', user._tokenResponse.refreshToken);
-            dispatch(authenticate());
+            localStorage.setItem('userId', user.user.uid);
+            localStorage.setItem('email', user.user.email);
+            let currentUser = {
+                id: user.user.uid,
+                email: user.user.email
+            }
+            dispatch(authenticate(currentUser));
             navigate('/rents');
         } catch (error) {
             alert(error);

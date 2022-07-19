@@ -12,6 +12,7 @@ import { addRent } from '../../../services/rents-service';
 function AddEditRentModal() {
     const dispatch = useDispatch();
     const isOpened = useSelector(state => state.rent.isOpenedRentModal);
+    const currentUser = useSelector(state => state.auth.currentUser);
 
     const [fields, setFields] = useState([]);
     const [form] = Form.useForm();
@@ -29,6 +30,8 @@ function AddEditRentModal() {
     }
 
     const onFinish = async (values) => {
+        let rentObject = values;
+        rentObject.owner = currentUser.id;
         try {
             const result = await addRent(values);
             dispatch(closeRentModal());
