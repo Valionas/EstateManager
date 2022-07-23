@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { openRequestRentModal, openReviewRentModal, openRentModal } from '../../store/slices/rentSlice';
+import { openRequestRentModal, openReviewRentModal, openRentModal, setCurrentRent } from '../../store/slices/rentSlice';
 
-import { Col, Row, Image } from 'antd';
+import { Col, Row, Image, Divider } from 'antd';
 import { Space, Table, Tag, Button } from 'antd';
 import { GoLocation } from 'react-icons/go'
 import './Rents.css';
@@ -10,6 +10,7 @@ import './Rents.css';
 import RequestRentModal from './modals/RequestRentModal';
 import ReviewRentModal from './modals/ReviewRentModal';
 import AddEditRentModal from './modals/AddEditRentModal';
+import ReviewCard from './ReviewCard';
 
 import { deleteRent } from '../../services/rents-service';
 
@@ -18,10 +19,12 @@ function RentCard({ rentObject }) {
     const currentUser = useSelector(state => state.auth.currentUser);
 
     const openRequestRentModalHandler = () => {
+        dispatch(setCurrentRent(rentObject));
         dispatch(openRequestRentModal());
     }
 
     const openReviewRentModalHandler = () => {
+        dispatch(setCurrentRent(rentObject));
         dispatch(openReviewRentModal());
     }
 
@@ -30,6 +33,7 @@ function RentCard({ rentObject }) {
     }
 
     const updateRentHandler = (id) => {
+        dispatch(setCurrentRent(rentObject));
         dispatch(openRentModal());
     }
 
@@ -62,7 +66,9 @@ function RentCard({ rentObject }) {
                         {currentUser && currentUser.id !== rentObject.owner &&
                             <Row>
                                 <Button type="primary" shape="round" style={{ width: "100%", marginBottom: '5%' }} onClick={openRequestRentModalHandler}>REQUEST RENT</Button>
-                                <Button type="primary" shape="round" style={{ width: "100%" }} onClick={openReviewRentModalHandler}>REVIEW</Button>
+                                {rentObject.reviews.find(review => review.reviewer.id === currentUser.id) === undefined && (
+                                    <Button type="primary" shape="round" style={{ width: "100%" }} onClick={openReviewRentModalHandler}>REVIEW</Button>
+                                )}
                             </Row>
                         }
                         {currentUser && currentUser.id === rentObject.owner &&
@@ -72,6 +78,15 @@ function RentCard({ rentObject }) {
                             </Row>
                         }
                     </Col>
+                </Row>
+                <Divider />
+                <Row justify='center'>
+                    <h1><b>REVIEWS</b></h1>
+                </Row>
+                <Row>
+                    {rentObject.reviews && rentObject.reviews.map(review => (
+                        <ReviewCard reviewObject={review}></ReviewCard>
+                    ))}
                 </Row>
             </div>
             <RequestRentModal />

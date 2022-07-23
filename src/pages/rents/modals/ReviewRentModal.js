@@ -1,18 +1,20 @@
 import { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { openReviewRentModal, closeReviewRentModal } from '../../../store/slices/rentSlice';
+import { openReviewRentModal, closeReviewRentModal, setCurrentRent, setUpdatePage } from '../../../store/slices/rentSlice';
 
 import { AiOutlineUpload } from 'react-icons/ai';
 
 import { Space, Table, Tag, Row, Modal, Button, Form, Input, Select, Rate } from 'antd';
 
-import { addRent } from '../../../services/rents-service';
+import { updateRent } from '../../../services/rents-service';
 
 function ReviewRentModal() {
     const dispatch = useDispatch();
     const isOpened = useSelector(state => state.rent.isOpenedReviewRentModal);
     const currentUser = useSelector(state => state.auth.currentUser);
+    const currentRent = useSelector(state => state.rent.currentRent);
+
 
     const [fields, setFields] = useState([]);
     const [form] = Form.useForm();
@@ -26,12 +28,18 @@ function ReviewRentModal() {
     }
 
     const onFinish = async (values) => {
+        let rentToUpdate = { ...currentRent };
+        let tempReviews = [...rentToUpdate.reviews];
         let reviewObject = values;
-        reviewObject.reviewer = currentUser.id;
+        reviewObject.reviewer = { id: currentUser.id, email: currentUser.email };
         reviewObject.reviewRate = currentRate;
+        tempReviews.push(reviewObject);
+        rentToUpdate.reviews = tempReviews;
         try {
-            const result = await addRent(values);
+            const result = await updateRent(rentToUpdate, currentRent.id);
             dispatch(closeReviewRentModal());
+            dispatch(setUpdatePage());
+            dispatch(setCurrentRent({}));
             form.resetFields();
         } catch (err) {
             console.log(err);
@@ -97,7 +105,7 @@ function ReviewRentModal() {
                 </Form.Item>
                 <Form.Item
                     label="Location factor"
-                    name="rentState"
+                    name="locationFactor"
                 >
                     <Select >
                         <Select.Option value={'poor'}>Desolate</Select.Option>

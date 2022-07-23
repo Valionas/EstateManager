@@ -33,6 +33,7 @@ function AddEditRentModal() {
     const onFinish = async (values) => {
         let rentObject = values;
         rentObject.owner = currentUser.id;
+        rentObject.reviews = [];
         rentObject.created = serverTimestamp();
         try {
             const result = await addRent(values);
