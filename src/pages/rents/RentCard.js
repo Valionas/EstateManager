@@ -85,7 +85,7 @@ function RentCard({ rentObject }) {
                 </Row>
                 <Row>
                     {rentObject.reviews && rentObject.reviews.map(review => (
-                        <ReviewCard reviewObject={review}></ReviewCard>
+                        <ReviewCard reviewObject={review} rentObject={rentObject}></ReviewCard>
                     ))}
                 </Row>
             </div>

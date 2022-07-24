@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { openReviewRentModal } from '../../store/slices/rentSlice';
+import { openReviewRentModal, setCurrentRent, setCurrentRentReview } from '../../store/slices/rentSlice';
 
 import { updateRent } from '../../services/rents-service';
 
@@ -9,7 +9,7 @@ import { Col, Row, Divider, Rate, Button } from 'antd';
 import { RiUserVoiceLine } from 'react-icons/ri';
 import { MdOutlineRealEstateAgent, MdOutlineEditLocationAlt, MdOutlineEditCalendar, MdOutlineStarRate } from 'react-icons/md';
 
-function ReviewCard({ reviewObject }) {
+function ReviewCard({ reviewObject, rentObject }) {
     const dispatch = useDispatch();
     const rates = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
     const currentUser = useSelector(state => state.auth.currentUser);
@@ -19,6 +19,8 @@ function ReviewCard({ reviewObject }) {
     }
 
     const updateReviewHandler = (id) => {
+        dispatch(setCurrentRent(rentObject));
+        dispatch(setCurrentRentReview(reviewObject));
         dispatch(openReviewRentModal());
     };
 

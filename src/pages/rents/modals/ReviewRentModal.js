@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { openReviewRentModal, closeReviewRentModal, setCurrentRent, setUpdatePage } from '../../../store/slices/rentSlice';
+import { openReviewRentModal, closeReviewRentModal, setCurrentRent, setUpdatePage, setCurrentRentReview } from '../../../store/slices/rentSlice';
 
 import { AiOutlineUpload } from 'react-icons/ai';
 
@@ -14,7 +14,7 @@ function ReviewRentModal() {
     const isOpened = useSelector(state => state.rent.isOpenedReviewRentModal);
     const currentUser = useSelector(state => state.auth.currentUser);
     const currentRent = useSelector(state => state.rent.currentRent);
-
+    const currentRentReview = useSelector(state => state.rent.currentRentReview);
 
     const [fields, setFields] = useState([]);
     const [form] = Form.useForm();
@@ -22,6 +22,29 @@ function ReviewRentModal() {
     const [currentRate, setCurrentRate] = useState(3);
     const rates = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 
+    useEffect(() => {
+        if (currentRentReview) {
+            setFields([
+                {
+                    name: ['monthsRented'],
+                    value: currentRentReview.monthsRented
+                },
+                {
+                    name: ['description'],
+                    value: currentRentReview.description
+                },
+                {
+                    name: ['rentState'],
+                    value: currentRentReview.rentState
+                },
+                {
+                    name: ['locationFactor'],
+                    value: currentRentReview.locationFactor
+                },
+            ])
+            setCurrentRate(currentRentReview.reviewRate);
+        }
+    }, [currentRentReview])
 
     const onCancelHandler = () => {
         dispatch(closeReviewRentModal());
@@ -33,13 +56,22 @@ function ReviewRentModal() {
         let reviewObject = values;
         reviewObject.reviewer = { id: currentUser.id, email: currentUser.email };
         reviewObject.reviewRate = currentRate;
-        tempReviews.push(reviewObject);
+
+        if (currentRentReview) {
+            let currentReview = tempReviews.find(review => review.reviewer.id === currentUser.id);
+            let indexOfReview = tempReviews.indexOf(currentReview);
+            tempReviews.splice(indexOfReview, 1, reviewObject);
+        } else {
+            tempReviews.push(reviewObject);
+        }
         rentToUpdate.reviews = tempReviews;
+
         try {
             const result = await updateRent(rentToUpdate, currentRent.id);
             dispatch(closeReviewRentModal());
             dispatch(setUpdatePage());
-            dispatch(setCurrentRent({}));
+            dispatch(setCurrentRent());
+            dispatch(setCurrentRentReview());
             form.resetFields();
         } catch (err) {
             console.log(err);
@@ -96,11 +128,11 @@ function ReviewRentModal() {
                     name="rentState"
                 >
                     <Select >
-                        <Select.Option value={'poor'}>Poor </Select.Option>
-                        <Select.Option value={'neutral'}>Neutral</Select.Option>
-                        <Select.Option value={'good'}>Good</Select.Option>
-                        <Select.Option value={'veryGood'}>Very Good</Select.Option>
-                        <Select.Option value={'excellent'}>Excellent</Select.Option>
+                        <Select.Option value={'Poor'}>Poor </Select.Option>
+                        <Select.Option value={'Neutral'}>Neutral</Select.Option>
+                        <Select.Option value={'Good'}>Good</Select.Option>
+                        <Select.Option value={'Very Good'}>Very Good</Select.Option>
+                        <Select.Option value={'Excellent'}>Excellent</Select.Option>
                     </Select>
                 </Form.Item>
                 <Form.Item
@@ -108,10 +140,10 @@ function ReviewRentModal() {
                     name="locationFactor"
                 >
                     <Select >
-                        <Select.Option value={'poor'}>Desolate</Select.Option>
-                        <Select.Option value={'neutral'}>Neutral</Select.Option>
-                        <Select.Option value={'good'}>Lively</Select.Option>
-                        <Select.Option value={'veryGood'}>Very Busy</Select.Option>
+                        <Select.Option value={'Desolate'}>Desolate</Select.Option>
+                        <Select.Option value={'Neutral'}>Neutral</Select.Option>
+                        <Select.Option value={'Lively'}>Lively</Select.Option>
+                        <Select.Option value={'Very Busy'}>Very Busy</Select.Option>
                     </Select>
                 </Form.Item>
                 <Row justify='center'>
