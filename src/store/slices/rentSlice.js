@@ -6,8 +6,8 @@ export const rentSlice = createSlice({
         isOpenedRentModal: false,
         isOpenedRequestRentModal: false,
         isOpenedReviewRentModal: false,
-        currentRent: {},
-        currentRentReview: {},
+        currentRent: undefined,
+        currentRentReview: undefined,
         triggeredUpdate: false,
     },
     reducers: {

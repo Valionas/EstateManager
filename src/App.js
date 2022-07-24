@@ -7,6 +7,7 @@ import { authenticate } from './store/slices/authSlice';
 import 'antd/dist/antd.css';
 import { Breadcrumb, Layout, Menu } from 'antd';
 import Rents from './pages/rents/Rents';
+import RentRequests from './pages/rent-requests/RentRequests';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
@@ -73,6 +74,7 @@ const App = () => {
                 <>
                   <Route exact path="/" element={<Home />} />
                   <Route exact path="/sales" element={<Login />} />
+                  <Route exact path="/rent-requests" element={<RentRequests />} />
                   <Route exact path="/reports" element={<Register />} />
                   <Route exact path="/logout" element={<Register />} />
                 </>

@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { openRequestRentModal, openReviewRentModal, openRentModal, setCurrentRent } from '../../store/slices/rentSlice';
+import { openRequestRentModal, openReviewRentModal, openRentModal, setCurrentRent, setUpdatePage } from '../../store/slices/rentSlice';
 
 import { Col, Row, Image, Divider } from 'antd';
 import { Space, Table, Tag, Button } from 'antd';
@@ -30,6 +30,7 @@ function RentCard({ rentObject }) {
 
     const deleteRentHandler = async (id) => {
         await deleteRent(id);
+        dispatch(setUpdatePage());
     }
 
     const updateRentHandler = (id) => {
@@ -74,7 +75,7 @@ function RentCard({ rentObject }) {
                         {currentUser && currentUser.id === rentObject.owner &&
                             <Row>
                                 <Button type="primary" shape="round" style={{ width: "100%", marginBottom: '5%' }} onClick={updateRentHandler}>UPDATE RENT</Button>
-                                <Button type="primary" shape="round" style={{ width: "100%" }} onClick={() => deleteRentHandler(rentObject.id)}>DELETE RENT</Button>
+                                <Button type="danger" shape="round" style={{ width: "100%" }} onClick={() => deleteRentHandler(rentObject.id)}>DELETE RENT</Button>
                             </Row>
                         }
                     </Col>

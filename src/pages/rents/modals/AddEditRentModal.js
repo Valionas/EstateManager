@@ -1,42 +1,83 @@
 import { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { openRentModal, closeRentModal } from '../../../store/slices/rentSlice';
+import { closeRentModal, setCurrentRent, setUpdatePage } from '../../../store/slices/rentSlice';
 
 import { AiOutlineUpload } from 'react-icons/ai';
 
 import { Space, Table, Tag, Row, Modal, Button, Form, Input, Select, Upload } from 'antd';
 
-import { addRent } from '../../../services/rents-service';
+import { addRent, updateRent } from '../../../services/rents-service';
 import { serverTimestamp } from 'firebase/firestore';
 
 function AddEditRentModal() {
     const dispatch = useDispatch();
     const isOpened = useSelector(state => state.rent.isOpenedRentModal);
     const currentUser = useSelector(state => state.auth.currentUser);
+    const currentRent = useSelector(state => state.rent.currentRent);
 
     const [fields, setFields] = useState([]);
     const [form] = Form.useForm();
-    const [fileList, setFileList] = useState([]);
 
+    useEffect(() => {
+        if (currentRent) {
+            setFields([
+                {
+                    name: ['name'],
+                    value: currentRent.name
+                },
+                {
+                    name: ['location'],
+                    value: currentRent.location
+                },
+                {
+                    name: ['rent'],
+                    value: currentRent.rent
+                },
+                {
+                    name: ['description'],
+                    value: currentRent.description
+                },
+                {
+                    name: ['currencies'],
+                    value: currentRent.currencies
+                },
+                {
+                    name: ['minimalRentalTime'],
+                    value: currentRent.minimalRentalTime
+                },
+                {
+                    name: ['image'],
+                    value: currentRent.image
+                },
+            ])
+        }
+    }, [currentRent]);
 
     const onCancelHandler = () => {
         dispatch(closeRentModal());
-        // setFields([
-        // //     {
-        // //         name: ['name'],
-        // //         value: data.name
-        // //     }
-        // // ])
+        form.resetFields();
     }
 
     const onFinish = async (values) => {
         let rentObject = values;
         rentObject.owner = currentUser.id;
-        rentObject.reviews = [];
+        if (currentRent) {
+            rentObject.reviews = currentRent.reviews
+        } else {
+            rentObject.reviews = [];
+        }
         rentObject.created = serverTimestamp();
+
         try {
-            const result = await addRent(values);
+            debugger
+            if (currentRent) {
+                const result = await updateRent(rentObject, currentRent.id);
+            } else {
+                const result = await addRent(values);
+            }
+            dispatch(setUpdatePage());
+            dispatch(setCurrentRent());
             dispatch(closeRentModal());
             form.resetFields();
         } catch (err) {

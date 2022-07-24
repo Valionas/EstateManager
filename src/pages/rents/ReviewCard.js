@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { openReviewRentModal, setCurrentRent, setCurrentRentReview } from '../../store/slices/rentSlice';
+import { openReviewRentModal, setCurrentRent, setCurrentRentReview, setUpdatePage } from '../../store/slices/rentSlice';
 
 import { updateRent } from '../../services/rents-service';
 
@@ -16,6 +16,7 @@ function ReviewCard({ reviewObject, rentObject }) {
 
     const deleteReviewHandler = async (id) => {
         await updateRent(id);
+        dispatch(setUpdatePage());
     }
 
     const updateReviewHandler = (id) => {
@@ -57,7 +58,7 @@ function ReviewCard({ reviewObject, rentObject }) {
                     </Col>
                     <Col span={3} style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
                         {
-                            currentUser.id === reviewObject.reviewer.id && (
+                            currentUser && currentUser.id === reviewObject.reviewer.id && (
                                 <Row style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
                                     <Button type="primary" shape="round" style={{ width: "100%", marginBottom: '5%' }} onClick={updateReviewHandler}>UPDATE REVIEW</Button>
                                     <Button type="danger" shape="round" style={{ width: "100%" }} onClick={() => deleteReviewHandler(reviewObject.id)}>DELETE REVIEW</Button>

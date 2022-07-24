@@ -7,39 +7,35 @@ import { Col, Row } from 'antd';
 import { Space, Table, Tag, Modal, Button, Spin } from 'antd';
 
 
-import RentCard from './RentCard';
-import AddEditRentModal from './modals/AddEditRentModal';
+import RequestRentCard from './RequestRentCard';
 
-import { getRents } from '../../services/rents-service';
+import { getRequestsByOwner } from '../../services/rent-requests-service';
 
-function Rents() {
+function RentRequests() {
     const dispatch = useDispatch();
     const updatePageTrigger = useSelector(state => state.rent.triggeredUpdate);
     const currentUser = useSelector(state => state.auth.currentUser);
 
     const [loading, setLoading] = useState(false);
-    const [rents, setRents] = useState();
+    const [requests, setRequests] = useState();
 
     const fetchData = async () => {
         setLoading(true);
-        const data = await getRents();
-        setRents(data);
+        const data = await getRequestsByOwner(currentUser.id);
+        debugger
+        setRequests(data);
         setLoading(false);
     }
 
     useEffect(() => {
-
         fetchData();
     }, [updatePageTrigger]);
 
-    const openRentModalHandler = () => {
-        dispatch(openRentModal());
-    }
 
     return (
         <>
             <Row justify='center' >
-                <h1>Rents</h1>
+                <h1>Rent Requests</h1>
             </Row>
             {loading ?
                 (
@@ -50,27 +46,17 @@ function Rents() {
                 :
                 (
                     <>
-                        {
-                            currentUser && (
-                                <Row justify='center' style={{ marginBottom: '10px' }}>
-                                    <Button type="primary" onClick={openRentModalHandler}>
-                                        Add Rentable Estate
-                                    </Button>
-                                </Row>
-                            )
-                        }
                         <Row justify="center">
                             <Col>
-                                {rents && rents.map((rent, index) => (
-                                    <RentCard key={index} rentObject={rent}></RentCard>
+                                {requests && requests.map((request, index) => (
+                                    <RequestRentCard key={index} requestObject={request}></RequestRentCard>
                                 ))}
                             </Col>
                         </Row>
                     </>
                 )}
-            <AddEditRentModal />
         </>
     )
 }
 
-export default Rents;
+export default RentRequests;
