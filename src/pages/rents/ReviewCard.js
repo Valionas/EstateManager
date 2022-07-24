@@ -12,6 +12,7 @@ import { MdOutlineRealEstateAgent, MdOutlineEditLocationAlt, MdOutlineEditCalend
 function ReviewCard({ reviewObject }) {
     const dispatch = useDispatch();
     const rates = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
+    const currentUser = useSelector(state => state.auth.currentUser);
 
     const deleteReviewHandler = async (id) => {
         await updateRent(id);
@@ -53,10 +54,14 @@ function ReviewCard({ reviewObject }) {
                         <Divider type="vertical" style={{ height: "100%" }} />
                     </Col>
                     <Col span={3} style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
-                        <Row style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
-                            <Button type="primary" shape="round" style={{ width: "100%", marginBottom: '5%' }} onClick={updateReviewHandler}>UPDATE REVIEW</Button>
-                            <Button type="danger" shape="round" style={{ width: "100%" }} onClick={() => deleteReviewHandler(reviewObject.id)}>DELETE REVIEW</Button>
-                        </Row>
+                        {
+                            currentUser.id === reviewObject.reviewer.id && (
+                                <Row style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
+                                    <Button type="primary" shape="round" style={{ width: "100%", marginBottom: '5%' }} onClick={updateReviewHandler}>UPDATE REVIEW</Button>
+                                    <Button type="danger" shape="round" style={{ width: "100%" }} onClick={() => deleteReviewHandler(reviewObject.id)}>DELETE REVIEW</Button>
+                                </Row>
+                            )
+                        }
                     </Col>
                     <Col span={1}>
                     </Col>
