@@ -16,8 +16,6 @@ function RequestRentModal() {
 
     const [fields, setFields] = useState([]);
     const [form] = Form.useForm();
-    const [fileList, setFileList] = useState([]);
-
 
     const onCancelHandler = () => {
         dispatch(closeRequestRentModal());

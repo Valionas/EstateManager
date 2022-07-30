@@ -28,7 +28,6 @@ function Rents() {
     }
 
     useEffect(() => {
-
         fetchData();
     }, [updatePageTrigger]);
 

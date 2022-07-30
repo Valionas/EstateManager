@@ -1,83 +1,45 @@
 import { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { closeRentModal, setCurrentRent, setUpdatePage } from '../../../store/slices/rentSlice';
+import { closeEstateModal, setCurrentEstate, setUpdatePage } from '../../../store/slices/estateSlice';
 
 import { AiOutlineUpload } from 'react-icons/ai';
 
 import { Space, Table, Tag, Row, Modal, Button, Form, Input, Select, Upload } from 'antd';
 
-import { addRent, updateRent } from '../../../services/rents-service';
+import { addEstate, updateEstate } from '../../../services/estates-service';
 import { serverTimestamp } from 'firebase/firestore';
 
-function AddEditRentModal() {
+function AddEditEstateModal() {
     const dispatch = useDispatch();
-    const isOpened = useSelector(state => state.rent.isOpenedRentModal);
+    const isOpened = useSelector(state => state.estate.isOpenedEstateModal);
     const currentUser = useSelector(state => state.auth.currentUser);
-    const currentRent = useSelector(state => state.rent.currentRent);
+    const currentEstate = useSelector(state => state.estate.currentEstate);
 
     const [fields, setFields] = useState([]);
     const [form] = Form.useForm();
 
-    useEffect(() => {
-        if (currentRent) {
-            setFields([
-                {
-                    name: ['name'],
-                    value: currentRent.name
-                },
-                {
-                    name: ['location'],
-                    value: currentRent.location
-                },
-                {
-                    name: ['rent'],
-                    value: currentRent.rent
-                },
-                {
-                    name: ['description'],
-                    value: currentRent.description
-                },
-                {
-                    name: ['currencies'],
-                    value: currentRent.currencies
-                },
-                {
-                    name: ['minimalRentalTime'],
-                    value: currentRent.minimalRentalTime
-                },
-                {
-                    name: ['image'],
-                    value: currentRent.image
-                },
-            ])
-        }
-    }, [currentRent]);
+
 
     const onCancelHandler = () => {
-        dispatch(closeRentModal());
+        dispatch(closeEstateModal());
         form.resetFields();
     }
 
     const onFinish = async (values) => {
         let rentObject = values;
         rentObject.owner = currentUser.id;
-        if (currentRent) {
-            rentObject.reviews = currentRent.reviews
-        } else {
-            rentObject.reviews = [];
-        }
         rentObject.created = serverTimestamp();
 
         try {
-            if (currentRent) {
-                const result = await updateRent(rentObject, currentRent.id);
+            if (currentEstate) {
+                const result = await updateEstate(rentObject, currentEstate.id);
             } else {
-                const result = await addRent(values);
+                const result = await addEstate(values);
             }
             dispatch(setUpdatePage());
-            dispatch(setCurrentRent());
-            dispatch(closeRentModal());
+            dispatch(setCurrentEstate());
+            dispatch(closeEstateModal());
             form.resetFields();
         } catch (err) {
             console.log(err);
@@ -130,8 +92,8 @@ function AddEditRentModal() {
                     <Input />
                 </Form.Item>
                 <Form.Item
-                    label="Rent / month"
-                    name="rent"
+                    label="Price"
+                    name="price"
                     rules={[
                         {
                             required: true,
@@ -154,36 +116,6 @@ function AddEditRentModal() {
                     <Input.TextArea />
                 </Form.Item>
                 <Form.Item
-                    label="Acceptable Currencies"
-                    name="currencies"
-                >
-                    <Select >
-                        <Select.Option value={'euro'}>EUR </Select.Option>
-                        <Select.Option value={'bgn'}>BGN</Select.Option>
-                        <Select.Option value={'usd'}>USD</Select.Option>
-                        <Select.Option value={'pound'}>GBP</Select.Option>
-                        <Select.Option value={'ruble'}>RUB</Select.Option>
-                    </Select>
-                </Form.Item>
-                <Form.Item
-                    label="Minimum rental time"
-                    name="minimalRentalTime"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please set your minimum rental time!',
-                        },
-                    ]}
-                >
-                    <Select >
-                        <Select.Option value={3}>3 months</Select.Option>
-                        <Select.Option value={6}>6 months</Select.Option>
-                        <Select.Option value={9}>9 months</Select.Option>
-                        <Select.Option value={12}>12 months</Select.Option>
-                        <Select.Option value={24}>24 months</Select.Option>
-                    </Select>
-                </Form.Item>
-                <Form.Item
                     label="Image link"
                     name="image"
                 >
@@ -194,4 +126,4 @@ function AddEditRentModal() {
     )
 }
 
-export default AddEditRentModal;
+export default AddEditEstateModal;

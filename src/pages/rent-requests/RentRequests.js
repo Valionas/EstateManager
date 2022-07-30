@@ -22,7 +22,6 @@ function RentRequests() {
     const fetchData = async () => {
         setLoading(true);
         const data = await getRequestsByOwner(currentUser.id);
-        debugger
         setRequests(data);
         setLoading(false);
     }

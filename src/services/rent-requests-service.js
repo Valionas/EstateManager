@@ -5,7 +5,6 @@ import { firebaseMapData } from "../helpers/firebaseMapper";
 const rentRequestsCollectionRef = collection(db, 'rentRequests');
 
 export const getRequestsByOwner = async (owner) => {
-    debugger;
     const data = await getDocs(rentRequestsCollectionRef);
     let mappedArray = firebaseMapData(data);
     let requestsFilteredByOwner = mappedArray.find(requestCollection => requestCollection.rentOwner === owner);
