@@ -13,7 +13,7 @@ import { getEstates } from '../../services/estates-service';
 
 function Estates() {
     const dispatch = useDispatch();
-    const updatePageTrigger = useSelector(state => state.rent.triggeredUpdate);
+    const updatePageTrigger = useSelector(state => state.estate.triggeredUpdate);
     const currentUser = useSelector(state => state.auth.currentUser);
 
     const [loading, setLoading] = useState(false);

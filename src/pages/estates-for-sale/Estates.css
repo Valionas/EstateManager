@@ -11,3 +11,11 @@
     align-items: center;
     background-color: gray;
 }
+
+.dynamic-delete-button {
+    transition: all 0.3s;
+}
+
+.dynamic-delete-button:hover {
+    color: #777;
+}

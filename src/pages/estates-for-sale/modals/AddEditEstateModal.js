@@ -5,7 +5,8 @@ import { closeEstateModal, setCurrentEstate, setUpdatePage } from '../../../stor
 
 import { AiOutlineUpload } from 'react-icons/ai';
 
-import { Space, Table, Tag, Row, Modal, Button, Form, Input, Select, Upload } from 'antd';
+import { Space, Table, Tag, Row, Modal, Button, Form, Input, Col } from 'antd';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 import { addEstate, updateEstate } from '../../../services/estates-service';
 import { serverTimestamp } from 'firebase/firestore';
@@ -19,21 +20,19 @@ function AddEditEstateModal() {
     const [fields, setFields] = useState([]);
     const [form] = Form.useForm();
 
-
-
     const onCancelHandler = () => {
         dispatch(closeEstateModal());
         form.resetFields();
     }
 
     const onFinish = async (values) => {
-        let rentObject = values;
-        rentObject.owner = currentUser.id;
-        rentObject.created = serverTimestamp();
-
+        let estateObject = values;
+        estateObject.owner = currentUser.id;
+        estateObject.created = serverTimestamp();
+        debugger;
         try {
             if (currentEstate) {
-                const result = await updateEstate(rentObject, currentEstate.id);
+                const result = await updateEstate(estateObject, currentEstate.id);
             } else {
                 const result = await addEstate(values);
             }
@@ -97,7 +96,31 @@ function AddEditEstateModal() {
                     rules={[
                         {
                             required: true,
-                            message: 'Please input your rent!',
+                            message: 'Please input your price!',
+                        },
+                    ]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    label="Year"
+                    name="year"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Please input your date of construction!',
+                        },
+                    ]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    label="Area (m^2)"
+                    name="area"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Please input your estate\'s area!',
                         },
                     ]}
                 >
@@ -115,12 +138,74 @@ function AddEditEstateModal() {
                 >
                     <Input.TextArea />
                 </Form.Item>
-                <Form.Item
-                    label="Image link"
-                    name="image"
-                >
-                    <Input />
-                </Form.Item>
+                <Row>
+                    <Col offset={3} span={21}>
+                        <Form.List
+                            name="images"
+                            rules={[
+                                {
+                                    validator: async (_, names) => {
+                                        if (!names || names.length < 1) {
+                                            return Promise.reject(new Error('At least 1 image'));
+                                        }
+                                    },
+                                },
+                            ]}
+                        >
+                            {(fields, { add, remove }, { errors }) => (
+                                <>
+                                    {fields.map((field, index) => (
+                                        <Form.Item
+                                            style={{ marginLeft: "-57px" }}
+                                            label='Image Url'
+                                            required={false}
+                                            key={field.key}
+                                        >
+                                            <Form.Item
+                                                {...field}
+                                                validateTrigger={['onChange', 'onBlur']}
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        whitespace: true,
+                                                        message: "Please input image's url.",
+                                                    },
+                                                ]}
+                                                noStyle
+                                            >
+                                                <Input
+                                                    style={{ width: "90%", marginRight: 15 }}
+                                                    placeholder="https://image.url"
+                                                />
+                                            </Form.Item>
+                                            {fields.length > 1 ? (
+                                                <MinusCircleOutlined
+                                                    className="dynamic-delete-button"
+                                                    onClick={() => remove(field.name)}
+                                                />
+                                            ) : null}
+                                        </Form.Item>
+                                    ))}
+                                    <Form.Item>
+                                        <Button
+                                            type="dashed"
+                                            onClick={() => add()}
+                                            style={{
+                                                marginLeft: 150,
+                                                width: '60%',
+                                            }}
+                                            icon={<PlusOutlined />}
+                                        >
+                                            Add image
+                                        </Button>
+                                        <Form.ErrorList errors={errors} />
+                                    </Form.Item>
+                                </>
+                            )}
+                        </Form.List>
+
+                    </Col>
+                </Row>
             </Form>
         </Modal>
     )
