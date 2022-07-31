@@ -60,7 +60,7 @@ function Estates() {
                         <Row justify="center">
 
                             {estates && estates.map((estate, index) => (
-                                <Col span={8}>
+                                <Col span={12}>
                                     <EstateCard key={index} estateObject={estate}></EstateCard>
                                 </Col>
                             ))}

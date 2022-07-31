@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { openRequestRentModal, openReviewRentModal, openRentModal, setCurrentRent, setUpdatePage } from '../../store/slices/rentSlice';
+import { setCurrentEstate, openEstateModal, setUpdatePage } from '../../store/slices/estateSlice';
+
 
 import { Col, Row, Image, Divider, Button, Carousel } from 'antd';
 
@@ -7,7 +8,7 @@ import { Col, Row, Image, Divider, Button, Carousel } from 'antd';
 import { GoLocation } from 'react-icons/go'
 import './Estates.css';
 
-import { deleteRent } from '../../services/rents-service';
+import { deleteEstate } from '../../services/estates-service';
 
 const contentStyle = {
     height: '100px',
@@ -21,24 +22,14 @@ function EstateCard({ estateObject }) {
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state.auth.currentUser);
 
-    const openRequestRentModalHandler = () => {
-        dispatch(setCurrentRent(estateObject));
-        dispatch(openRequestRentModal());
-    }
-
-    const openReviewRentModalHandler = () => {
-        dispatch(setCurrentRent(estateObject));
-        dispatch(openReviewRentModal());
-    }
-
-    const deleteRentHandler = async (id) => {
-        await deleteRent(id);
+    const deleteEstateHandler = async (id) => {
+        await deleteEstate(id);
         dispatch(setUpdatePage());
     }
 
     const updateRentHandler = (id) => {
-        dispatch(setCurrentRent(estateObject));
-        dispatch(openRentModal());
+        dispatch(setCurrentEstate(estateObject));
+        dispatch(openEstateModal());
     }
 
     return (
@@ -71,7 +62,7 @@ function EstateCard({ estateObject }) {
                         <p><b>PRICE:</b> {estateObject.price}</p>
                     </Col>
                     <Col span={7}>
-                        <p><b>Year:</b> {estateObject.dateOfConstruction}</p>
+                        <p><b>Year:</b> {estateObject.year}</p>
                     </Col>
                     <Col span={7}>
                         <p><b>Area:</b> {estateObject.area}m^2</p>
@@ -83,6 +74,17 @@ function EstateCard({ estateObject }) {
                         <p style={{ textAlign: 'justify', height: "25vh", overflow: 'auto' }}><b>DESCRIPTION:</b> {estateObject.description}</p>
                     </Col>
                 </Row>
+                {currentUser && currentUser.id === estateObject.owner &&
+                    (
+                        <>
+                            <Divider></Divider>
+                            <Row style={{ justifyContent: "center", marginBottom: 20 }}>
+                                <Button type="primary" shape="round" onClick={updateRentHandler} style={{ marginRight: 20 }}>EDIT</Button>
+                                <Button type="danger" shape="round" onClick={() => deleteEstateHandler(estateObject.id)}>DELETE</Button>
+                            </Row>
+                        </>
+                    )
+                }
             </div>
         </>
     )

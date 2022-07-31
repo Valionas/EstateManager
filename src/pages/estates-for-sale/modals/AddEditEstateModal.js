@@ -20,10 +20,40 @@ function AddEditEstateModal() {
     const [fields, setFields] = useState([]);
     const [form] = Form.useForm();
 
-    const onCancelHandler = () => {
-        dispatch(closeEstateModal());
-        form.resetFields();
-    }
+    useEffect(() => {
+        if (currentEstate) {
+            setFields([
+                {
+                    name: ['name'],
+                    value: currentEstate.name
+                },
+                {
+                    name: ['location'],
+                    value: currentEstate.location
+                },
+                {
+                    name: ['price'],
+                    value: currentEstate.price
+                },
+                {
+                    name: ['description'],
+                    value: currentEstate.description
+                },
+                {
+                    name: ['year'],
+                    value: currentEstate.year
+                },
+                {
+                    name: ['area'],
+                    value: currentEstate.area
+                },
+                {
+                    name: ['image'],
+                    value: currentEstate.images
+                },
+            ])
+        }
+    }, [currentEstate]);
 
     const onFinish = async (values) => {
         let estateObject = values;
@@ -49,6 +79,10 @@ function AddEditEstateModal() {
         console.log('Failed:', errorInfo);
     };
 
+    const onCancelHandler = () => {
+        dispatch(closeEstateModal());
+        form.resetFields();
+    }
 
     return (
         <Modal title="Add the following information..." visible={isOpened} onOk={() => form.submit()} onCancel={onCancelHandler}>

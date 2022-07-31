@@ -5,7 +5,6 @@ export const estateSlice = createSlice({
     initialState: {
         isOpenedEstateModal: false,
         currentEstate: undefined,
-        currentRentReview: undefined,
         triggeredUpdate: false,
     },
     reducers: {
@@ -16,7 +15,7 @@ export const estateSlice = createSlice({
             state.isOpenedEstateModal = false
         },
         setCurrentEstate: (state, action) => {
-            state.currentRent = action.payload;
+            state.currentEstate = action.payload;
         },
         setUpdatePage: (state, action) => {
             state.triggeredUpdate = !state.triggeredUpdate;
