@@ -22,6 +22,7 @@ function AddEditEstateModal() {
 
     useEffect(() => {
         if (currentEstate) {
+            debugger
             setFields([
                 {
                     name: ['name'],
@@ -48,7 +49,7 @@ function AddEditEstateModal() {
                     value: currentEstate.area
                 },
                 {
-                    name: ['image'],
+                    name: ['images'],
                     value: currentEstate.images
                 },
             ])
@@ -178,8 +179,8 @@ function AddEditEstateModal() {
                             name="images"
                             rules={[
                                 {
-                                    validator: async (_, names) => {
-                                        if (!names || names.length < 1) {
+                                    validator: async (_, images) => {
+                                        if (!images || images.length < 1) {
                                             return Promise.reject(new Error('At least 1 image'));
                                         }
                                     },
