@@ -1,70 +1,38 @@
-# Getting Started with Create React App
+# EstateManager 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overall Description
 
-## Available Scripts
+The EstateManager system will be used to help various people, interested or directly working in the estate economy, with managing their estate sales and rents through a simple user interface. The project consists of several important parts: 
 
-In the project directory, you can run:
+### Rents
+  * A catalog type page which will hold all the records of the currently listed rentable estates
+  * The listed items are divided in cards, which hold information about the name, location, monthly rent and some user control buttons, depending on the user relationship with the current item - whether if he is an owner or another person, the user will see a different set of buttons:
+    * Owner of the rentable estate - the buttons will be oriented around the CRUD functionality of the entity, such as deleting or updating the currently focused rentable estate
+    * Non-owner of the rentable estate - there will be 2 buttons - to request a rent and to leave a review. \
+      If the user decides to become a renter for the current estate , he must send an request to the owner of the estate and wait for an approval. If the owner decides to approve the person, by viewing his motivational message, he will grant the person renter access \
+      If the user decides to leave a review, he can choose the other button. After successfully filling the review modal information, which pops up after clicking, the user's review is listed below the rentable estate to help the others to have a better understanding of the current state of the rent 
+ * There will be a button to create and list a rentable estate, which will be only visible to all authenticated users, while the anonymous ones will have access only to a read-only part of the page.
 
-### `npm start`
+### Estates
+ * Similar to the rents functionality, the estates part will be used to have CRUD operations for estates which will be used for sales.
+ * The estates have specific information, different from the one in the rents, but they also share common things, such as name, location, owner and renter or buyer 
+ * The ownership functionality is also included, but the estates do not have review functionality since it won't be of any need to the other users , unlike the rent scenario
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Rent Requests
+ * This page will hold all the requests, received from the users to rentable estates, property of the currently authenticated user.
+ * The current user will have to make the choice between the requests and approve one or none of the pending renters.
+ * Upon approving a rent request, the current user will have a generated report , which will be part of the Reports page.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Estate Sales
+ * Similar to the rent requests page, the user will decide how to change the status of the estate for sale and will also have to include the buyer's information
+ * After changing the status of the estate to sold, a report will be generated and send to the Reports Page
 
-### `npm test`
+### Reports Page
+ * The page is divided in two tables - one for the rents and one for the estate sales. Both tables share some common and some different columns, in which the current user will have the opportunity to check his sales and rents , in order to summarize the given information and decide how his business is holding.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Architecture
+ * The project is divided into 4 main folders - helpers, pages, services and store
+  * helpers - mapper functions and menu items functions which are used to format and map data into a more useful way
+  * pages - consists of sub-folders for every page of the project, including CRUD pages, Authentication pages and error page
+  * services - the API call logic, which is called and triggered in the useEffects or event handlers around the project
+  * store - the Redux store, which hold the reducer slices and the store file in which we combine all the reducers
