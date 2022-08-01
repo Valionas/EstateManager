@@ -4,8 +4,24 @@ import { Route, Routes, Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { authenticate } from './store/slices/authSlice';
 
+import { getAuth, signOut } from 'firebase/auth';
+
 import 'antd/dist/antd.css';
 import { Breadcrumb, Layout, Menu } from 'antd';
+import {
+  DesktopOutlined,
+  FileOutlined,
+  PieChartOutlined,
+  TeamOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
+
+import { GrUserAdd, GrUserAdmin } from 'react-icons/gr';
+import { AiOutlineUserAdd, AiOutlineUserSwitch } from 'react-icons/ai';
+import { MdOutlinePayment, MdOutlineSell, MdCreate } from 'react-icons/md'
+import { HiOutlineDocumentReport } from 'react-icons/hi';
+import { BiLogOut } from 'react-icons/bi';
+import { GiMoneyStack, GiModernCity } from 'react-icons/gi';
 
 import Estates from './pages/estates-for-sale/Estates';
 import Rents from './pages/rents/Rents';
@@ -16,13 +32,16 @@ import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import NotFoundPage from './pages/not-found/NotFoundPage';
 
-import { publicMenuItems, authenticatedMenuItems } from './helpers/menuItems';
 const { Header, Content, Footer, Sider } = Layout;
 
 const App = () => {
   const dispatch = useDispatch();
-  let navigate = useNavigate();
-  const authenticated = useSelector(state => state.auth.isAuthenticated);
+  const authentication = getAuth();
+  const navigate = useNavigate();
+
+  const authenticated = useSelector(state => state.auth.currentUser);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [menuItems, setMenuItems] = useState();
 
@@ -32,17 +51,65 @@ const App = () => {
     let email = localStorage.getItem('email');
     if (authToken) {
       dispatch(authenticate({ id: userId, email: email }));
+      setIsLoggedIn(true);
     }
   }, []);
 
   useEffect(() => {
     if (authenticated) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [authenticated]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
       setMenuItems(authenticatedMenuItems);
     } else {
       setMenuItems(publicMenuItems);
     }
-  }, [authenticated]);
+  }, [isLoggedIn])
 
+  function setMenuItem(label, key, icon, children) {
+    return {
+      key,
+      icon,
+      children,
+      label,
+    };
+  }
+
+  const publicMenuItems = [
+    setMenuItem(<Link to="/">Home</Link>, '1', <PieChartOutlined />),
+    setMenuItem(<Link to="/login">Login</Link>, '2', <AiOutlineUserSwitch />),
+    setMenuItem(<Link to="/register">Register</Link>, '3', <AiOutlineUserAdd />),
+    setMenuItem(<Link to="/rents">Rents</Link>, '4', <MdOutlinePayment />),
+    setMenuItem(<Link to="/estates">Estates for sale</Link>, '5', <GiModernCity />),
+  ];
+
+  const authenticatedMenuItems = [
+    setMenuItem(<Link to="/">Home</Link>, '1', <PieChartOutlined />),
+    setMenuItem(<Link to="/rents">Rents</Link>, '2', <MdOutlinePayment />),
+    setMenuItem(<Link to="/rent-requests">Rent Requests</Link>, '3', <GiMoneyStack />),
+    setMenuItem(<Link to="/estates">Estates for sale</Link>, '4', <GiModernCity />),
+    setMenuItem(<Link to="/sales">Estate Sales</Link>, '5', <MdOutlineSell />),
+    setMenuItem(<Link to="/reports">Reports</Link>, '6', <HiOutlineDocumentReport />),
+    setMenuItem(<a onClick={() => logoutHandler()}>Logout</a>, '7', <BiLogOut />),
+  ];
+
+
+  const logoutHandler = async () => {
+    try {
+      await signOut(authentication);
+      localStorage.clear();
+      dispatch(authenticate());
+      setIsLoggedIn(false);
+      navigate('/login');
+    } catch (err) {
+      console.debug(err);
+    }
+  }
   return (
     <Layout
       style={{
@@ -67,7 +134,7 @@ const App = () => {
             }}
           >
             <Routes>
-              {!authenticated ?
+              {!isLoggedIn ?
                 <>
                   <Route exact path="/" element={<Home />} />
                   <Route exact path="/login" element={<Login />} />

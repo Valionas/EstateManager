@@ -22,7 +22,6 @@ function AddEditEstateModal() {
 
     useEffect(() => {
         if (currentEstate) {
-            debugger
             setFields([
                 {
                     name: ['name'],
@@ -60,7 +59,6 @@ function AddEditEstateModal() {
         let estateObject = values;
         estateObject.owner = currentUser.id;
         estateObject.created = serverTimestamp();
-        debugger;
         try {
             if (currentEstate) {
                 const result = await updateEstate(estateObject, currentEstate.id);
