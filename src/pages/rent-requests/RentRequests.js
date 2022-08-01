@@ -4,12 +4,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { openRentModal, closeRentModal, setUpdatePage } from '../../store/slices/rentSlice';
 
 import { Col, Row } from 'antd';
-import { Space, Table, Tag, Modal, Button, Spin } from 'antd';
-
-
-import RequestRentCard from './RequestRentCard';
+import { Space, Table, Tag, Modal, Button, Spin, Image, Divider } from 'antd';
 
 import { getRequestsByOwner } from '../../services/rent-requests-service';
+import { render } from '@testing-library/react';
 
 function RentRequests() {
     const dispatch = useDispatch();
@@ -30,6 +28,55 @@ function RentRequests() {
         fetchData();
     }, [updatePageTrigger]);
 
+    const requestColumns = [
+        {
+            title: 'Image',
+            dataIndex: 'image',
+            key: 'image',
+            render: image => <Image
+                height={"5vh"}
+                width={"100%"}
+                src={image}
+            />,
+        },
+        {
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: 'Location',
+            dataIndex: 'location',
+            key: 'location',
+        },
+        {
+            title: 'Renter',
+            dataIndex: 'renter',
+            key: 'renter',
+        },
+        {
+            title: 'Message',
+            dataIndex: 'message',
+            key: 'message'
+        },
+        {
+            title: 'Actions',
+            dataIndex: 'actions',
+            key: 'actions',
+            render: () =>
+                <>
+                    <Row>
+                        <Col span={12}>
+                            <Button type="primary" shape="round" >Approve</Button>
+                        </Col>
+                        <Divider></Divider>
+                        <Col>
+                            <Button type="danger" shape="round" >Decline</Button>
+                        </Col>
+                    </Row>
+                </>
+        }
+    ];
 
     return (
         <>
@@ -46,10 +93,11 @@ function RentRequests() {
                 (
                     <>
                         <Row justify="center">
-                            <Col>
-                                {requests && requests.map((request, index) => (
-                                    <RequestRentCard key={index} requestObject={request}></RequestRentCard>
-                                ))}
+                            <Col span={24}>
+                                {
+                                    requests && <Table columns={requestColumns} dataSource={requests} />
+                                }
+
                             </Col>
                         </Row>
                     </>
