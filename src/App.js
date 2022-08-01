@@ -10,6 +10,7 @@ import { Breadcrumb, Layout, Menu } from 'antd';
 import Estates from './pages/estates-for-sale/Estates';
 import Rents from './pages/rents/Rents';
 import RentRequests from './pages/rent-requests/RentRequests';
+import Reports from './pages/reports/Reports';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
@@ -77,7 +78,7 @@ const App = () => {
                   <Route exact path="/" element={<Home />} />
                   <Route exact path="/sales" element={<Login />} />
                   <Route exact path="/rent-requests" element={<RentRequests />} />
-                  <Route exact path="/reports" element={<Register />} />
+                  <Route exact path="/reports" element={<Reports />} />
                   <Route exact path="/logout" element={<Register />} />
                 </>
               }
