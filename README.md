@@ -29,3 +29,10 @@ The EstateManager system will be used to help various people, interested or dire
 
 ### Reports Page
  * The page is divided in two tables - one for the rents and one for the estate sales. Both tables share some common and some different columns, in which the current user will have the opportunity to check his sales and rents , in order to summarize the given information and decide how his business is holding.
+
+## Architecture
+ * The project is divided into 4 main folders - helpers, pages, services and store
+  * helpers - mapper functions and menu items functions which are used to format and map data into a more useful way
+  * pages - consists of sub-folders for every page of the project, including CRUD pages, Authentication pages and error page
+  * services - the API call logic, which is called and triggered in the useEffects or event handlers around the project
+  * store - the Redux store, which hold the reducer slices and the store file in which we combine all the reducers
