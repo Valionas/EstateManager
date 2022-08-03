@@ -3,6 +3,9 @@ import { openRequestRentModal, openReviewRentModal, openRentModal, setCurrentRen
 
 import { Col, Row, Image, Divider } from 'antd';
 import { Space, Table, Tag, Button } from 'antd';
+import { showConfirmationModal } from '../../components/ConfirmationModal';
+import { modalMessage } from '../../globals/messages';
+
 import { GoLocation } from 'react-icons/go'
 import './Rents.css';
 
@@ -29,8 +32,12 @@ function RentCard({ rentObject }) {
     }
 
     const deleteRentHandler = async (id) => {
-        await deleteRent(id);
-        dispatch(setUpdatePage());
+        showConfirmationModal(modalMessage, async function (answer) {
+            if (answer) {
+                await deleteRent(id);
+                dispatch(setUpdatePage());
+            }
+        })
     }
 
     const updateRentHandler = (id) => {

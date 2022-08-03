@@ -8,6 +8,8 @@ import { updateRent } from '../../services/rents-service';
 import { Col, Row, Divider, Rate, Button } from 'antd';
 import { RiUserVoiceLine } from 'react-icons/ri';
 import { MdOutlineRealEstateAgent, MdOutlineEditLocationAlt, MdOutlineEditCalendar, MdOutlineStarRate } from 'react-icons/md';
+import { showConfirmationModal } from '../../components/ConfirmationModal';
+import { modalMessage } from '../../globals/messages';
 
 function ReviewCard({ reviewObject, rentObject }) {
     const dispatch = useDispatch();
@@ -15,8 +17,12 @@ function ReviewCard({ reviewObject, rentObject }) {
     const currentUser = useSelector(state => state.auth.currentUser);
 
     const deleteReviewHandler = async (id) => {
-        await updateRent(id);
-        dispatch(setUpdatePage());
+        showConfirmationModal(modalMessage, async function (answer) {
+            if (answer) {
+                await updateRent(id);
+                dispatch(setUpdatePage());
+            }
+        })
     }
 
     const updateReviewHandler = (id) => {

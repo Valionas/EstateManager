@@ -163,6 +163,7 @@ const App = () => {
           EstateManager ©2022 Created by Valentin Kolev
         </Footer>
       </Layout>
+      <div id="confirmation-modal"></div>
     </Layout>
   );
 };

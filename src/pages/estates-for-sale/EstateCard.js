@@ -3,7 +3,8 @@ import { setCurrentEstate, openEstateModal, setUpdatePage } from '../../store/sl
 
 
 import { Col, Row, Image, Divider, Button, Carousel } from 'antd';
-
+import { showConfirmationModal } from '../../components/ConfirmationModal';
+import { modalMessage } from '../../globals/messages';
 
 import { GoLocation } from 'react-icons/go'
 import './Estates.css';
@@ -23,8 +24,12 @@ function EstateCard({ estateObject }) {
     const currentUser = useSelector(state => state.auth.currentUser);
 
     const deleteEstateHandler = async (id) => {
-        await deleteEstate(id);
-        dispatch(setUpdatePage());
+        showConfirmationModal(modalMessage, async function (answer) {
+            if (answer) {
+                await deleteEstate(id);
+                dispatch(setUpdatePage());
+            }
+        })
     }
 
     const updateRentHandler = (id) => {
