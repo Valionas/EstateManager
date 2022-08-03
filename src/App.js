@@ -22,10 +22,12 @@ import { MdOutlinePayment, MdOutlineSell, MdCreate } from 'react-icons/md'
 import { HiOutlineDocumentReport } from 'react-icons/hi';
 import { BiLogOut } from 'react-icons/bi';
 import { GiMoneyStack, GiModernCity } from 'react-icons/gi';
+import { RiMailSendLine } from 'react-icons/ri';
 
 import Estates from './pages/estates-for-sale/Estates';
 import Rents from './pages/rents/Rents';
 import RentRequests from './pages/rent-requests/RentRequests';
+import SentMessages from './pages/sent-messages/SentMessages';
 import Reports from './pages/reports/Reports';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
@@ -94,8 +96,9 @@ const App = () => {
     setMenuItem(<Link to="/rent-requests">Rent Requests</Link>, '3', <GiMoneyStack />),
     setMenuItem(<Link to="/estates">Estates for sale</Link>, '4', <GiModernCity />),
     setMenuItem(<Link to="/sales">Estate Sales</Link>, '5', <MdOutlineSell />),
-    setMenuItem(<Link to="/reports">Reports</Link>, '6', <HiOutlineDocumentReport />),
-    setMenuItem(<a onClick={() => logoutHandler()}>Logout</a>, '7', <BiLogOut />),
+    setMenuItem(<Link to="/messages">My messages</Link>, '6', <RiMailSendLine />),
+    setMenuItem(<Link to="/reports">Reports</Link>, '7', <HiOutlineDocumentReport />),
+    setMenuItem(<a onClick={() => logoutHandler()}>Logout</a>, '8', <BiLogOut />),
   ];
 
 
@@ -145,6 +148,7 @@ const App = () => {
                   <Route exact path="/" element={<Home />} />
                   <Route exact path="/sales" element={<Login />} />
                   <Route exact path="/rent-requests" element={<RentRequests />} />
+                  <Route exact path="/messages" element={<SentMessages />} />
                   <Route exact path="/reports" element={<Reports />} />
                   <Route exact path="/logout" element={<Register />} />
                 </>

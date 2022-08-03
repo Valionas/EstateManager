@@ -8,7 +8,11 @@ export const getRequestsByOwner = async (owner) => {
     const data = await getDocs(rentRequestsCollectionRef);
     let mappedArray = firebaseMapData(data);
     let requestsFilteredByOwner = mappedArray.find(requestCollection => requestCollection.rentOwner === owner);
-    return requestsFilteredByOwner.requests;
+    if (requestsFilteredByOwner) {
+        return requestsFilteredByOwner.requests;
+    }
+
+    return [];
 };
 
 export const addRequest = async (data) => {
