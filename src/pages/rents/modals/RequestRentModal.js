@@ -1,18 +1,23 @@
 import { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { openRequestRentModal, closeRequestRentModal } from '../../../store/slices/rentSlice';
+import { closeRequestRentModal, setCurrentRent, setUpdatePage } from '../../../store/slices/rentSlice';
 
 import { AiOutlineUpload } from 'react-icons/ai';
 
 import { Space, Table, Tag, Row, Modal, Button, Form, Input, Select, Upload } from 'antd';
 
-import { addRent } from '../../../services/rents-service';
+import { addRequest } from '../../../services/rent-requests-service';
+import { addMessage } from '../../../services/messages-service';
+import { updateRent } from '../../../services/rents-service';
+
+
 
 function RequestRentModal() {
     const dispatch = useDispatch();
     const isOpened = useSelector(state => state.rent.isOpenedRequestRentModal);
     const currentUser = useSelector(state => state.auth.currentUser);
+    const currentRent = useSelector(state => state.rent.currentRent);
 
     const [fields, setFields] = useState([]);
     const [form] = Form.useForm();
@@ -22,10 +27,41 @@ function RequestRentModal() {
     }
 
     const onFinish = async (values) => {
-        let rentObject = values;
-        rentObject.owner = currentUser.id;
+        //Generate request for rent owner
+        let requestObject = {
+            image: currentRent.image,
+            name: currentRent.name,
+            location: currentRent.location,
+            renter: currentUser.email,
+            messsage: values.message,
+            owner: currentRent.owner,
+        };
+
+
+        //Generate message for renter
+        let messageObject = {
+            image: currentRent.image,
+            name: currentRent.name,
+            location: currentRent.location,
+            receiver: currentRent.owner,
+            sender: currentUser.email,
+            message: values.message,
+            status: 'Pending',
+        };
+
+        let updatedRent = { ...currentRent };
+        let copyArr = [...updatedRent.applicants];
+        copyArr.push(currentUser.email);
+        updatedRent.applicants = copyArr;
+
         try {
-            const result = await addRent(values);
+            const result = await addRequest(requestObject);
+            debugger
+            messageObject.requestId = result.id;
+            await addMessage(messageObject);
+            await updateRent(updatedRent, updatedRent.id);
+            dispatch(setUpdatePage());
+            dispatch(setCurrentRent());
             dispatch(closeRequestRentModal());
             form.resetFields();
         } catch (err) {
@@ -55,12 +91,12 @@ function RequestRentModal() {
                 autoComplete="off"
             >
                 <Form.Item
-                    label="Description"
-                    name="description"
+                    label="Message"
+                    name="message"
                     rules={[
                         {
                             required: true,
-                            message: 'Please input your description!',
+                            message: 'Please input your motivational message!',
                         },
                     ]}
                 >

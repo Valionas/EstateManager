@@ -5,9 +5,12 @@ import { openRentModal, closeRentModal, setUpdatePage } from '../../store/slices
 
 import { Col, Row } from 'antd';
 import { Space, Table, Tag, Modal, Button, Spin, Image, Divider } from 'antd';
+import { showConfirmationModal } from '../../components/ConfirmationModal';
+import { modalMessage } from '../../globals/messages';
 
-import { getRequestsByOwner } from '../../services/rent-requests-service';
-import { render } from '@testing-library/react';
+import { getRequestsByOwner, deleteRequest } from '../../services/rent-requests-service';
+import { updateMessage, getMessagesBySender, getMessageByRequestId } from '../../services/messages-service';
+
 
 function RentRequests() {
     const dispatch = useDispatch();
@@ -19,7 +22,7 @@ function RentRequests() {
 
     const fetchData = async () => {
         setLoading(true);
-        const data = await getRequestsByOwner(currentUser.id);
+        const data = await getRequestsByOwner(currentUser.email);
         setRequests(data);
         setLoading(false);
     }
@@ -27,6 +30,28 @@ function RentRequests() {
     useEffect(() => {
         fetchData();
     }, [updatePageTrigger]);
+
+
+    const approveRequestHandler = (sender, id) => {
+        showConfirmationModal(modalMessage, async function (answer) {
+            if (answer) {
+                let message = await getMessageByRequestId(sender, id);
+                message.status = 'Approved';
+                await updateMessage(message, message.id);
+                await deleteRequest(id);
+                dispatch(setUpdatePage());
+            }
+        })
+    }
+
+    const declineRequestHandler = (sender, id) => {
+        showConfirmationModal(modalMessage, async function (answer) {
+            if (answer) {
+                await deleteRequest(id);
+                dispatch(setUpdatePage());
+            }
+        })
+    }
 
     const requestColumns = [
         {
@@ -63,15 +88,15 @@ function RentRequests() {
             title: 'Actions',
             dataIndex: 'actions',
             key: 'actions',
-            render: () =>
+            render: (item, record) =>
                 <>
                     <Row>
                         <Col span={12}>
-                            <Button type="primary" shape="round" >Approve</Button>
+                            <Button type="primary" shape="round" onClick={(e) => approveRequestHandler(record.renter, record.id)} >Approve</Button>
                         </Col>
                         <Divider></Divider>
                         <Col>
-                            <Button type="danger" shape="round" >Decline</Button>
+                            <Button type="danger" shape="round" onClick={(e) => declineRequestHandler(record.id)} >Decline</Button>
                         </Col>
                     </Row>
                 </>

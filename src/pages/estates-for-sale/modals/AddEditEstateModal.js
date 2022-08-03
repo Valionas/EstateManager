@@ -58,7 +58,7 @@ function AddEditEstateModal() {
     const onFinish = async (values) => {
         let estateObject = values;
         estateObject.owner = currentUser.id;
-        estateObject.created = serverTimestamp();
+
         try {
             if (currentEstate) {
                 const result = await updateEstate(estateObject, currentEstate.id);

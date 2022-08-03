@@ -61,13 +61,12 @@ function AddEditRentModal() {
 
     const onFinish = async (values) => {
         let rentObject = values;
-        rentObject.owner = currentUser.id;
+        rentObject.owner = currentUser.email;
         if (currentRent) {
             rentObject.reviews = currentRent.reviews
         } else {
             rentObject.reviews = [];
         }
-        rentObject.created = serverTimestamp();
 
         try {
             if (currentRent) {

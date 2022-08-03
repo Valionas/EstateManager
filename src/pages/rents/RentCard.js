@@ -71,15 +71,17 @@ function RentCard({ rentObject }) {
                         <Row>
                             <p style={{ fontSize: "2vh" }}><b>Acceptable currencies:</b> ${rentObject.currencies}</p>
                         </Row>
-                        {currentUser && currentUser.id !== rentObject.owner &&
+                        {currentUser && currentUser.email !== rentObject.owner &&
                             <Row>
-                                <Button type="primary" shape="round" style={{ width: "100%", marginBottom: '5%' }} onClick={openRequestRentModalHandler}>REQUEST RENT</Button>
+                                {rentObject.applicants.find(applicant => applicant === currentUser.email) === undefined && (
+                                    <Button type="primary" shape="round" style={{ width: "100%", marginBottom: '5%' }} onClick={openRequestRentModalHandler}>REQUEST RENT</Button>
+                                )}
                                 {rentObject.reviews.find(review => review.reviewer.id === currentUser.id) === undefined && (
                                     <Button type="primary" shape="round" style={{ width: "100%" }} onClick={openReviewRentModalHandler}>REVIEW</Button>
                                 )}
                             </Row>
                         }
-                        {currentUser && currentUser.id === rentObject.owner &&
+                        {currentUser && currentUser.email === rentObject.owner &&
                             <Row>
                                 <Button type="primary" shape="round" style={{ width: "100%", marginBottom: '5%' }} onClick={updateRentHandler}>UPDATE RENT</Button>
                                 <Button type="danger" shape="round" style={{ width: "100%" }} onClick={() => deleteRentHandler(rentObject.id)}>DELETE RENT</Button>

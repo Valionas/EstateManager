@@ -7,14 +7,18 @@ const messagesCollectionRef = collection(db, 'messages');
 export const getMessagesBySender = async (sender) => {
     const data = await getDocs(messagesCollectionRef);
     let mappedArray = firebaseMapData(data);
-    debugger
-    let requestsFilteredBySender = mappedArray.find(requestCollection => requestCollection.sender === sender);
-    if (requestsFilteredBySender) {
-        return requestsFilteredBySender.messages;
-    }
-
-    return [];
+    let messagesFilteredBySender = mappedArray.filter(messageCollection => messageCollection.sender === sender);
+    return messagesFilteredBySender;
 };
+
+export const getMessageByRequestId = async (sender, id) => {
+    const data = await getDocs(messagesCollectionRef);
+    let mappedArray = firebaseMapData(data);
+    let messagesFilteredBySender = mappedArray.filter(messageCollection => messageCollection.sender === sender);
+    let message = messagesFilteredBySender.find(message => message.requestId === id);
+    return message;
+}
+
 
 export const addMessage = async (data) => {
     await addDoc(messagesCollectionRef, data);

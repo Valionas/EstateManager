@@ -7,16 +7,14 @@ const rentRequestsCollectionRef = collection(db, 'rentRequests');
 export const getRequestsByOwner = async (owner) => {
     const data = await getDocs(rentRequestsCollectionRef);
     let mappedArray = firebaseMapData(data);
-    let requestsFilteredByOwner = mappedArray.find(requestCollection => requestCollection.rentOwner === owner);
-    if (requestsFilteredByOwner) {
-        return requestsFilteredByOwner.requests;
-    }
+    let requestsFilteredByOwner = mappedArray.filter(requestCollection => requestCollection.owner === owner);
+    return requestsFilteredByOwner;
 
-    return [];
+
 };
 
 export const addRequest = async (data) => {
-    await addDoc(rentRequestsCollectionRef, data);
+    return await addDoc(rentRequestsCollectionRef, data);
 };
 
 export const updateRequest = async (data, id) => {

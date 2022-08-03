@@ -5,8 +5,10 @@ import { openRentModal, closeRentModal, setUpdatePage } from '../../store/slices
 
 import { Col, Row } from 'antd';
 import { Space, Table, Tag, Modal, Button, Spin, Image, Divider } from 'antd';
+import { showConfirmationModal } from '../../components/ConfirmationModal';
+import { modalMessage } from '../../globals/messages';
 
-import { getMessagesBySender } from '../../services/messages-service';
+import { getMessagesBySender, deleteMessage } from '../../services/messages-service';
 import { render } from '@testing-library/react';
 
 function SentMessages() {
@@ -19,7 +21,7 @@ function SentMessages() {
 
     const fetchData = async () => {
         setLoading(true);
-        const data = await getMessagesBySender(currentUser.id);
+        const data = await getMessagesBySender(currentUser.email);
         setMessages(data);
         setLoading(false);
     }
@@ -27,6 +29,15 @@ function SentMessages() {
     useEffect(() => {
         fetchData();
     }, [updatePageTrigger]);
+
+    const deleteMessageHandler = (id) => {
+        showConfirmationModal(modalMessage, async function (answer) {
+            if (answer) {
+                await deleteMessage(id);
+                dispatch(setUpdatePage());
+            }
+        })
+    }
 
     const messagesColumns = [
         {
@@ -68,16 +79,33 @@ function SentMessages() {
             title: 'Actions',
             dataIndex: 'actions',
             key: 'actions',
-            render: () =>
+            render: (item, record) =>
                 <>
                     <Row>
-                        <Col span={12}>
-                            <Button type="primary" shape="round" >Update</Button>
-                        </Col>
-                        <Divider></Divider>
-                        <Col>
-                            <Button type="danger" shape="round" >Delete</Button>
-                        </Col>
+                        {
+                            record.status === 'Pending' ? (
+                                <>
+                                    <Col span={12}>
+                                        <Button type="primary" shape="round" >Update</Button>
+                                    </Col>
+                                    <Divider></Divider>
+                                    <Col>
+                                        <Button type="danger" shape="round" onClick={(e) => deleteMessageHandler(record.id)}>Delete</Button>
+                                    </Col>
+                                </>
+                            ) : (
+                                <>
+                                    <Col span={12}>
+                                        <Button type="primary" shape="round" >View</Button>
+                                    </Col>
+                                    <Divider></Divider>
+                                    <Col>
+                                        <Button type="danger" shape="round" onClick={(e) => deleteMessageHandler(record.id)}>Delete</Button>
+                                    </Col>
+                                </>
+                            )
+
+                        }
                     </Row>
                 </>
         }
