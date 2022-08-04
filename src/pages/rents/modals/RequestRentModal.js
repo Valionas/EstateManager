@@ -27,12 +27,15 @@ function RequestRentModal() {
     }
 
     const onFinish = async (values) => {
+        debugger
         //Generate request for rent owner
         let requestObject = {
+            rentId: currentRent.id,
             image: currentRent.image,
             name: currentRent.name,
             location: currentRent.location,
             renter: currentUser.email,
+            rent: currentRent.rent,
             messsage: values.message,
             owner: currentRent.owner,
         };
@@ -40,11 +43,13 @@ function RequestRentModal() {
 
         //Generate message for renter
         let messageObject = {
+            rentId: currentRent.id,
             image: currentRent.image,
             name: currentRent.name,
             location: currentRent.location,
             receiver: currentRent.owner,
             sender: currentUser.email,
+            rent: currentRent.rent,
             message: values.message,
             status: 'Pending',
         };
@@ -56,7 +61,6 @@ function RequestRentModal() {
 
         try {
             const result = await addRequest(requestObject);
-            debugger
             messageObject.requestId = result.id;
             await addMessage(messageObject);
             await updateRent(updatedRent, updatedRent.id);

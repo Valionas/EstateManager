@@ -10,6 +10,16 @@ export const getRents = async () => {
     return mappedArray;
 };
 
+
+export const getRent = async (id) => {
+    const docRef = doc(db, 'rents', id);
+    const docSnap = await getDoc(docRef);
+    const data = docSnap.exists() ? docSnap.data() : undefined;
+    if (!data) return null;
+
+    return { id, ...data };
+}
+
 export const addRent = async (data) => {
     await addDoc(rentsCollectionRef, data);
 };

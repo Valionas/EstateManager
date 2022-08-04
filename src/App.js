@@ -93,9 +93,9 @@ const App = () => {
   const authenticatedMenuItems = [
     setMenuItem(<Link to="/">Home</Link>, '1', <PieChartOutlined />),
     setMenuItem(<Link to="/rents">Rents</Link>, '2', <MdOutlinePayment />),
-    setMenuItem(<Link to="/rent-requests">Rent Requests</Link>, '3', <GiMoneyStack />),
+    setMenuItem(<Link to="/rent-requests">My Rent Requests</Link>, '3', <GiMoneyStack />),
     setMenuItem(<Link to="/estates">Estates for sale</Link>, '4', <GiModernCity />),
-    setMenuItem(<Link to="/sales">Estate Sales</Link>, '5', <MdOutlineSell />),
+    setMenuItem(<Link to="/sales">My Estate Sales</Link>, '5', <MdOutlineSell />),
     setMenuItem(<Link to="/messages">My messages</Link>, '6', <RiMailSendLine />),
     setMenuItem(<Link to="/reports">Reports</Link>, '7', <HiOutlineDocumentReport />),
     setMenuItem(<a onClick={() => logoutHandler()}>Logout</a>, '8', <BiLogOut />),

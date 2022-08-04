@@ -10,6 +10,8 @@ import { modalMessage } from '../../globals/messages';
 
 import { getRequestsByOwner, deleteRequest } from '../../services/rent-requests-service';
 import { updateMessage, getMessagesBySender, getMessageByRequestId } from '../../services/messages-service';
+import { addReport } from '../../services/reports-service';
+
 
 
 function RentRequests() {
@@ -32,11 +34,22 @@ function RentRequests() {
     }, [updatePageTrigger]);
 
 
-    const approveRequestHandler = (sender, id) => {
+    const approveRequestHandler = (sender, id, request) => {
         showConfirmationModal(modalMessage, async function (answer) {
             if (answer) {
+                debugger
+                let generatedReport = {
+                    image: request.image,
+                    name: request.rentName,
+                    renter: request.renter,
+                    location: request.location,
+                    rent: Number(request.rent),
+                    owner: currentUser.email,
+                    type: 'rent'
+                }
                 let message = await getMessageByRequestId(sender, id);
                 message.status = 'Approved';
+                await addReport(generatedReport);
                 await updateMessage(message, message.id);
                 await deleteRequest(id);
                 dispatch(setUpdatePage());
@@ -47,6 +60,10 @@ function RentRequests() {
     const declineRequestHandler = (sender, id) => {
         showConfirmationModal(modalMessage, async function (answer) {
             if (answer) {
+                debugger
+                let message = await getMessageByRequestId(sender, id);
+                message.status = 'Declined';
+                await updateMessage(message, message.id);
                 await deleteRequest(id);
                 dispatch(setUpdatePage());
             }
@@ -75,6 +92,11 @@ function RentRequests() {
             key: 'location',
         },
         {
+            title: 'Rent',
+            dataIndex: 'rent',
+            key: 'rent',
+        },
+        {
             title: 'Renter',
             dataIndex: 'renter',
             key: 'renter',
@@ -92,11 +114,11 @@ function RentRequests() {
                 <>
                     <Row>
                         <Col span={12}>
-                            <Button type="primary" shape="round" onClick={(e) => approveRequestHandler(record.renter, record.id)} >Approve</Button>
+                            <Button type="primary" shape="round" onClick={(e) => approveRequestHandler(record.renter, record.id, record)} >Approve</Button>
                         </Col>
                         <Divider></Divider>
                         <Col>
-                            <Button type="danger" shape="round" onClick={(e) => declineRequestHandler(record.id)} >Decline</Button>
+                            <Button type="danger" shape="round" onClick={(e) => declineRequestHandler(record.renter, record.id, record)} >Decline</Button>
                         </Col>
                     </Row>
                 </>
