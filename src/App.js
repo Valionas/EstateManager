@@ -6,6 +6,8 @@ import { authenticate } from './store/slices/authSlice';
 
 import { getAuth, signOut } from 'firebase/auth';
 
+import { motion } from 'framer-motion';
+
 import 'antd/dist/antd.css';
 import { Breadcrumb, Layout, Menu } from 'antd';
 import {
@@ -124,41 +126,47 @@ const App = () => {
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={menuItems} />
       </Sider>
       <Layout className="site-layout">
-        <Content
-          style={{
-            margin: '0 16px',
-          }}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1 }}
         >
-          <div
-            className="site-layout-background"
+          <Content
             style={{
-              padding: 24,
-              minHeight: 360,
+              margin: '0 16px',
             }}
           >
-            <Routes>
-              {!isLoggedIn ?
-                <>
-                  <Route exact path="/" element={<Home />} />
-                  <Route exact path="/login" element={<Login />} />
-                  <Route exact path="/register" element={<Register />} />
-                </>
-                :
-                <>
-                  <Route exact path="/" element={<Home />} />
-                  <Route exact path="/sales" element={<Login />} />
-                  <Route exact path="/rent-requests" element={<RentRequests />} />
-                  <Route exact path="/messages" element={<SentMessages />} />
-                  <Route exact path="/reports" element={<Reports />} />
-                  <Route exact path="/logout" element={<Register />} />
-                </>
-              }
-              <Route exact path="/rents" element={<Rents />} />
-              <Route exact path="/estates" element={<Estates />} />
-              <Route exact path="*" element={<NotFoundPage />} />
-            </Routes>
-          </div>
-        </Content>
+            <div
+              className="site-layout-background"
+              style={{
+                padding: 24,
+                minHeight: 360,
+              }}
+            >
+              <Routes>
+                {!isLoggedIn ?
+                  <>
+                    <Route exact path="/" element={<Home />} />
+                    <Route exact path="/login" element={<Login />} />
+                    <Route exact path="/register" element={<Register />} />
+                  </>
+                  :
+                  <>
+                    <Route exact path="/" element={<Home />} />
+                    <Route exact path="/sales" element={<Login />} />
+                    <Route exact path="/rent-requests" element={<RentRequests />} />
+                    <Route exact path="/messages" element={<SentMessages />} />
+                    <Route exact path="/reports" element={<Reports />} />
+                    <Route exact path="/logout" element={<Register />} />
+                  </>
+                }
+                <Route exact path="/rents" element={<Rents />} />
+                <Route exact path="/estates" element={<Estates />} />
+                <Route exact path="*" element={<NotFoundPage />} />
+              </Routes>
+            </div>
+          </Content>
+        </motion.div>
         <Footer
           style={{
             textAlign: 'center',

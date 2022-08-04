@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { openRentModal, closeRentModal, setUpdatePage } from '../../store/slices/rentSlice';
 
+import { motion } from 'framer-motion';
+
 import { Col, Row } from 'antd';
 import { Space, Table, Tag, Modal, Button, Spin, Image, Divider } from 'antd';
 import { showConfirmationModal } from '../../components/ConfirmationModal';
@@ -11,6 +13,8 @@ import { modalMessage } from '../../globals/messages';
 import { getRequestsByOwner, deleteRequest } from '../../services/rent-requests-service';
 import { updateMessage, getMessagesBySender, getMessageByRequestId } from '../../services/messages-service';
 import { addReport } from '../../services/reports-service';
+import { getRent } from '../../services/rents-service';
+
 
 
 
@@ -138,7 +142,11 @@ function RentRequests() {
                 )
                 :
                 (
-                    <>
+                    <motion.div
+                        initial={{ opacity: 0, x: +200 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.75 }}
+                    >
                         <Row justify="center">
                             <Col span={24}>
                                 {
@@ -147,7 +155,7 @@ function RentRequests() {
 
                             </Col>
                         </Row>
-                    </>
+                    </motion.div>
                 )}
         </>
     )

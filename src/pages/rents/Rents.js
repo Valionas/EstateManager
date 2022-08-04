@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { openRentModal, closeRentModal, setUpdatePage } from '../../store/slices/rentSlice';
 
+import { motion } from 'framer-motion';
+
 import { Col, Row } from 'antd';
 import { Space, Table, Tag, Modal, Button, Spin } from 'antd';
 
@@ -48,7 +50,11 @@ function Rents() {
                 )
                 :
                 (
-                    <>
+                    <motion.div
+                        initial={{ opacity: 0, }}
+                        animate={{ opacity: 1, }}
+                        transition={{ duration: 1 }}
+                    >
                         {
                             currentUser && (
                                 <Row justify='center' style={{ marginBottom: '10px' }}>
@@ -65,7 +71,7 @@ function Rents() {
                                 ))}
                             </Col>
                         </Row>
-                    </>
+                    </motion.div>
                 )}
             <AddEditRentModal />
         </>
