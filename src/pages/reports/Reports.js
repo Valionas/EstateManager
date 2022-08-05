@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
+import { motion } from 'framer-motion';
+
 import { Col, Row } from 'antd';
 import { Space, Table, Tag, Modal, Button, Spin, Image } from 'antd';
 
@@ -109,20 +111,26 @@ function Reports() {
                 )
                 :
                 (
-                    <Row>
-                        <Col span={11} offset={1}>
-                            <Row justify='center'>
-                                <h2>Rents</h2>
-                            </Row>
-                            <Table columns={rentColumns} dataSource={rentReports} />
-                        </Col>
-                        <Col span={11} offset={1}>
-                            <Row justify='center'>
-                                <h2>Estates</h2>
-                            </Row>
-                            <Table columns={estateColumns} dataSource={estateReports} />
-                        </Col>
-                    </Row>
+                    <motion.div
+                        initial={{ opacity: 0, x: +200 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.75 }}
+                    >
+                        <Row>
+                            <Col span={11} offset={1}>
+                                <Row justify='center'>
+                                    <h2>Rents</h2>
+                                </Row>
+                                <Table columns={rentColumns} dataSource={rentReports} />
+                            </Col>
+                            <Col span={11} offset={1}>
+                                <Row justify='center'>
+                                    <h2>Estates</h2>
+                                </Row>
+                                <Table columns={estateColumns} dataSource={estateReports} />
+                            </Col>
+                        </Row>
+                    </motion.div>
                 )}
         </>
     )

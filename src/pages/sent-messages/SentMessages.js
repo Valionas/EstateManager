@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { openRentModal, closeRentModal, setUpdatePage } from '../../store/slices/rentSlice';
 
+import { motion } from 'framer-motion';
+
 import { Col, Row } from 'antd';
 import { Space, Table, Tag, Modal, Button, Spin, Image, Divider } from 'antd';
 import { showConfirmationModal } from '../../components/ConfirmationModal';
@@ -124,7 +126,11 @@ function SentMessages() {
                 )
                 :
                 (
-                    <>
+                    <motion.div
+                        initial={{ opacity: 0, x: +200 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.75 }}
+                    >
                         <Row justify="center">
                             <Col span={24}>
                                 {
@@ -133,7 +139,7 @@ function SentMessages() {
 
                             </Col>
                         </Row>
-                    </>
+                    </motion.div>
                 )}
         </>
     )

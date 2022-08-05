@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { openEstateModal, closeEstateModal, setUpdatePage } from '../../store/slices/estateSlice';
 
+import { motion } from 'framer-motion';
+
 import { Col, Row } from 'antd';
 import { Space, Table, Tag, Modal, Button, Spin } from 'antd';
 
@@ -47,7 +49,11 @@ function Estates() {
                 )
                 :
                 (
-                    <>
+                    <motion.div
+                        initial={{ opacity: 0, }}
+                        animate={{ opacity: 1, }}
+                        transition={{ duration: 1 }}
+                    >
                         {
                             currentUser && (
                                 <Row justify='center' style={{ marginBottom: '10px' }}>
@@ -66,7 +72,7 @@ function Estates() {
                             ))}
 
                         </Row>
-                    </>
+                    </motion.div>
                 )}
             <AddEditEstateModal />
         </>
