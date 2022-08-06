@@ -8,6 +8,8 @@ import { Col, Row, Button, Checkbox, Form, Input } from 'antd';
 import { Space, Table, Tag } from 'antd';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
+import './Login.css';
+
 function Login() {
     const dispatch = useDispatch();
     const authentication = getAuth();
@@ -40,15 +42,15 @@ function Login() {
     };
 
     return (
-        <>
+        <div className='loginContainer'>
             <Row justify='center'>
                 <Form
                     name="basic"
                     labelCol={{
-                        span: 8,
+                        span: 10,
                     }}
                     wrapperCol={{
-                        span: 16,
+                        span: 14,
                     }}
                     initialValues={{
                         remember: true,
@@ -83,17 +85,17 @@ function Login() {
                     </Form.Item>
                     <Form.Item
                         wrapperCol={{
-                            offset: 8,
-                            span: 16,
+                            offset: 10,
+                            span: 14,
                         }}
                     >
-                        <Button type="primary" htmlType="submit">
+                        <Button type="primary" htmlType="submit" className='submitBtn'>
                             Submit
                         </Button>
                     </Form.Item>
                 </Form>
             </Row>
-        </>
+        </div>
     )
 }
 

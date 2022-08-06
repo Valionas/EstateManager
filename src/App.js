@@ -9,7 +9,7 @@ import { getAuth, signOut } from 'firebase/auth';
 import { motion } from 'framer-motion';
 
 import 'antd/dist/antd.css';
-import { Breadcrumb, Layout, Menu } from 'antd';
+import { Breadcrumb, Layout, Menu, Row, Col } from 'antd';
 import {
   DesktopOutlined,
   FileOutlined,
@@ -121,7 +121,7 @@ const App = () => {
         minHeight: '100vh',
       }}
     >
-      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} style={{ zIndex: 2 }}>
         <div className="logo" />
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={menuItems} />
       </Sider>
@@ -168,11 +168,23 @@ const App = () => {
           </Content>
         </motion.div>
         <Footer
+          className="footerSection"
           style={{
+            position: "fixed",
+            bottom: 0,
+            left: 0,
+            zIndex: 1,
             textAlign: 'center',
+            width: "100%",
+            backgroundColor: '#001529',
+            color: 'white'
           }}
         >
-          EstateManager ©2022 Created by Valentin Kolev
+          <Row justify='center' style={{ width: "100%" }}>
+            <Col>
+              EstateManager ©2022 Created by Valentin Kolev
+            </Col>
+          </Row>
         </Footer>
       </Layout>
       <div id="confirmation-modal"></div>

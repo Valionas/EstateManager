@@ -8,6 +8,8 @@ import { Col, Row, Button, Checkbox, Form, Input } from 'antd';
 import { Space, Table, Tag } from 'antd';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 
+import './Register.css';
+
 function Register() {
     const dispatch = useDispatch();
     const authentication = getAuth();
@@ -41,7 +43,7 @@ function Register() {
     };
 
     return (
-        <>
+        <div className='registerContainer'>
             <Row justify='center'>
                 <Form
                     name="basic"
@@ -95,14 +97,19 @@ function Register() {
                     >
                         <Input.Password />
                     </Form.Item>
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                            Submit
+                    <Form.Item
+                        wrapperCol={{
+                            offset: 10,
+                            span: 14,
+                        }}
+                    >
+                        <Button type="primary" htmlType="submit" className="submitBtn">
+                            Register
                         </Button>
                     </Form.Item>
                 </Form>
             </Row>
-        </>
+        </div>
     )
 }
 
