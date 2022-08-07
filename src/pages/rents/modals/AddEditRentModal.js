@@ -39,10 +39,6 @@ function AddEditRentModal() {
                     value: currentRent.description
                 },
                 {
-                    name: ['currencies'],
-                    value: currentRent.currencies
-                },
-                {
                     name: ['minimalRentalTime'],
                     value: currentRent.minimalRentalTime
                 },
@@ -151,18 +147,6 @@ function AddEditRentModal() {
                     ]}
                 >
                     <Input.TextArea />
-                </Form.Item>
-                <Form.Item
-                    label="Acceptable Currencies"
-                    name="currencies"
-                >
-                    <Select >
-                        <Select.Option value={'euro'}>EUR </Select.Option>
-                        <Select.Option value={'bgn'}>BGN</Select.Option>
-                        <Select.Option value={'usd'}>USD</Select.Option>
-                        <Select.Option value={'pound'}>GBP</Select.Option>
-                        <Select.Option value={'ruble'}>RUB</Select.Option>
-                    </Select>
                 </Form.Item>
                 <Form.Item
                     label="Minimum rental time"

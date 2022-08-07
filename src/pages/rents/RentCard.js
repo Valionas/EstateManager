@@ -55,21 +55,18 @@ function RentCard({ rentObject }) {
                             src={rentObject.image}
                         />
                     </Col>
-                    <Col span={13} offset={1}>
+                    <Col span={12} offset={1}>
                         <h1>{rentObject.name}</h1>
                         <p><GoLocation /> {rentObject.location}</p>
                         <h1>Description</h1>
                         <p>{rentObject.description}</p>
                     </Col>
-                    <Col span={4} offset={1}>
+                    <Col span={5} offset={1}>
                         <Row>
                             <p style={{ fontSize: "2vh" }}><b>Price:</b> ${rentObject.rent}/monthly</p>
                         </Row>
                         <Row>
-                            <p style={{ fontSize: "2vh" }}><b>Minimal rental time:</b> ${rentObject.minimalRentalTime}</p>
-                        </Row>
-                        <Row>
-                            <p style={{ fontSize: "2vh" }}><b>Acceptable currencies:</b> ${rentObject.currencies}</p>
+                            <p style={{ fontSize: "2vh" }}><b>Minimal rental time:</b> {rentObject.minimalRentalTime} months</p>
                         </Row>
                         {currentUser && currentUser.email !== rentObject.owner &&
                             <Row>
