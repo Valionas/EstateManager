@@ -23,9 +23,14 @@ The EstateManager system will be used to help various people, interested or dire
  * The current user will have to make the choice between the requests and approve one or none of the pending renters.
  * Upon approving a rent request, the current user will have a generated report , which will be part of the Reports page.
 
-### Estate Sales
+### Estate Offers
  * Similar to the rent requests page, the user will decide how to change the status of the estate for sale and will also have to include the buyer's information
  * After changing the status of the estate to sold, a report will be generated and send to the Reports Page
+
+### Message
+ * Upon applying for an estate sale or requesting a rent, every user gets a respond message back to his message log with a status of Pending.
+ * The other side (owner of the estate or rentable place) has the authority to decide whether the request will be approved or declined.
+ * If the request is approved, the status of the current request will be changed to Approved, the update functionality will get disabled and the user can only delete if neccessary the current request
 
 ### Reports Page
  * The page is divided in two tables - one for the rents and one for the estate sales. Both tables share some common and some different columns, in which the current user will have the opportunity to check his sales and rents , in order to summarize the given information and decide how his business is holding.
@@ -36,3 +41,11 @@ The EstateManager system will be used to help various people, interested or dire
   * pages - consists of sub-folders for every page of the project, including CRUD pages, Authentication pages and error page
   * services - the API call logic, which is called and triggered in the useEffects or event handlers around the project
   * store - the Redux store, which hold the reducer slices and the store file in which we combine all the reducers
+
+## Used Libraries
+ ### Framer-Motion
+  * React library for fast and easily-appliable custom animations for components, such as transitions, fades, rotations and many more
+ ### React-Icons
+  * Includes popular icons in your React projects easily with react-icons, which utilizes ES6 imports that allows you to include only the icons that your project is using.
+ ### Ant-Design
+  * An enterprise-class UI design language and React UI library with a set of high-quality React components, one of best React UI library for enterprises.
