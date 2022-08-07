@@ -103,6 +103,10 @@ function ApplyForEstateModal() {
                             required: true,
                             message: 'Please input your motivational message!',
                         },
+                        {
+                            min: 10,
+                            message: 'Message cannot be shorter than 10 symbols'
+                        }
                     ]}
                 >
                     <Input.TextArea />
@@ -115,6 +119,15 @@ function ApplyForEstateModal() {
                             required: true,
                             message: 'Please input your offer!',
                         },
+                        ({ getFieldValue }) => ({
+                            validator(_, value) {
+                                if (isNaN(value)) {
+                                    return Promise.reject(new Error('Use only numerical values'));
+                                }
+
+                                return Promise.resolve();
+                            }
+                        })
                     ]}
                 >
                     <Input />

@@ -101,6 +101,10 @@ function RequestRentModal() {
                             required: true,
                             message: 'Please input your motivational message!',
                         },
+                        {
+                            min: 10,
+                            message: 'Message cannot be shorter than 10 symbols'
+                        }
                     ]}
                 >
                     <Input.TextArea />
