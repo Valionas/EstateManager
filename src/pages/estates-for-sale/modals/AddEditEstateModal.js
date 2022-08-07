@@ -125,12 +125,24 @@ function AddEditEstateModal() {
                     <Input />
                 </Form.Item>
                 <Form.Item
-                    label="Price"
-                    name="price"
+                    label="Starting Price"
+                    name="startingPrice"
                     rules={[
                         {
                             required: true,
-                            message: 'Please input your price!',
+                            message: 'Please input your starting price!',
+                        },
+                    ]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    label="Bid Step"
+                    name="bidStep"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Please input your bid\'s step!',
                         },
                     ]}
                 >

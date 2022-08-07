@@ -29,6 +29,7 @@ import { RiMailSendLine } from 'react-icons/ri';
 import Estates from './pages/estates-for-sale/Estates';
 import Rents from './pages/rents/Rents';
 import RentRequests from './pages/rent-requests/RentRequests';
+import EstateApplications from './pages/estate-applications/EstateApplications';
 import SentMessages from './pages/sent-messages/SentMessages';
 import Reports from './pages/reports/Reports';
 import Home from './pages/home/Home';
@@ -97,7 +98,7 @@ const App = () => {
     setMenuItem(<Link to="/rents">Rents</Link>, '2', <MdOutlinePayment />),
     setMenuItem(<Link to="/rent-requests">My Rent Requests</Link>, '3', <GiMoneyStack />),
     setMenuItem(<Link to="/estates">Estates for sale</Link>, '4', <GiModernCity />),
-    setMenuItem(<Link to="/sales">My Estate Sales</Link>, '5', <MdOutlineSell />),
+    setMenuItem(<Link to="/estate-offers">My Estate Offers</Link>, '5', <MdOutlineSell />),
     setMenuItem(<Link to="/messages">My messages</Link>, '6', <RiMailSendLine />),
     setMenuItem(<Link to="/reports">Reports</Link>, '7', <HiOutlineDocumentReport />),
     setMenuItem(<a onClick={() => logoutHandler()}>Logout</a>, '8', <BiLogOut />),
@@ -153,7 +154,7 @@ const App = () => {
                   :
                   <>
                     <Route exact path="/" element={<Home />} />
-                    <Route exact path="/sales" element={<Login />} />
+                    <Route exact path="/estate-offers" element={<EstateApplications />} />
                     <Route exact path="/rent-requests" element={<RentRequests />} />
                     <Route exact path="/messages" element={<SentMessages />} />
                     <Route exact path="/reports" element={<Reports />} />

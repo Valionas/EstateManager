@@ -10,7 +10,7 @@ import { Space, Table, Tag, Modal, Button, Spin, Image, Divider } from 'antd';
 import { showConfirmationModal } from '../../components/ConfirmationModal';
 import { modalMessage } from '../../globals/messages';
 
-import { getRequestsByOwner, deleteRequest } from '../../services/rent-requests-service';
+import { getEstateApplicationsByOwner, deleteEstateApplication } from '../../services/estate-applications-service';
 import { updateMessage, getMessagesBySender, getMessageByRequestId } from '../../services/messages-service';
 import { addReport } from '../../services/reports-service';
 import { getRent } from '../../services/rents-service';
@@ -18,18 +18,18 @@ import { getRent } from '../../services/rents-service';
 
 
 
-function RentRequests() {
+function EstateApplications() {
     const dispatch = useDispatch();
-    const updatePageTrigger = useSelector(state => state.rent.triggeredUpdate);
+    const updatePageTrigger = useSelector(state => state.estate.triggeredUpdate);
     const currentUser = useSelector(state => state.auth.currentUser);
 
     const [loading, setLoading] = useState(false);
-    const [requests, setRequests] = useState();
+    const [applications, setEstateApplications] = useState();
 
     const fetchData = async () => {
         setLoading(true);
-        const data = await getRequestsByOwner(currentUser.email);
-        setRequests(data);
+        const data = await getEstateApplicationsByOwner(currentUser.email);
+        setEstateApplications(data);
         setLoading(false);
     }
 
@@ -38,41 +38,41 @@ function RentRequests() {
     }, [updatePageTrigger]);
 
 
-    const approveRequestHandler = (sender, id, request) => {
+    const approveApplicationHandler = (sender, id, application) => {
         showConfirmationModal(modalMessage, async function (answer) {
             if (answer) {
                 let generatedReport = {
-                    image: request.image,
-                    name: request.rentName,
-                    renter: request.renter,
-                    location: request.location,
-                    rent: Number(request.rent),
+                    image: application.image,
+                    name: application.estateName,
+                    buyer: application.buyer,
+                    location: application.location,
+                    price: Number(application.offeredPrice),
                     owner: currentUser.email,
-                    type: 'rent'
+                    type: 'estate'
                 }
                 let message = await getMessageByRequestId(sender, id);
                 message.status = 'Approved';
                 await addReport(generatedReport);
                 await updateMessage(message, message.id);
-                await deleteRequest(id);
+                await deleteEstateApplication(id);
                 dispatch(setUpdatePage());
             }
         })
     }
 
-    const declineRequestHandler = (sender, id) => {
+    const declineApplicationHandler = (sender, id) => {
         showConfirmationModal(modalMessage, async function (answer) {
             if (answer) {
                 let message = await getMessageByRequestId(sender, id);
                 message.status = 'Declined';
                 await updateMessage(message, message.id);
-                await deleteRequest(id);
+                await deleteEstateApplication(id);
                 dispatch(setUpdatePage());
             }
         })
     }
 
-    const requestColumns = [
+    const applicationColumns = [
         {
             title: 'Image',
             dataIndex: 'image',
@@ -94,14 +94,14 @@ function RentRequests() {
             key: 'location',
         },
         {
-            title: 'Rent',
-            dataIndex: 'rent',
-            key: 'rent',
+            title: 'Offered Price',
+            dataIndex: 'offeredPrice',
+            key: 'offeredPrice',
         },
         {
-            title: 'Renter',
-            dataIndex: 'renter',
-            key: 'renter',
+            title: 'Offered By',
+            dataIndex: 'buyer',
+            key: 'buyer',
         },
         {
             title: 'Message',
@@ -116,11 +116,11 @@ function RentRequests() {
                 <>
                     <Row>
                         <Col span={12}>
-                            <Button type="primary" shape="round" onClick={(e) => approveRequestHandler(record.renter, record.id, record)} >Approve</Button>
+                            <Button type="primary" shape="round" onClick={(e) => approveApplicationHandler(record.buyer, record.id, record)} >Approve</Button>
                         </Col>
                         <Divider></Divider>
                         <Col>
-                            <Button type="danger" shape="round" onClick={(e) => declineRequestHandler(record.renter, record.id, record)} >Decline</Button>
+                            <Button type="danger" shape="round" onClick={(e) => declineApplicationHandler(record.buyer, record.id, record)} >Decline</Button>
                         </Col>
                     </Row>
                 </>
@@ -130,7 +130,7 @@ function RentRequests() {
     return (
         <>
             <Row justify='center' >
-                <h1>Rent Requests</h1>
+                <h1>Estate Applications</h1>
             </Row>
             {loading ?
                 (
@@ -148,7 +148,7 @@ function RentRequests() {
                         <Row justify="center">
                             <Col span={24}>
                                 {
-                                    requests && <Table columns={requestColumns} dataSource={requests} />
+                                    applications && <Table columns={applicationColumns} dataSource={applications} />
                                 }
 
                             </Col>
@@ -159,4 +159,4 @@ function RentRequests() {
     )
 }
 
-export default RentRequests;
+export default EstateApplications;

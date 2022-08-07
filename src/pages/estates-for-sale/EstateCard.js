@@ -1,10 +1,12 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentEstate, openEstateModal, setUpdatePage } from '../../store/slices/estateSlice';
+import { setCurrentEstate, openEstateModal, setUpdatePage, openApplyForEstateModal } from '../../store/slices/estateSlice';
 
 
 import { Col, Row, Image, Divider, Button, Carousel } from 'antd';
 import { showConfirmationModal } from '../../components/ConfirmationModal';
 import { modalMessage } from '../../globals/messages';
+
+import ApplyForEstateModal from './modals/ApplyForEstateModal';
 
 import { GoLocation } from 'react-icons/go'
 import './Estates.css';
@@ -32,9 +34,14 @@ function EstateCard({ estateObject }) {
         })
     }
 
-    const updateRentHandler = (id) => {
+    const updateEstateHandler = (id) => {
         dispatch(setCurrentEstate(estateObject));
         dispatch(openEstateModal());
+    }
+
+    const openEstateApplicationModalHandler = () => {
+        dispatch(setCurrentEstate(estateObject));
+        dispatch(openApplyForEstateModal());
     }
 
     return (
@@ -62,15 +69,27 @@ function EstateCard({ estateObject }) {
                         <h1><b>{estateObject.name}</b></h1>
                     </Col>
                 </Row>
+                <Divider></Divider>
                 <Row justify='center' style={{ marginTop: 20 }}>
-                    <Col span={7} offset={1}>
-                        <p><b>PRICE:</b> {estateObject.price}</p>
+                    <Col span={10} offset={3}>
+                        <p><b>Starting Price:</b> {estateObject.startingPrice} BGN</p>
                     </Col>
-                    <Col span={7}>
+                    <Col span={10} offset={1}>
                         <p><b>Year:</b> {estateObject.year}</p>
                     </Col>
-                    <Col span={7}>
-                        <p><b>Area:</b> {estateObject.area}m^2</p>
+
+                </Row>
+                <Row justify='center' style={{ marginTop: 20 }}>
+                    <Col span={10} offset={3}>
+                        <p><b>Bid Step:</b> {estateObject.bidStep} BGN</p>
+                    </Col>
+                    <Col span={10} offset={1}>
+                        <p><b>Area:</b> {estateObject.area} m^2</p>
+                    </Col>
+                </Row>
+                <Row justify='center' style={{ marginTop: 20 }}>
+                    <Col span={10} offset={3}>
+                        <p><b>Location:</b> {estateObject.location}</p>
                     </Col>
                 </Row>
                 <Divider></Divider>
@@ -79,18 +98,26 @@ function EstateCard({ estateObject }) {
                         <p style={{ textAlign: 'justify', height: "25vh", overflow: 'auto' }}><b>DESCRIPTION:</b> {estateObject.description}</p>
                     </Col>
                 </Row>
-                {currentUser && currentUser.id === estateObject.owner &&
+                {currentUser && currentUser.email === estateObject.owner &&
                     (
                         <>
                             <Divider></Divider>
                             <Row style={{ justifyContent: "center", marginBottom: 20 }}>
-                                <Button type="primary" shape="round" onClick={updateRentHandler} style={{ marginRight: 20 }}>EDIT</Button>
+                                <Button type="primary" shape="round" onClick={updateEstateHandler} style={{ marginRight: 20 }}>EDIT</Button>
                                 <Button type="danger" shape="round" onClick={() => deleteEstateHandler(estateObject.id)}>DELETE</Button>
                             </Row>
                         </>
                     )
                 }
+                {currentUser && currentUser.email !== estateObject.owner &&
+                    <Row justify='center'>
+                        {estateObject.applicants.find(applicant => applicant === currentUser.email) === undefined && (
+                            <Button type="primary" shape="round" style={{ width: "80%", marginBottom: '5%' }} onClick={openEstateApplicationModalHandler}>Apply to buy</Button>
+                        )}
+                    </Row>
+                }
             </div>
+            <ApplyForEstateModal />
         </>
     )
 }

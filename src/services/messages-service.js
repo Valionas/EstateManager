@@ -15,7 +15,7 @@ export const getMessageByRequestId = async (sender, id) => {
     const data = await getDocs(messagesCollectionRef);
     let mappedArray = firebaseMapData(data);
     let messagesFilteredBySender = mappedArray.filter(messageCollection => messageCollection.sender === sender);
-    let message = messagesFilteredBySender.find(message => message.requestId === id);
+    let message = messagesFilteredBySender.find(message => message.relatedOfferId === id);
     return message;
 }
 

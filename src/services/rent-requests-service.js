@@ -9,8 +9,6 @@ export const getRequestsByOwner = async (owner) => {
     let mappedArray = firebaseMapData(data);
     let requestsFilteredByOwner = mappedArray.filter(requestCollection => requestCollection.owner === owner);
     return requestsFilteredByOwner;
-
-
 };
 
 export const addRequest = async (data) => {

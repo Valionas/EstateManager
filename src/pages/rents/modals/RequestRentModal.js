@@ -27,7 +27,6 @@ function RequestRentModal() {
     }
 
     const onFinish = async (values) => {
-        debugger
         //Generate request for rent owner
         let requestObject = {
             rentId: currentRent.id,
@@ -36,14 +35,14 @@ function RequestRentModal() {
             location: currentRent.location,
             renter: currentUser.email,
             rent: currentRent.rent,
-            messsage: values.message,
+            message: values.message,
             owner: currentRent.owner,
         };
 
 
         //Generate message for renter
         let messageObject = {
-            rentId: currentRent.id,
+            relatedObjectId: currentRent.id,
             image: currentRent.image,
             name: currentRent.name,
             location: currentRent.location,
