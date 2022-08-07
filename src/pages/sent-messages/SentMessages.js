@@ -97,10 +97,6 @@ function SentMessages() {
                                 </>
                             ) : (
                                 <>
-                                    <Col span={12}>
-                                        <Button type="primary" shape="round" >View</Button>
-                                    </Col>
-                                    <Divider></Divider>
                                     <Col>
                                         <Button type="danger" shape="round" onClick={(e) => deleteMessageHandler(record.id)}>Delete</Button>
                                     </Col>
