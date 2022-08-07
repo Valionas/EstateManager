@@ -15,7 +15,9 @@ function Reports() {
 
     const [loading, setLoading] = useState(false);
     const [rentReports, setRentReports] = useState();
-    const [estateReports, setEstateRepors] = useState();
+    const [totalRents, setTotalRents] = useState();
+    const [estateReports, setEstateReports] = useState();
+    const [totalEstateSales, setTotalEstateSales] = useState();
 
     const rentColumns = [
         {
@@ -88,9 +90,18 @@ function Reports() {
         setLoading(true);
         const data = await getReports();
         const rentReports = data.filter(x => x.type === 'rent');
+        let totalRents = rentReports.reduce(function (sum, value) {
+            return sum + value.rent;
+        }, 0);
         const estateReports = data.filter(x => x.type === 'estate');
+        let totalEstateSales = estateReports.reduce(function (sum, value) {
+            return sum + value.price;
+        }, 0);
+
         setRentReports(rentReports);
-        setEstateRepors(estateReports);
+        setTotalRents(totalRents);
+        setEstateReports(estateReports);
+        setTotalEstateSales(totalEstateSales);
         setLoading(false);
     }
 
@@ -121,13 +132,13 @@ function Reports() {
                                 <Row justify='center'>
                                     <h2>Rents</h2>
                                 </Row>
-                                <Table columns={rentColumns} dataSource={rentReports} />
+                                <Table columns={rentColumns} dataSource={rentReports} bordered={true} footer={() => <div style={{ textAlign: 'right' }}>Total: {totalRents}</div>} />
                             </Col>
                             <Col span={11} offset={1}>
                                 <Row justify='center'>
                                     <h2>Estates</h2>
                                 </Row>
-                                <Table columns={estateColumns} dataSource={estateReports} />
+                                <Table columns={estateColumns} dataSource={estateReports} bordered={true} footer={() => <div style={{ textAlign: 'right' }}>Total: {totalEstateSales}</div>} />
                             </Col>
                         </Row>
                     </motion.div>

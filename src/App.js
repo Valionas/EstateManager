@@ -18,8 +18,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 
-import { GrUserAdd, GrUserAdmin } from 'react-icons/gr';
-import { AiOutlineUserAdd, AiOutlineUserSwitch } from 'react-icons/ai';
+import { AiOutlineUserAdd, AiOutlineUserSwitch, AiOutlineHome } from 'react-icons/ai';
 import { MdOutlinePayment, MdOutlineSell, MdCreate } from 'react-icons/md'
 import { HiOutlineDocumentReport } from 'react-icons/hi';
 import { BiLogOut } from 'react-icons/bi';
@@ -86,7 +85,7 @@ const App = () => {
   }
 
   const publicMenuItems = [
-    setMenuItem(<Link to="/">Home</Link>, '1', <PieChartOutlined />),
+    setMenuItem(<Link to="/">Home</Link>, '1', <AiOutlineHome />),
     setMenuItem(<Link to="/login">Login</Link>, '2', <AiOutlineUserSwitch />),
     setMenuItem(<Link to="/register">Register</Link>, '3', <AiOutlineUserAdd />),
     setMenuItem(<Link to="/rents">Rents</Link>, '4', <MdOutlinePayment />),
@@ -94,7 +93,7 @@ const App = () => {
   ];
 
   const authenticatedMenuItems = [
-    setMenuItem(<Link to="/">Home</Link>, '1', <PieChartOutlined />),
+    setMenuItem(<Link to="/">Home</Link>, '1', <AiOutlineHome />),
     setMenuItem(<Link to="/rents">Rents</Link>, '2', <MdOutlinePayment />),
     setMenuItem(<Link to="/rent-requests">My Rent Requests</Link>, '3', <GiMoneyStack />),
     setMenuItem(<Link to="/estates">Estates for sale</Link>, '4', <GiModernCity />),

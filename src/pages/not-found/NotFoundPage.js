@@ -26,14 +26,14 @@ function NotFoundPage() {
             {
                 currentUser ? (
                     <Row justify='center'>
-                        <Button type="primary" shape="round" style={{ width: "15%" }} icon={<IoArrowBackCircleOutline style={{ fontSize: 16 }} />} >
-                            <Link to="/" style={{ color: "white" }}>Home</Link>
+                        <Button type="primary" shape="round" style={{ width: "15%" }}  >
+                            <Link to="/" style={{ color: "white" }}>Go Back To Home</Link>
                         </Button>
                     </Row>
                 ) : (
                     <Row justify='center'>
-                        <Button type="primary" shape="round" style={{ width: "15%" }} icon={<IoArrowBackCircleOutline style={{ fontSize: 16 }} />} >
-                            <Link to="/login" style={{ color: "white" }}>Login</Link>
+                        <Button type="primary" shape="round" style={{ width: "15%" }}  >
+                            <Link to="/login" style={{ color: "white" }}>Go Back To Login</Link>
                         </Button>
                     </Row>
                 )
