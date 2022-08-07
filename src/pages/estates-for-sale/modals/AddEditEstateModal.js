@@ -50,8 +50,8 @@ function AddEditEstateModal() {
                 {
                     name: ['images'],
                     value: currentEstate.images
-                },
-            ])
+                }
+            ]);
         }
     }, [currentEstate]);
 
@@ -65,10 +65,10 @@ function AddEditEstateModal() {
             } else {
                 const result = await addEstate(values);
             }
+            form.resetFields();
             dispatch(setUpdatePage());
             dispatch(setCurrentEstate());
             dispatch(closeEstateModal());
-            form.resetFields();
         } catch (err) {
             console.log(err);
         }
@@ -80,6 +80,7 @@ function AddEditEstateModal() {
 
     const onCancelHandler = () => {
         dispatch(closeEstateModal());
+        dispatch(setCurrentEstate());
         form.resetFields();
     }
 
