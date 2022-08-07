@@ -68,6 +68,10 @@ function Register() {
                                 required: true,
                                 message: 'Please input your email!',
                             },
+                            {
+                                type: 'email',
+                                message: 'Email format is incorrect.'
+                            }
                         ]}
                     >
                         <Input />
@@ -81,6 +85,10 @@ function Register() {
                                 required: true,
                                 message: 'Please input your password!',
                             },
+                            {
+                                min: 6,
+                                message: 'Password cannot be shorter than 6 symbols.'
+                            }
                         ]}
                     >
                         <Input.Password />
@@ -93,6 +101,19 @@ function Register() {
                                 required: true,
                                 message: 'Please input your password!',
                             },
+                            {
+                                min: 6,
+                                message: 'Password cannot be shorter than 6 symbols.'
+                            },
+                            ({ getFieldValue }) => ({
+                                validator(_, value) {
+                                    if (!value || getFieldValue('password') === value) {
+                                        return Promise.resolve()
+                                    }
+
+                                    return Promise.reject(new Error('The two passwords do not match!'))
+                                }
+                            })
                         ]}
                     >
                         <Input.Password />

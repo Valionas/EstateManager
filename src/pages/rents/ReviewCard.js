@@ -19,7 +19,14 @@ function ReviewCard({ reviewObject, rentObject }) {
     const deleteReviewHandler = async (id) => {
         showConfirmationModal(modalMessage, async function (answer) {
             if (answer) {
-                await updateRent(id);
+                debugger
+                let rentToUpdate = { ...rentObject };
+                let tempReviews = [...rentToUpdate.reviews];
+                let currentReview = tempReviews.find(review => review.reviewer.id === currentUser.id);
+                let indexOfReview = tempReviews.indexOf(currentReview);
+                tempReviews.splice(indexOfReview, 1);
+                rentToUpdate.reviews = tempReviews;
+                await updateRent(rentToUpdate, id);
                 dispatch(setUpdatePage());
             }
         })
@@ -67,7 +74,7 @@ function ReviewCard({ reviewObject, rentObject }) {
                             currentUser && currentUser.id === reviewObject.reviewer.id && (
                                 <Row style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
                                     <Button type="primary" shape="round" style={{ width: "100%", marginBottom: '5%' }} onClick={updateReviewHandler}>UPDATE REVIEW</Button>
-                                    <Button type="danger" shape="round" style={{ width: "100%" }} onClick={() => deleteReviewHandler(reviewObject.id)}>DELETE REVIEW</Button>
+                                    <Button type="danger" shape="round" style={{ width: "100%" }} onClick={() => deleteReviewHandler(rentObject.id)}>DELETE REVIEW</Button>
                                 </Row>
                             )
                         }

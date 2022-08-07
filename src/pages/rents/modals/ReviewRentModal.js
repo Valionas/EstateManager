@@ -47,6 +47,7 @@ function ReviewRentModal() {
     }, [currentRentReview])
 
     const onCancelHandler = () => {
+        form.resetFields();
         dispatch(closeReviewRentModal());
     }
 
@@ -107,6 +108,15 @@ function ReviewRentModal() {
                             required: true,
                             message: 'Please input your rent time!',
                         },
+                        ({ getFieldValue }) => ({
+                            validator(_, value) {
+                                if (isNaN(value)) {
+                                    return Promise.reject(new Error('Use only numerical values'));
+                                }
+
+                                return Promise.resolve();
+                            }
+                        })
                     ]}
                 >
                     <Input />
@@ -119,6 +129,10 @@ function ReviewRentModal() {
                             required: true,
                             message: 'Please input your description!',
                         },
+                        {
+                            min: 20,
+                            message: 'Description cannot be shorter than 20 symbols.'
+                        }
                     ]}
                 >
                     <Input.TextArea />
@@ -126,6 +140,12 @@ function ReviewRentModal() {
                 <Form.Item
                     label="State of rent"
                     name="rentState"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Please set your minimum rental time!',
+                        },
+                    ]}
                 >
                     <Select >
                         <Select.Option value={'Poor'}>Poor </Select.Option>
@@ -138,6 +158,12 @@ function ReviewRentModal() {
                 <Form.Item
                     label="Location factor"
                     name="locationFactor"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Please set your minimum rental time!',
+                        },
+                    ]}
                 >
                     <Select >
                         <Select.Option value={'Desolate'}>Desolate</Select.Option>

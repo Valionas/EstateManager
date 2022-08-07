@@ -67,6 +67,10 @@ function Login() {
                                 required: true,
                                 message: 'Please input your email!',
                             },
+                            {
+                                type: 'email',
+                                message: 'Email format is incorrect.'
+                            }
                         ]}
                     >
                         <Input />

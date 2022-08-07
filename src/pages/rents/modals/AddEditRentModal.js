@@ -108,6 +108,10 @@ function AddEditRentModal() {
                             required: true,
                             message: 'Please input your estate\'s name!',
                         },
+                        {
+                            min: 3,
+                            message: 'Name cannot be shorter than 3 symbols'
+                        }
                     ]}
                 >
                     <Input />
@@ -120,6 +124,19 @@ function AddEditRentModal() {
                             required: true,
                             message: 'Please input your estate\'s location!',
                         },
+                        {
+                            min: 5,
+                            message: 'Location cannot be shorter than 5 symbols'
+                        },
+                        ({ getFieldValue }) => ({
+                            validator(_, value) {
+                                if (isNaN(value)) {
+                                    return Promise.resolve();
+                                }
+
+                                return Promise.reject(new Error('Check your location once again.'));
+                            }
+                        })
                     ]}
                 >
                     <Input />
@@ -132,6 +149,15 @@ function AddEditRentModal() {
                             required: true,
                             message: 'Please input your rent!',
                         },
+                        ({ getFieldValue }) => ({
+                            validator(_, value) {
+                                if (isNaN(value)) {
+                                    return Promise.reject(new Error('Use only numerical values'));
+                                }
+
+                                return Promise.resolve();
+                            }
+                        })
                     ]}
                 >
                     <Input />
@@ -144,6 +170,10 @@ function AddEditRentModal() {
                             required: true,
                             message: 'Please input your description!',
                         },
+                        {
+                            min: 20,
+                            message: 'Description cannot be shorter than 20 symbols.'
+                        }
                     ]}
                 >
                     <Input.TextArea />
@@ -173,7 +203,7 @@ function AddEditRentModal() {
                     <Input />
                 </Form.Item>
             </Form>
-        </Modal>
+        </Modal >
     )
 }
 

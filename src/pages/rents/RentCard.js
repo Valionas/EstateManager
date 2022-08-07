@@ -49,13 +49,13 @@ function RentCard({ rentObject }) {
         <>
             <div className='rentCard'>
                 <Row>
-                    <Col span={4} style={{ display: 'flex', justifyContent: "center", alignItems: 'center' }}>
+                    <Col span={6} style={{ display: 'flex', justifyContent: "center", alignItems: 'center' }}>
                         <Image
                             height={"100%"}
                             src={rentObject.image}
                         />
                     </Col>
-                    <Col span={12} offset={1}>
+                    <Col span={10} offset={1}>
                         <h1>{rentObject.name}</h1>
                         <p><GoLocation /> {rentObject.location}</p>
                         <h1>Description</h1>
