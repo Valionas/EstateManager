@@ -4,10 +4,11 @@ import { firebaseMapData } from "../helpers/firebaseMapper";
 
 const reportsCollectionRef = collection(db, 'reports');
 
-export const getReports = async () => {
+export const getReports = async (owner) => {
     const data = await getDocs(reportsCollectionRef);
     const mappedArray = firebaseMapData(data);
-    return mappedArray;
+    const filteredReportsByOwner = mappedArray.filter(report => report.owner === owner);
+    return filteredReportsByOwner;
 };
 
 export const addReport = async (data) => {

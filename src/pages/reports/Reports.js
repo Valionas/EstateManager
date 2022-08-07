@@ -88,7 +88,7 @@ function Reports() {
 
     const fetchData = async () => {
         setLoading(true);
-        const data = await getReports();
+        const data = await getReports(currentUser.email);
         const rentReports = data.filter(x => x.type === 'rent');
         let totalRents = rentReports.reduce(function (sum, value) {
             return sum + value.rent;
