@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { closeApplyForEstateModal, setCurrentEstate, setUpdatePage } from '../../../store/slices/estateSlice';
+import { closeApplyForEstateModal, setCurrentEstate, setUpdatePage, setCurrentEstateApplication } from '../../../store/slices/estateSlice';
 
 import { AiOutlineUpload } from 'react-icons/ai';
 
 import { Space, Table, Tag, Row, Modal, Button, Form, Input, Select, Upload } from 'antd';
 
-import { addEstateApplication } from '../../../services/estate-applications-service';
-import { addMessage } from '../../../services/messages-service';
+import { addEstateApplication, getEstateApplicationById, updateEstateApplication } from '../../../services/estate-applications-service';
+import { addMessage, updateMessage } from '../../../services/messages-service';
 import { updateEstate } from '../../../services/estates-service';
 
 
@@ -18,60 +18,99 @@ function ApplyForEstateModal() {
     const isOpened = useSelector(state => state.estate.isOpenedApplyForEstateModal);
     const currentUser = useSelector(state => state.auth.currentUser);
     const currentEstate = useSelector(state => state.estate.currentEstate);
+    const currentEstateApplication = useSelector(state => state.estate.currentEstateApplication);
 
     const [fields, setFields] = useState([]);
     const [form] = Form.useForm();
 
+    useEffect(() => {
+        if (currentEstateApplication) {
+            setFields([
+                {
+                    name: ['message'],
+                    value: currentEstateApplication.message
+                },
+                {
+                    name: ['offerPrice'],
+                    value: currentEstateApplication.price
+                },
+            ])
+        }
+    }, [currentEstateApplication]);
+
     const onCancelHandler = () => {
         form.resetFields();
-        setCurrentEstate();
+        dispatch(setCurrentEstate());
+        dispatch(setCurrentEstateApplication());
         dispatch(closeApplyForEstateModal());
     }
 
     const onFinish = async (values) => {
-        //Generate request for estate owner
-        let applicationObject = {
-            estateId: currentEstate.id,
-            image: currentEstate.images[0],
-            name: currentEstate.name,
-            location: currentEstate.location,
-            buyer: currentUser.email,
-            offeredPrice: values.offerPrice,
-            message: values.message,
-            owner: currentEstate.owner,
-        };
+        if (!currentEstateApplication) {
+            //Generate request for estate owner
+            let applicationObject = {
+                estateId: currentEstate.id,
+                image: currentEstate.images[0],
+                name: currentEstate.name,
+                location: currentEstate.location,
+                buyer: currentUser.email,
+                offeredPrice: values.offerPrice,
+                message: values.message,
+                owner: currentEstate.owner,
+            };
 
 
-        //Generate message for buyer
-        let messageObject = {
-            relatedObjectId: currentEstate.id,
-            image: currentEstate.images[0],
-            name: currentEstate.name,
-            location: currentEstate.location,
-            receiver: currentEstate.owner,
-            sender: currentUser.email,
-            price: values.offerPrice,
-            message: values.message,
-            status: 'Pending',
-        };
+            //Generate message for buyer
+            let messageObject = {
+                relatedObjectId: currentEstate.id,
+                image: currentEstate.images[0],
+                name: currentEstate.name,
+                location: currentEstate.location,
+                receiver: currentEstate.owner,
+                sender: currentUser.email,
+                price: values.offerPrice,
+                message: values.message,
+                type: 'estate',
+                status: 'Pending',
+            };
 
-        let updatedEstate = { ...currentEstate };
-        let copyArr = [...updatedEstate.applicants];
-        copyArr.push(currentUser.email);
-        updatedEstate.applicants = copyArr;
+            let updatedEstate = { ...currentEstate };
+            let copyArr = [...updatedEstate.applicants];
+            copyArr.push(currentUser.email);
+            updatedEstate.applicants = copyArr;
 
-        try {
-            const result = await addEstateApplication(applicationObject);
-            messageObject.applicationId = result.id;
-            await addMessage(messageObject);
-            await updateEstate(updatedEstate, updatedEstate.id);
-            dispatch(setUpdatePage());
-            dispatch(setCurrentEstate());
-            dispatch(closeApplyForEstateModal());
-            form.resetFields();
-        } catch (err) {
-            console.log(err);
+            try {
+                const result = await addEstateApplication(applicationObject);
+                messageObject.relatedOfferId = result.id;
+                await addMessage(messageObject);
+                await updateEstate(updatedEstate, updatedEstate.id);
+                dispatch(setUpdatePage());
+                dispatch(setCurrentEstate());
+                dispatch(closeApplyForEstateModal());
+                form.resetFields();
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            debugger
+            let currentMessage = { ...currentEstateApplication };
+            currentMessage.price = values.offerPrice;
+            currentMessage.message = values.message;
+            try {
+                await updateMessage(currentMessage, currentMessage.id);
+                let estateApplicationToUpdate = await getEstateApplicationById(currentMessage.relatedOfferId);
+                estateApplicationToUpdate.message = values.message;
+                estateApplicationToUpdate.offeredPrice = values.offerPrice;
+                await updateEstateApplication(estateApplicationToUpdate, estateApplicationToUpdate.id);
+                dispatch(setUpdatePage());
+                dispatch(setCurrentEstate());
+                dispatch(closeApplyForEstateModal());
+                form.resetFields();
+            } catch (err) {
+                console.log(err);
+            }
         }
+
     };
 
     const onFinishFailed = (errorInfo) => {

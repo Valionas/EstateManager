@@ -8,6 +8,7 @@ export const rentSlice = createSlice({
         isOpenedReviewRentModal: false,
         currentRent: undefined,
         currentRentReview: undefined,
+        currentRentRequest: undefined,
         triggeredUpdate: false,
     },
     reducers: {
@@ -35,6 +36,9 @@ export const rentSlice = createSlice({
         setCurrentRentReview: (state, action) => {
             state.currentRentReview = action.payload;
         },
+        setCurrentRentRequest: (state, action) => {
+            state.currentRentRequest = action.payload;
+        },
         setUpdatePage: (state, action) => {
             state.triggeredUpdate = !state.triggeredUpdate;
         }
@@ -42,6 +46,6 @@ export const rentSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { openRentModal, closeRentModal, openRequestRentModal, closeRequestRentModal, openReviewRentModal, closeReviewRentModal, setCurrentRent, setCurrentRentReview, setUpdatePage } = rentSlice.actions
+export const { openRentModal, closeRentModal, openRequestRentModal, closeRequestRentModal, openReviewRentModal, closeReviewRentModal, setCurrentRent, setCurrentRentReview, setUpdatePage, setCurrentRentRequest } = rentSlice.actions
 
 export default rentSlice.reducer

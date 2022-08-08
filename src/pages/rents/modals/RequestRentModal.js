@@ -49,6 +49,7 @@ function RequestRentModal() {
             receiver: currentRent.owner,
             sender: currentUser.email,
             rent: currentRent.rent,
+            type: 'rent',
             message: values.message,
             status: 'Pending',
         };
@@ -60,7 +61,7 @@ function RequestRentModal() {
 
         try {
             const result = await addRequest(requestObject);
-            messageObject.requestId = result.id;
+            messageObject.relatedOfferId = result.id;
             await addMessage(messageObject);
             await updateRent(updatedRent, updatedRent.id);
             dispatch(setUpdatePage());

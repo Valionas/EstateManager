@@ -6,6 +6,7 @@ export const estateSlice = createSlice({
         isOpenedEstateModal: false,
         isOpenedApplyForEstateModal: false,
         currentEstate: undefined,
+        currentEstateApplication: undefined,
         triggeredUpdate: false,
     },
     reducers: {
@@ -24,6 +25,9 @@ export const estateSlice = createSlice({
         setCurrentEstate: (state, action) => {
             state.currentEstate = action.payload;
         },
+        setCurrentEstateApplication: (state, action) => {
+            state.currentEstateApplication = action.payload;
+        },
         setUpdatePage: (state, action) => {
             state.triggeredUpdate = !state.triggeredUpdate;
         }
@@ -31,6 +35,6 @@ export const estateSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { openEstateModal, closeEstateModal, setCurrentEstate, setUpdatePage, openApplyForEstateModal, closeApplyForEstateModal } = estateSlice.actions
+export const { openEstateModal, closeEstateModal, setCurrentEstate, setUpdatePage, openApplyForEstateModal, closeApplyForEstateModal, setCurrentEstateApplication } = estateSlice.actions
 
 export default estateSlice.reducer

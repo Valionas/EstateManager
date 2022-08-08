@@ -11,6 +11,15 @@ export const getEstateApplicationsByOwner = async (owner) => {
     return estateApplicationsFilteredByOwner;
 };
 
+export const getEstateApplicationById = async (id) => {
+    const docRef = doc(db, 'estateApplications', id);
+    const docSnap = await getDoc(docRef);
+    const data = docSnap.exists() ? docSnap.data() : undefined;
+    if (!data) return null;
+
+    return { id, ...data };
+}
+
 export const addEstateApplication = async (data) => {
     return await addDoc(estateApplicationsCollectionRef, data);
 };

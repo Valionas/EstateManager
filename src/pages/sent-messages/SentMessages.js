@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { openRentModal, closeRentModal, setUpdatePage } from '../../store/slices/rentSlice';
+import { setCurrentRentRequest, openRentModal, closeRentModal, setUpdatePage, openRequestRentModal } from '../../store/slices/rentSlice';
+import { setCurrentEstateApplication, openApplyForEstateModal } from '../../store/slices/estateSlice';
+
 
 import { motion } from 'framer-motion';
 
@@ -12,6 +14,9 @@ import { modalMessage } from '../../globals/messages';
 
 import { getMessagesBySender, deleteMessage } from '../../services/messages-service';
 import { render } from '@testing-library/react';
+
+import RequestRentModal from '../rents/modals/RequestRentModal';
+import ApplyForEstateModal from '../estates-for-sale/modals/ApplyForEstateModal';
 
 function SentMessages() {
     const dispatch = useDispatch();
@@ -39,6 +44,21 @@ function SentMessages() {
                 dispatch(setUpdatePage());
             }
         })
+    };
+
+    const updateMessageHandler = (record) => {
+        switch (record.type) {
+            case "estate":
+                dispatch(setCurrentEstateApplication(record));
+                dispatch(openApplyForEstateModal());
+                break;
+            case "rent":
+                dispatch(setCurrentRentRequest(record));
+                dispatch(openRequestRentModal());
+                break;
+            default:
+                break;
+        }
     }
 
     const messagesColumns = [
@@ -88,7 +108,7 @@ function SentMessages() {
                             record.status === 'Pending' ? (
                                 <>
                                     <Col span={12}>
-                                        <Button type="primary" shape="round" >Update</Button>
+                                        <Button type="primary" shape="round" onClick={(e) => updateMessageHandler(record)}>Update</Button>
                                     </Col>
                                     <Divider></Divider>
                                     <Col>
@@ -137,6 +157,8 @@ function SentMessages() {
                         </Row>
                     </motion.div>
                 )}
+            <RequestRentModal />
+            <ApplyForEstateModal />
         </>
     )
 }
