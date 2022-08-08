@@ -112,6 +112,10 @@ function ReviewRentModal() {
                             validator(_, value) {
                                 if (isNaN(value)) {
                                     return Promise.reject(new Error('Use only numerical values'));
+                                };
+
+                                if (value < 0) {
+                                    return Promise.reject(new Error('Use only positive values'));
                                 }
 
                                 return Promise.resolve();

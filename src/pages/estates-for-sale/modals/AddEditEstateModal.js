@@ -132,6 +132,19 @@ function AddEditEstateModal() {
                             required: true,
                             message: 'Please input your starting price!',
                         },
+                        ({ getFieldValue }) => ({
+                            validator(_, value) {
+                                if (isNaN(value)) {
+                                    return Promise.reject(new Error('Use only numerical values'));
+                                }
+
+                                if (value < 0) {
+                                    return Promise.reject(new Error('Use only positive values'));
+                                }
+
+                                return Promise.resolve();
+                            }
+                        })
                     ]}
                 >
                     <Input />
@@ -144,6 +157,19 @@ function AddEditEstateModal() {
                             required: true,
                             message: 'Please input your bid\'s step!',
                         },
+                        ({ getFieldValue }) => ({
+                            validator(_, value) {
+                                if (isNaN(value)) {
+                                    return Promise.reject(new Error('Use only numerical values'));
+                                }
+
+                                if (value < 0) {
+                                    return Promise.reject(new Error('Use only positive values'));
+                                }
+
+                                return Promise.resolve();
+                            }
+                        })
                     ]}
                 >
                     <Input />
@@ -156,6 +182,23 @@ function AddEditEstateModal() {
                             required: true,
                             message: 'Please input your date of construction!',
                         },
+                        ({ getFieldValue }) => ({
+                            validator(_, value) {
+                                if (isNaN(value)) {
+                                    return Promise.reject(new Error('Use only numerical values'));
+                                }
+
+                                if (value < 0) {
+                                    return Promise.reject(new Error('Use only positive values'));
+                                }
+
+                                if (value < 1800 || value > 2022) {
+                                    return Promise.reject(new Error('Year cannot be less than 1800 and greater than current year (2022)'));
+                                }
+
+                                return Promise.resolve();
+                            }
+                        })
                     ]}
                 >
                     <Input />
@@ -168,6 +211,19 @@ function AddEditEstateModal() {
                             required: true,
                             message: 'Please input your estate\'s area!',
                         },
+                        ({ getFieldValue }) => ({
+                            validator(_, value) {
+                                if (isNaN(value)) {
+                                    return Promise.reject(new Error('Use only numerical values'));
+                                }
+
+                                if (value < 0) {
+                                    return Promise.reject(new Error('Use only positive values'));
+                                }
+
+                                return Promise.resolve();
+                            }
+                        })
                     ]}
                 >
                     <Input />
@@ -180,6 +236,10 @@ function AddEditEstateModal() {
                             required: true,
                             message: 'Please input your description!',
                         },
+                        {
+                            min: 10,
+                            message: 'Description cannot be shorter than 10 symbols'
+                        }
                     ]}
                 >
                     <Input.TextArea />

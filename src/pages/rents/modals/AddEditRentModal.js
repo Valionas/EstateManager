@@ -134,6 +134,7 @@ function AddEditRentModal() {
                                     return Promise.resolve();
                                 }
 
+
                                 return Promise.reject(new Error('Check your location once again.'));
                             }
                         })
@@ -153,6 +154,10 @@ function AddEditRentModal() {
                             validator(_, value) {
                                 if (isNaN(value)) {
                                     return Promise.reject(new Error('Use only numerical values'));
+                                }
+
+                                if (value < 0) {
+                                    return Promise.reject(new Error('Use only positive values'));
                                 }
 
                                 return Promise.resolve();

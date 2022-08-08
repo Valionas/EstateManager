@@ -92,7 +92,6 @@ function ApplyForEstateModal() {
                 console.log(err);
             }
         } else {
-            debugger
             let currentMessage = { ...currentEstateApplication };
             currentMessage.price = values.offerPrice;
             currentMessage.message = values.message;
@@ -162,6 +161,10 @@ function ApplyForEstateModal() {
                             validator(_, value) {
                                 if (isNaN(value)) {
                                     return Promise.reject(new Error('Use only numerical values'));
+                                }
+
+                                if (value < 0) {
+                                    return Promise.reject(new Error('Use only positive values'));
                                 }
 
                                 return Promise.resolve();
