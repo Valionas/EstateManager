@@ -11,6 +11,15 @@ export const getRequestsByOwner = async (owner) => {
     return requestsFilteredByOwner;
 };
 
+export const getRentRequestById = async (id) => {
+    const docRef = doc(db, 'rentRequests', id);
+    const docSnap = await getDoc(docRef);
+    const data = docSnap.exists() ? docSnap.data() : undefined;
+    if (!data) return null;
+
+    return { id, ...data };
+}
+
 export const addRequest = async (data) => {
     return await addDoc(rentRequestsCollectionRef, data);
 };
