@@ -51,7 +51,7 @@ function ApplyForEstateModal() {
             let applicationObject = {
                 estateId: currentEstate.id,
                 image: currentEstate.images[0],
-                name: currentEstate.name,
+                estateName: currentEstate.name,
                 location: currentEstate.location,
                 buyer: currentUser.email,
                 offeredPrice: values.offerPrice,

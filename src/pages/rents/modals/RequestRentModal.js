@@ -44,7 +44,7 @@ function RequestRentModal() {
             let requestObject = {
                 rentId: currentRent.id,
                 image: currentRent.image,
-                name: currentRent.name,
+                rentName: currentRent.name,
                 location: currentRent.location,
                 renter: currentUser.email,
                 rent: currentRent.rent,

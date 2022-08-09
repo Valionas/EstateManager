@@ -116,7 +116,7 @@ function EstateCard({ estateObject }) {
                 }
                 {currentUser && currentUser.email !== estateObject.owner &&
                     <Row justify='center'>
-                        {estateObject.applicants.find(applicant => applicant === currentUser.email) === undefined && (
+                        {estateObject.status !== 'Sold' && estateObject.applicants.find(applicant => applicant === currentUser.email) === undefined && (
                             <Button type="primary" shape="round" style={{ width: "80%", marginBottom: '5%' }} onClick={openEstateApplicationModalHandler}>Apply to buy</Button>
                         )}
                     </Row>

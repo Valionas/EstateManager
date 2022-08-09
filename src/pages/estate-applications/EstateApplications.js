@@ -38,6 +38,7 @@ function EstateApplications() {
     const approveApplicationHandler = (sender, id, application) => {
         showConfirmationModal(modalMessage, async function (answer) {
             if (answer) {
+                debugger
                 let estate = await getEstateById(application.estateId);
                 estate.applicants = [];
                 estate.status = 'Sold';
