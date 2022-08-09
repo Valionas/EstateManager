@@ -11,7 +11,7 @@ export const getRents = async () => {
 };
 
 
-export const getRent = async (id) => {
+export const getRentById = async (id) => {
     const docRef = doc(db, 'rents', id);
     const docSnap = await getDoc(docRef);
     const data = docSnap.exists() ? docSnap.data() : undefined;

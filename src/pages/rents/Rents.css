@@ -5,13 +5,15 @@
 }
 
 .approvedRentBanner {
-    padding-top: 10px;
-    position: absolute;
-    width: 200px;
-    height: 45px;
-    z-index: 1000;
     color: white;
     text-align: center;
+    background-color: red;
+    padding: 5px;
+}
+
+.rentableRentBanner {
+    color: black;
+    text-align: center;
     background-color: orange;
-    left: 47%;
+    padding: 5px;
 }

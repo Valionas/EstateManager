@@ -19,3 +19,17 @@
 .dynamic-delete-button:hover {
     color: #777;
 }
+
+.soldEstateBanner {
+    color: white;
+    text-align: center;
+    background-color: red;
+    padding: 5px;
+}
+
+.saleEstateBanner {
+    color: black;
+    text-align: center;
+    background-color: orange;
+    padding: 5px;
+}

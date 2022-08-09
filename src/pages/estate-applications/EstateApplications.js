@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { openRentModal, closeRentModal, setUpdatePage } from '../../store/slices/rentSlice';
+import { setUpdatePage } from '../../store/slices/rentSlice';
 
 import { motion } from 'framer-motion';
 
@@ -13,10 +13,7 @@ import { modalMessage } from '../../globals/messages';
 import { getEstateApplicationsByOwner, deleteEstateApplication } from '../../services/estate-applications-service';
 import { updateMessage, getMessagesBySender, getMessageByRequestId } from '../../services/messages-service';
 import { addReport } from '../../services/reports-service';
-import { getRent } from '../../services/rents-service';
-
-
-
+import { getEstateById, updateEstate } from '../../services/estates-service';
 
 function EstateApplications() {
     const dispatch = useDispatch();
@@ -41,6 +38,11 @@ function EstateApplications() {
     const approveApplicationHandler = (sender, id, application) => {
         showConfirmationModal(modalMessage, async function (answer) {
             if (answer) {
+                let estate = await getEstateById(application.estateId);
+                estate.applicants = [];
+                estate.status = 'Sold';
+                await updateEstate(estate, estate.id);
+
                 let generatedReport = {
                     image: application.image,
                     name: application.estateName,
@@ -50,8 +52,10 @@ function EstateApplications() {
                     owner: currentUser.email,
                     type: 'estate'
                 }
+
                 let message = await getMessageByRequestId(sender, id);
                 message.status = 'Approved';
+
                 await addReport(generatedReport);
                 await updateMessage(message, message.id);
                 await deleteEstateApplication(id);
@@ -60,9 +64,14 @@ function EstateApplications() {
         })
     }
 
-    const declineApplicationHandler = (sender, id) => {
+    const declineApplicationHandler = (sender, id, application) => {
         showConfirmationModal(modalMessage, async function (answer) {
             if (answer) {
+                let estate = await getEstateById(application.estateId);
+                let estateApplicants = estate.applicants.filter(x => x !== sender);
+                estate.applicants = estateApplicants;
+                await updateEstate(estate, estate.id);
+
                 let message = await getMessageByRequestId(sender, id);
                 message.status = 'Declined';
                 await updateMessage(message, message.id);

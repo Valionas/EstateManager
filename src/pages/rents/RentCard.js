@@ -69,7 +69,7 @@ function RentCard({ rentObject }) {
                     </Col>
                     <Col span={5} offset={1}>
                         <Row>
-                            <p style={{ fontSize: "2vh" }}><b>Status:</b> {rentObject.status}</p>
+                            <p style={{ fontSize: "2vh" }}><b>Status:</b> <span className={rentObject.status === 'Occupied' ? 'approvedRentBanner' : 'rentableRentBanner'}>{rentObject.status}</span></p>
                         </Row>
                         <Row>
                             <p style={{ fontSize: "2vh" }}><b>Price:</b> ${rentObject.rent}/monthly</p>
@@ -79,7 +79,7 @@ function RentCard({ rentObject }) {
                         </Row>
                         {currentUser && currentUser.email !== rentObject.owner &&
                             <Row>
-                                {rentObject.applicants.find(applicant => applicant === currentUser.email) === undefined && (
+                                {rentObject.status !== 'Occupied' && rentObject.applicants.find(applicant => applicant === currentUser.email) === undefined && (
                                     <Button type="primary" shape="round" style={{ width: "100%", marginBottom: '5%' }} onClick={openRequestRentModalHandler}>REQUEST RENT</Button>
                                 )}
                                 {rentObject.reviews.find(review => review.reviewer.id === currentUser.id) === undefined && (

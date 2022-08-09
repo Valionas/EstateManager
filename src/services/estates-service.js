@@ -10,6 +10,15 @@ export const getEstates = async () => {
     return mappedArray;
 };
 
+export const getEstateById = async (id) => {
+    const docRef = doc(db, 'estates', id);
+    const docSnap = await getDoc(docRef);
+    const data = docSnap.exists() ? docSnap.data() : undefined;
+    if (!data) return null;
+
+    return { id, ...data };
+}
+
 export const addEstate = async (data) => {
     await addDoc(estatesCollectionRef, data);
 };

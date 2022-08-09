@@ -13,7 +13,7 @@ import { modalMessage } from '../../globals/messages';
 import { getRequestsByOwner, deleteRequest } from '../../services/rent-requests-service';
 import { updateMessage, getMessagesBySender, getMessageByRequestId } from '../../services/messages-service';
 import { addReport } from '../../services/reports-service';
-import { getRent } from '../../services/rents-service';
+import { getRentById, updateRent } from '../../services/rents-service';
 
 
 
@@ -41,6 +41,11 @@ function RentRequests() {
     const approveRequestHandler = (sender, id, request) => {
         showConfirmationModal(modalMessage, async function (answer) {
             if (answer) {
+                let rent = await getRentById(request.rentId);
+                rent.applicants = [];
+                rent.status = 'Occupied';
+                await updateRent(rent, rent.id);
+
                 let generatedReport = {
                     image: request.image,
                     name: request.rentName,
@@ -60,9 +65,14 @@ function RentRequests() {
         })
     }
 
-    const declineRequestHandler = (sender, id) => {
+    const declineRequestHandler = (sender, id, request) => {
         showConfirmationModal(modalMessage, async function (answer) {
             if (answer) {
+                let rent = await getRentById(request.rentId);
+                let rentApplicants = rent.applicants.filter(x => x !== sender);
+                rent.applicants = rentApplicants;
+                await updateRent(rent, rent.id);
+
                 let message = await getMessageByRequestId(sender, id);
                 message.status = 'Declined';
                 await updateMessage(message, message.id);

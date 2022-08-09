@@ -92,6 +92,11 @@ function EstateCard({ estateObject }) {
                         <p><b>Location:</b> {estateObject.location}</p>
                     </Col>
                 </Row>
+                <Row justify='center' style={{ marginTop: 20 }}>
+                    <Col span={10} offset={4}>
+                        <p><b>Status:</b> <span className={estateObject.status === 'For Sale' ? 'saleEstateBanner' : 'soldEstateBanner'} >{estateObject.status}</span></p>
+                    </Col>
+                </Row>
                 <Divider></Divider>
                 <Row justify='center'>
                     <Col>
