@@ -58,6 +58,7 @@ function AddEditRentModal() {
     const onFinish = async (values) => {
         let rentObject = values;
         rentObject.owner = currentUser.email;
+        rentObject.status = "Rentable";
         if (currentRent) {
             rentObject.reviews = currentRent.reviews
         } else {

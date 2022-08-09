@@ -9,13 +9,12 @@ import { modalMessage } from '../../globals/messages';
 import { GoLocation } from 'react-icons/go'
 import './Rents.css';
 
-
 import RequestRentModal from './modals/RequestRentModal';
 import ReviewRentModal from './modals/ReviewRentModal';
 import AddEditRentModal from './modals/AddEditRentModal';
 import ReviewCard from './ReviewCard';
 
-import { deleteRent } from '../../services/rents-service';
+import { deleteRent, updateRent } from '../../services/rents-service';
 
 function RentCard({ rentObject }) {
     const dispatch = useDispatch();
@@ -45,6 +44,13 @@ function RentCard({ rentObject }) {
         dispatch(openRentModal());
     }
 
+    const renewRentHandler = async (rentObject) => {
+        let currentRentObject = rentObject;
+        currentRentObject.status = 'Rentable';
+        await updateRent(currentRentObject, currentRentObject.id);
+        dispatch(setUpdatePage());
+    }
+
     return (
         <>
             <div className='rentCard'>
@@ -63,6 +69,9 @@ function RentCard({ rentObject }) {
                     </Col>
                     <Col span={5} offset={1}>
                         <Row>
+                            <p style={{ fontSize: "2vh" }}><b>Status:</b> {rentObject.status}</p>
+                        </Row>
+                        <Row>
                             <p style={{ fontSize: "2vh" }}><b>Price:</b> ${rentObject.rent}/monthly</p>
                         </Row>
                         <Row>
@@ -80,6 +89,11 @@ function RentCard({ rentObject }) {
                         }
                         {currentUser && currentUser.email === rentObject.owner &&
                             <Row>
+                                {
+                                    rentObject.status === "Occupied" && (
+                                        <Button type="primary" shape="round" style={{ width: "100%", marginBottom: '5%' }} onClick={() => renewRentHandler(rentObject)}>RENEW RENT</Button>
+                                    )
+                                }
                                 <Button type="primary" shape="round" style={{ width: "100%", marginBottom: '5%' }} onClick={updateRentHandler}>UPDATE RENT</Button>
                                 <Button type="danger" shape="round" style={{ width: "100%" }} onClick={() => deleteRentHandler(rentObject.id)}>DELETE RENT</Button>
                             </Row>
