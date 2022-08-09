@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setUpdatePage } from '../../store/slices/rentSlice';
+import { setUpdatePage } from '../../store/slices/estateSlice';
 
 import { motion } from 'framer-motion';
 
@@ -38,7 +38,6 @@ function EstateApplications() {
     const approveApplicationHandler = (sender, id, application) => {
         showConfirmationModal(modalMessage, async function (answer) {
             if (answer) {
-                debugger
                 let estate = await getEstateById(application.estateId);
                 estate.applicants = [];
                 estate.status = 'Sold';
