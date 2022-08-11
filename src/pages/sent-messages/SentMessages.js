@@ -44,18 +44,28 @@ function SentMessages() {
     const deleteMessageHandler = (id, record) => {
         showConfirmationModal(modalMessage, async function (answer) {
             if (answer) {
+                debugger;
                 switch (record.type) {
                     case "estate":
                         let currentEstate = await getEstateById(record.relatedObjectId);
                         currentEstate.applicants = currentEstate.applicants.filter(x => x !== record.sender);
                         await updateEstate(currentEstate, currentEstate.id);
-                        await deleteEstateApplication(record.relatedOfferId);
+
+                        let estateApplication = await getEstateApplicationById(record.relatedOfferId);
+                        if (estateApplication) {
+                            await deleteEstateApplication(record.relatedOfferId);
+                        };
+
                         break;
                     case "rent":
                         let currentRent = await getRentById(record.relatedObjectId);
                         currentRent.applicants = currentRent.applicants.filter(x => x !== record.sender);
                         await updateRent(currentRent, currentRent.id);
-                        await deleteRequest(record.relatedOfferId);
+
+                        let rentRequest = await getRentRequestById(record.relatedOfferId);
+                        if (rentRequest) {
+                            await deleteRequest(record.relatedOfferId);
+                        };
                         break;
                     default:
                         break;
