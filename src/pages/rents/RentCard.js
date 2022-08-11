@@ -101,14 +101,20 @@ function RentCard({ rentObject }) {
                     </Col>
                 </Row>
                 <Divider />
-                <Row justify='center'>
-                    <h1><b>REVIEWS</b></h1>
-                </Row>
-                <Row>
-                    {rentObject.reviews && rentObject.reviews.map(review => (
-                        <ReviewCard reviewObject={review} rentObject={rentObject}></ReviewCard>
-                    ))}
-                </Row>
+                {
+                    rentObject.reviews && rentObject.reviews.length !== 0 && (
+                        <>
+                            <Row justify='center'>
+                                <h1><b>REVIEWS</b></h1>
+                            </Row>
+                            <Row>
+                                {rentObject.reviews.map(review => (
+                                    <ReviewCard reviewObject={review} rentObject={rentObject}></ReviewCard>
+                                ))}
+                            </Row>
+                        </>
+                    )
+                }
             </div>
             <RequestRentModal />
             <ReviewRentModal />

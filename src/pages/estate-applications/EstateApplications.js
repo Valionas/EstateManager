@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import { Col, Row } from 'antd';
 import { Space, Table, Tag, Modal, Button, Spin, Image, Divider } from 'antd';
 import { showConfirmationModal } from '../../components/ConfirmationModal';
-import { modalMessage } from '../../globals/messages';
+import { approveMessage, declineMessage } from '../../globals/messages';
 
 import { getEstateApplicationsByOwner, deleteEstateApplication } from '../../services/estate-applications-service';
 import { updateMessage, getMessagesBySender, getMessageByRequestId } from '../../services/messages-service';
@@ -36,7 +36,7 @@ function EstateApplications() {
 
 
     const approveApplicationHandler = (sender, id, application) => {
-        showConfirmationModal(modalMessage, async function (answer) {
+        showConfirmationModal(approveMessage, async function (answer) {
             if (answer) {
                 let estate = await getEstateById(application.estateId);
                 estate.applicants = [];
@@ -65,7 +65,7 @@ function EstateApplications() {
     }
 
     const declineApplicationHandler = (sender, id, application) => {
-        showConfirmationModal(modalMessage, async function (answer) {
+        showConfirmationModal(declineMessage, async function (answer) {
             if (answer) {
                 let estate = await getEstateById(application.estateId);
                 let estateApplicants = estate.applicants.filter(x => x !== sender);

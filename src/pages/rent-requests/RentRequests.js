@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import { Col, Row } from 'antd';
 import { Space, Table, Tag, Modal, Button, Spin, Image, Divider } from 'antd';
 import { showConfirmationModal } from '../../components/ConfirmationModal';
-import { modalMessage } from '../../globals/messages';
+import { declineMessage, approveMessage } from '../../globals/messages';
 
 import { getRequestsByOwner, deleteRequest } from '../../services/rent-requests-service';
 import { updateMessage, getMessagesBySender, getMessageByRequestId } from '../../services/messages-service';
@@ -39,7 +39,7 @@ function RentRequests() {
 
 
     const approveRequestHandler = (sender, id, request) => {
-        showConfirmationModal(modalMessage, async function (answer) {
+        showConfirmationModal(approveMessage, async function (answer) {
             if (answer) {
                 let rent = await getRentById(request.rentId);
                 rent.applicants = [];
@@ -66,7 +66,7 @@ function RentRequests() {
     }
 
     const declineRequestHandler = (sender, id, request) => {
-        showConfirmationModal(modalMessage, async function (answer) {
+        showConfirmationModal(declineMessage, async function (answer) {
             if (answer) {
                 let rent = await getRentById(request.rentId);
                 let rentApplicants = rent.applicants.filter(x => x !== sender);
