@@ -42,7 +42,16 @@ The EstateManager system will be used to help various people, interested or dire
   * services - the API call logic, which is called and triggered in the useEffects or event handlers around the project
   * store - the Redux store, which hold the reducer slices and the store file in which we combine all the reducers
 
-## Used Libraries
+## Error Handling and Validation
+ ### Form Validations
+  * Every input has its own custom validation, triggered on user input, such as numerical values for prices, string length for descriptions, names, locations and etc, selects and more
+ ### Notification Messages ( Toast types )
+  * Ant design components, which are shown upon thrown error from the Fire Base API
+  
+  
+## Used Libraries and Services
+ ### Fire Base 
+  * A cloud service, which is able to store and send data, acting as both a data base and API for this project.
  ### Framer-Motion
   * React library for fast and easily-appliable custom animations for components, such as transitions, fades, rotations and many more
  ### React-Icons
