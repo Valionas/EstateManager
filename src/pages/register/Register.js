@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { authenticate } from '../../store/slices/authSlice';
 
-import { Col, Row, Button, Checkbox, Form, Input } from 'antd';
+import { Col, Row, Button, Checkbox, Form, Input, notification } from 'antd';
 import { Space, Table, Tag } from 'antd';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 
@@ -15,6 +15,14 @@ function Register() {
     const authentication = getAuth();
     const navigate = useNavigate();
     const [rents, setRents] = useState();
+
+    const userAlreadyExists = (type) => {
+        notification[type]({
+            message: 'Oops something wrong...',
+            description:
+                'Someone is already using this email, please try a different one',
+        });
+    };
 
     const onFinish = async (values) => {
         const { email, password, repeatPassword } = values;
@@ -33,7 +41,7 @@ function Register() {
                 dispatch(authenticate(currentUser));
                 navigate('/rents');
             } catch (error) {
-                alert(error);
+                userAlreadyExists('error');
             }
         }
     };

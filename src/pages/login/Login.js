@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { authenticate } from '../../store/slices/authSlice';
 
-import { Col, Row, Button, Checkbox, Form, Input } from 'antd';
+import { Col, Row, Button, Checkbox, Form, Input, notification } from 'antd';
 import { Space, Table, Tag } from 'antd';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
@@ -16,6 +16,14 @@ function Login() {
     const navigate = useNavigate();
 
     const [rents, setRents] = useState();
+
+    const openWrongCredentialsNotification = (type) => {
+        notification[type]({
+            message: 'Oops something wrong...',
+            description:
+                'Please check your email or password input',
+        });
+    };
 
     const onFinish = async (values) => {
         const { email, password } = values;
@@ -32,7 +40,7 @@ function Login() {
             dispatch(authenticate(currentUser));
             navigate('/rents');
         } catch (error) {
-            alert(error);
+            openWrongCredentialsNotification('error');
         }
 
     };
