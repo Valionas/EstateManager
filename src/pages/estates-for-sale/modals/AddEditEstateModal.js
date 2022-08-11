@@ -61,7 +61,7 @@ function AddEditEstateModal() {
 
     const onFinish = async (values) => {
         let estateObject = values;
-        estateObject.owner = currentUser.id;
+        estateObject.owner = currentUser.email;
         estateObject.status = "For Sale";
         estateObject.applicants = [];
         try {

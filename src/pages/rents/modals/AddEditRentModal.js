@@ -208,6 +208,10 @@ function AddEditRentModal() {
                     label="Image link"
                     name="image"
                     rules={[
+                        {
+                            required: true,
+                            message: 'Please set your image link!',
+                        },
                         ({ getFieldValue }) => ({
                             validator(_, value) {
                                 if (!value.includes('https://')) {
