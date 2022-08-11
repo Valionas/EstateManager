@@ -59,6 +59,7 @@ function AddEditEstateModal() {
         let estateObject = values;
         estateObject.owner = currentUser.id;
         estateObject.status = "For Sale";
+        estateObject.applicants = [];
         try {
             if (currentEstate) {
                 const result = await updateEstate(estateObject, currentEstate.id);

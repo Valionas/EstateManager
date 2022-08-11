@@ -13,7 +13,11 @@ import { showConfirmationModal } from '../../components/ConfirmationModal';
 import { modalMessage } from '../../globals/messages';
 
 import { getMessagesBySender, deleteMessage } from '../../services/messages-service';
-import { render } from '@testing-library/react';
+import { getEstateById, updateEstate } from '../../services/estates-service';
+import { getRentById, updateRent } from '../../services/rents-service';
+import { getEstateApplicationById, deleteEstateApplication } from '../../services/estate-applications-service';
+import { getRentRequestById, deleteRequest } from '../../services/rent-requests-service';
+
 
 import RequestRentModal from '../rents/modals/RequestRentModal';
 import ApplyForEstateModal from '../estates-for-sale/modals/ApplyForEstateModal';
@@ -37,9 +41,25 @@ function SentMessages() {
         fetchData();
     }, [updatePageTrigger]);
 
-    const deleteMessageHandler = (id) => {
+    const deleteMessageHandler = (id, record) => {
         showConfirmationModal(modalMessage, async function (answer) {
             if (answer) {
+                switch (record.type) {
+                    case "estate":
+                        let currentEstate = await getEstateById(record.relatedObjectId);
+                        currentEstate.applicants = currentEstate.applicants.filter(x => x !== record.sender);
+                        await updateEstate(currentEstate, currentEstate.id);
+                        await deleteEstateApplication(record.relatedOfferId);
+                        break;
+                    case "rent":
+                        let currentRent = await getRentById(record.relatedObjectId);
+                        currentRent.applicants = currentRent.applicants.filter(x => x !== record.sender);
+                        await updateRent(currentRent, currentRent.id);
+                        await deleteRequest(record.relatedOfferId);
+                        break;
+                    default:
+                        break;
+                }
                 await deleteMessage(id);
                 dispatch(setUpdatePage());
             }
@@ -112,13 +132,13 @@ function SentMessages() {
                                     </Col>
                                     <Divider></Divider>
                                     <Col>
-                                        <Button type="danger" shape="round" onClick={(e) => deleteMessageHandler(record.id)}>Delete</Button>
+                                        <Button type="danger" shape="round" onClick={(e) => deleteMessageHandler(record.id, record)}>Delete</Button>
                                     </Col>
                                 </>
                             ) : (
                                 <>
                                     <Col>
-                                        <Button type="danger" shape="round" onClick={(e) => deleteMessageHandler(record.id)}>Delete</Button>
+                                        <Button type="danger" shape="round" onClick={(e) => deleteMessageHandler(record.id, record)}>Delete</Button>
                                     </Col>
                                 </>
                             )
