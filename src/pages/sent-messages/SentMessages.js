@@ -44,7 +44,6 @@ function SentMessages() {
     const deleteMessageHandler = (id, record) => {
         showConfirmationModal(modalMessage, async function (answer) {
             if (answer) {
-                debugger;
                 switch (record.type) {
                     case "estate":
                         let currentEstate = await getEstateById(record.relatedObjectId);

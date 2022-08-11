@@ -52,6 +52,7 @@ function AddEditRentModal() {
 
     const onCancelHandler = () => {
         dispatch(closeRentModal());
+        dispatch(setCurrentRent());
         form.resetFields();
     }
 
@@ -206,6 +207,17 @@ function AddEditRentModal() {
                 <Form.Item
                     label="Image link"
                     name="image"
+                    rules={[
+                        ({ getFieldValue }) => ({
+                            validator(_, value) {
+                                if (!value.includes('https://')) {
+                                    return Promise.reject(new Error('Use a valid image link, starting with https://'));
+                                }
+
+                                return Promise.resolve();
+                            }
+                        })
+                    ]}
                 >
                     <Input />
                 </Form.Item>

@@ -32,8 +32,12 @@ function AddEditEstateModal() {
                     value: currentEstate.location
                 },
                 {
-                    name: ['price'],
-                    value: currentEstate.price
+                    name: ['startingPrice'],
+                    value: currentEstate.startingPrice
+                },
+                {
+                    name: ['bidStep'],
+                    value: currentEstate.bidStep
                 },
                 {
                     name: ['description'],
@@ -109,6 +113,10 @@ function AddEditEstateModal() {
                             required: true,
                             message: 'Please input your estate\'s name!',
                         },
+                        {
+                            min: 3,
+                            message: 'Name cannot be less than 3 symbols.'
+                        }
                     ]}
                 >
                     <Input />
@@ -121,6 +129,10 @@ function AddEditEstateModal() {
                             required: true,
                             message: 'Please input your estate\'s location!',
                         },
+                        {
+                            min: 3,
+                            message: 'Location cannot be less than 5 symbols.'
+                        }
                     ]}
                 >
                     <Input />
