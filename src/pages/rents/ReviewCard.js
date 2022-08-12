@@ -68,7 +68,7 @@ function ReviewCard({ reviewObject, rentObject }) {
                     <Col span={1}>
                         <Divider type="vertical" style={{ height: "100%" }} />
                     </Col>
-                    <Col span={4} style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
+                    <Col span={5} style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
                         {
                             currentUser && currentUser.id === reviewObject.reviewer.id && (
                                 <Row style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
