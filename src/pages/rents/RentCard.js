@@ -109,7 +109,9 @@ function RentCard({ rentObject }) {
                             </Row>
                             <Row>
                                 {rentObject.reviews.map(review => (
-                                    <ReviewCard reviewObject={review} rentObject={rentObject}></ReviewCard>
+                                    <Col span={24}>
+                                        <ReviewCard reviewObject={review} rentObject={rentObject}></ReviewCard>
+                                    </Col>
                                 ))}
                             </Row>
                         </>

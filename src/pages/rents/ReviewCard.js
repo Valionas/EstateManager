@@ -19,7 +19,6 @@ function ReviewCard({ reviewObject, rentObject }) {
     const deleteReviewHandler = async (id) => {
         showConfirmationModal(modalMessage, async function (answer) {
             if (answer) {
-                debugger
                 let rentToUpdate = { ...rentObject };
                 let tempReviews = [...rentToUpdate.reviews];
                 let currentReview = tempReviews.find(review => review.reviewer.id === currentUser.id);
@@ -43,7 +42,7 @@ function ReviewCard({ reviewObject, rentObject }) {
             <Divider orientation='left' style={{ fontSize: 20 }}><RiUserVoiceLine /> : {reviewObject.reviewer.email}</Divider>
             <div className='reviewCard'>
                 <Row>
-                    <Col span={6} style={{ fontSize: 20 }} offset={2}>
+                    <Col span={6} style={{ fontSize: 20 }} offset={1}>
                         <p>
                             <MdOutlineEditCalendar />: {reviewObject.monthsRented} months
                         </p>
@@ -62,14 +61,14 @@ function ReviewCard({ reviewObject, rentObject }) {
                     </Col>
                     <Col span={10}>
                         <div style={{ width: "100%" }}>
-                            <b>DESCRIPTION:</b>
+                            <h1 style={{ textAlign: 'center' }}>Description</h1>
                             <span> {reviewObject.description}</span>
                         </div>
                     </Col>
                     <Col span={1}>
                         <Divider type="vertical" style={{ height: "100%" }} />
                     </Col>
-                    <Col span={3} style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
+                    <Col span={4} style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
                         {
                             currentUser && currentUser.id === reviewObject.reviewer.id && (
                                 <Row style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
