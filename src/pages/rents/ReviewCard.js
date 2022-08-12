@@ -42,7 +42,7 @@ function ReviewCard({ reviewObject, rentObject }) {
             <Divider orientation='left' style={{ fontSize: 20 }}><RiUserVoiceLine /> : {reviewObject.reviewer.email}</Divider>
             <div className='reviewCard'>
                 <Row>
-                    <Col span={6} style={{ fontSize: 20 }} offset={1}>
+                    <Col span={5} style={{ fontSize: 20 }} offset={1}>
                         <p>
                             <MdOutlineEditCalendar />: {reviewObject.monthsRented} months
                         </p>
