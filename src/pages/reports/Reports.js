@@ -4,8 +4,11 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { motion } from 'framer-motion';
 
+import { CSVLink } from 'react-csv';
 import { Col, Row } from 'antd';
 import { Space, Table, Tag, Modal, Button, Spin, Image } from 'antd';
+
+import { RiFileExcel2Line } from 'react-icons/ri'
 
 import { getReports } from '../../services/reports-service';
 
@@ -14,10 +17,33 @@ function Reports() {
     const currentUser = useSelector(state => state.auth.currentUser);
 
     const [loading, setLoading] = useState(false);
-    const [rentReports, setRentReports] = useState();
-    const [totalRents, setTotalRents] = useState();
-    const [estateReports, setEstateReports] = useState();
+    const [rentReports, setRentReports] = useState([]);
+    const [totalRents, setTotalRents] = useState([]);
+    const [estateReports, setEstateReports] = useState([]);
     const [totalEstateSales, setTotalEstateSales] = useState();
+
+    const fetchData = async () => {
+        setLoading(true);
+        const data = await getReports(currentUser.email);
+        const rentReports = data.filter(x => x.type === 'rent');
+        let totalRents = rentReports.reduce(function (sum, value) {
+            return sum + value.rent;
+        }, 0);
+        const estateReports = data.filter(x => x.type === 'estate');
+        let totalEstateSales = estateReports.reduce(function (sum, value) {
+            return sum + value.price;
+        }, 0);
+
+        setRentReports(rentReports);
+        setTotalRents(totalRents);
+        setEstateReports(estateReports);
+        setTotalEstateSales(totalEstateSales);
+        setLoading(false);
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     const rentColumns = [
         {
@@ -85,29 +111,31 @@ function Reports() {
         },
     ];
 
+    const csvRentReportHeaders = [
+        { label: "Name", key: "name" },
+        { label: "Rent", key: "rent" },
+        { label: "Location", key: "location" },
+        { label: "Renter", key: "renter" },
+    ];
 
-    const fetchData = async () => {
-        setLoading(true);
-        const data = await getReports(currentUser.email);
-        const rentReports = data.filter(x => x.type === 'rent');
-        let totalRents = rentReports.reduce(function (sum, value) {
-            return sum + value.rent;
-        }, 0);
-        const estateReports = data.filter(x => x.type === 'estate');
-        let totalEstateSales = estateReports.reduce(function (sum, value) {
-            return sum + value.price;
-        }, 0);
+    const csvEstateReportHeaders = [
+        { label: "Name", key: "name" },
+        { label: "Price", key: "price" },
+        { label: "Location", key: "location" },
+        { label: "Buyer", key: "buyer" },
+    ];
 
-        setRentReports(rentReports);
-        setTotalRents(totalRents);
-        setEstateReports(estateReports);
-        setTotalEstateSales(totalEstateSales);
-        setLoading(false);
+    const csvRentReport = {
+        data: rentReports,
+        headers: csvRentReportHeaders,
+        filename: "Rent_Report.csv",
     }
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+    const csvEstateReport = {
+        data: estateReports,
+        headers: csvEstateReportHeaders,
+        filename: "Estate_Report.csv"
+    }
 
     return (
         <>
@@ -132,12 +160,24 @@ function Reports() {
                                 <Row justify='center'>
                                     <h2>Rents</h2>
                                 </Row>
+                                <Row justify='center'>
+                                    <Button icon={<RiFileExcel2Line />} style={{ display: 'flex', alignItems: "center", marginRight: 5 }}>
+                                        <CSVLink {...csvRentReport} separator={";"}>Export</CSVLink>
+                                    </Button>
+                                </Row>
+                                <br />
                                 <Table columns={rentColumns} dataSource={rentReports} bordered={true} footer={() => <div style={{ textAlign: 'right' }}>Total: {totalRents}</div>} />
                             </Col>
                             <Col span={11} offset={1}>
                                 <Row justify='center'>
                                     <h2>Estates</h2>
                                 </Row>
+                                <Row justify='center'>
+                                    <Button icon={<RiFileExcel2Line />} style={{ display: 'flex', alignItems: "center" }}>
+                                        <CSVLink {...csvEstateReport} separator={";"}>Export</CSVLink>
+                                    </Button>
+                                </Row>
+                                <br />
                                 <Table columns={estateColumns} dataSource={estateReports} bordered={true} footer={() => <div style={{ textAlign: 'right' }}>Total: {totalEstateSales}</div>} />
                             </Col>
                         </Row>

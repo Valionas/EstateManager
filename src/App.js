@@ -182,7 +182,7 @@ const App = () => {
         >
           <Row justify='center' style={{ width: "100%" }}>
             <Col>
-              EstateManager ©2022 Created by Valentin Kolev
+              EstateManager ©2023 Created by Valentin Kolev
             </Col>
           </Row>
         </Footer>

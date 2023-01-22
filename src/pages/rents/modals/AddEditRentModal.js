@@ -60,10 +60,10 @@ function AddEditRentModal() {
         let rentObject = values;
         rentObject.applicants = [];
         rentObject.owner = currentUser.email;
-        rentObject.status = "Rentable";
         if (currentRent) {
             rentObject.reviews = currentRent.reviews
         } else {
+            rentObject.status = "Rentable";
             rentObject.reviews = [];
         }
 
