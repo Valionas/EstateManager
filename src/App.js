@@ -19,7 +19,7 @@ import {
 } from '@ant-design/icons';
 
 import { AiOutlineUserAdd, AiOutlineUserSwitch, AiOutlineHome } from 'react-icons/ai';
-import { MdOutlinePayment, MdOutlineSell, MdCreate } from 'react-icons/md'
+import { MdOutlinePayment, MdOutlineSell, MdCreate } from 'react-icons/md';
 import { HiOutlineDocumentReport } from 'react-icons/hi';
 import { BiLogOut } from 'react-icons/bi';
 import { GiMoneyStack, GiModernCity } from 'react-icons/gi';
@@ -43,7 +43,7 @@ const App = () => {
   const authentication = getAuth();
   const navigate = useNavigate();
 
-  const authenticated = useSelector(state => state.auth.currentUser);
+  const authenticated = useSelector((state) => state.auth.currentUser);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
@@ -73,7 +73,7 @@ const App = () => {
     } else {
       setMenuItems(publicMenuItems);
     }
-  }, [isLoggedIn])
+  }, [isLoggedIn]);
 
   function setMenuItem(label, key, icon, children) {
     return {
@@ -103,7 +103,6 @@ const App = () => {
     setMenuItem(<a onClick={() => logoutHandler()}>Logout</a>, '8', <BiLogOut />),
   ];
 
-
   const logoutHandler = async () => {
     try {
       await signOut(authentication);
@@ -114,14 +113,19 @@ const App = () => {
     } catch (err) {
       console.debug(err);
     }
-  }
+  };
   return (
     <Layout
       style={{
         minHeight: '100vh',
       }}
     >
-      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} style={{ zIndex: 2 }}>
+      <Sider
+        collapsible
+        collapsed={collapsed}
+        onCollapse={(value) => setCollapsed(value)}
+        style={{ zIndex: 2 }}
+      >
         <div className="logo" />
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={menuItems} />
       </Sider>
@@ -144,13 +148,13 @@ const App = () => {
               }}
             >
               <Routes>
-                {!isLoggedIn ?
+                {!isLoggedIn ? (
                   <>
                     <Route exact path="/" element={<Home />} />
                     <Route exact path="/login" element={<Login />} />
                     <Route exact path="/register" element={<Register />} />
                   </>
-                  :
+                ) : (
                   <>
                     <Route exact path="/" element={<Home />} />
                     <Route exact path="/estate-offers" element={<EstateApplications />} />
@@ -159,7 +163,7 @@ const App = () => {
                     <Route exact path="/reports" element={<Reports />} />
                     <Route exact path="/logout" element={<Register />} />
                   </>
-                }
+                )}
                 <Route exact path="/rents" element={<Rents />} />
                 <Route exact path="/estates" element={<Estates />} />
                 <Route exact path="*" element={<NotFoundPage />} />
@@ -170,20 +174,18 @@ const App = () => {
         <Footer
           className="footerSection"
           style={{
-            position: "fixed",
+            position: 'fixed',
             bottom: 0,
             left: 0,
             zIndex: 1,
             textAlign: 'center',
-            width: "100%",
+            width: '100%',
             backgroundColor: '#001529',
-            color: 'white'
+            color: 'white',
           }}
         >
-          <Row justify='center' style={{ width: "100%" }}>
-            <Col>
-              EstateManager ©2023 Created by Valentin Kolev
-            </Col>
+          <Row justify="center" style={{ width: '100%' }}>
+            <Col>EstateManager ©2023 Created by Valentin Kolev</Col>
           </Row>
         </Footer>
       </Layout>
