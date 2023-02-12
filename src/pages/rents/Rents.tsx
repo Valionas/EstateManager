@@ -19,7 +19,7 @@ import Rent from '../../models/rents/Rent';
 function Rents() {
   const dispatch = useDispatch();
   const updatePageTrigger = useSelector((state: ReduxState) => state.rent.triggeredUpdate);
-  const currentUser = useSelector((state: ReduxState) => state.auth.currentUser);
+  const authenticated = useSelector((state: ReduxState) => state.auth.isAuthenticated);
 
   const [loading, setLoading] = useState(false);
   const [rents, setRents] = useState<Rent[]>();
@@ -50,7 +50,7 @@ function Rents() {
         </Row>
       ) : (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
-          {currentUser && (
+          {authenticated && (
             <Row justify="center" style={{ marginBottom: '10px' }}>
               <Button type="primary" onClick={openRentModalHandler}>
                 Add Rentable Estate

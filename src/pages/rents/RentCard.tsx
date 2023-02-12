@@ -23,10 +23,12 @@ import ReviewCard from './ReviewCard';
 import { deleteRent, updateRent } from '../../services/rents-service';
 import React from 'react';
 import { ReduxState } from '../../store';
+import { auth } from '../../firebase';
 
 function RentCard({ rentObject }) {
   const dispatch = useDispatch();
   const currentUser = useSelector((state: ReduxState) => state.auth.currentUser);
+  const authenticated = useSelector((state: ReduxState) => state.auth.isAuthenticated);
 
   const openRequestRentModalHandler = () => {
     dispatch(setCurrentRent(rentObject));
@@ -97,7 +99,7 @@ function RentCard({ rentObject }) {
                 <b>Minimal rental time:</b> {rentObject.minimalRentalTime} months
               </p>
             </Row>
-            {currentUser && currentUser.email !== rentObject.owner && (
+            {authenticated && currentUser.email !== rentObject.owner && (
               <Row>
                 {rentObject.status !== 'Occupied' &&
                   rentObject.applicants.find((applicant) => applicant === currentUser.email) ===
@@ -124,7 +126,7 @@ function RentCard({ rentObject }) {
                 )}
               </Row>
             )}
-            {currentUser && currentUser.email === rentObject.owner && (
+            {authenticated && currentUser.email === rentObject.owner && (
               <Row>
                 {rentObject.status === 'Occupied' && (
                   <Button

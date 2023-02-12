@@ -27,6 +27,7 @@ function ReviewCard({ reviewObject, rentObject }) {
   const dispatch = useDispatch();
   const rates = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
   const currentUser = useSelector((state: ReduxState) => state.auth.currentUser);
+  const authenticated = useSelector((state: ReduxState) => state.auth.isAuthenticated);
 
   const deleteReviewHandler = async (id) => {
     showConfirmationModal(modalMessage, async function (answer) {
@@ -84,7 +85,7 @@ function ReviewCard({ reviewObject, rentObject }) {
             <Divider type="vertical" style={{ height: '100%' }} />
           </Col>
           <Col span={5} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            {currentUser && currentUser.id === reviewObject.reviewer.id && (
+            {authenticated && currentUser.id === reviewObject.reviewer.id && (
               <Row style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Button
                   type="primary"

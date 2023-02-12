@@ -18,7 +18,7 @@ import Estate from '../../models/estates/Estate';
 function Estates() {
   const dispatch = useDispatch();
   const updatePageTrigger = useSelector((state: ReduxState) => state.estate.triggeredUpdate);
-  const currentUser = useSelector((state: ReduxState) => state.auth.currentUser);
+  const authenticated = useSelector((state: ReduxState) => state.auth.isAuthenticated);
 
   const [loading, setLoading] = useState(false);
   const [estates, setEstates] = useState<Estate[]>();
@@ -49,7 +49,7 @@ function Estates() {
         </Row>
       ) : (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
-          {currentUser && (
+          {authenticated && (
             <Row justify="center" style={{ marginBottom: '10px' }}>
               <Button type="primary" onClick={openEstateModalHandler}>
                 Publish for sale

@@ -21,6 +21,7 @@ import { ReduxState } from '../../store';
 function EstateCard({ estateObject }) {
   const dispatch = useDispatch();
   const currentUser = useSelector((state: ReduxState) => state.auth.currentUser);
+  const authenticated = useSelector((state: ReduxState) => state.auth.isAuthenticated);
 
   const deleteEstateHandler = async (id) => {
     showConfirmationModal(modalMessage, async function (answer) {
@@ -124,7 +125,7 @@ function EstateCard({ estateObject }) {
             </p>
           </Col>
         </Row>
-        {currentUser && currentUser.email === estateObject.owner && (
+        {authenticated && currentUser.email === estateObject.owner && (
           <>
             <Divider></Divider>
             <Row style={{ justifyContent: 'center', marginBottom: 20 }}>
@@ -147,7 +148,7 @@ function EstateCard({ estateObject }) {
             </Row>
           </>
         )}
-        {currentUser && currentUser.email !== estateObject.owner && (
+        {authenticated && currentUser.email !== estateObject.owner && (
           <Row justify="center">
             {estateObject.status !== 'Sold' &&
               estateObject.applicants.find((applicant) => applicant === currentUser.email) ===

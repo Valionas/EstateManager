@@ -5,6 +5,8 @@ import { motion } from 'framer-motion';
 
 import './Home.css';
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { ReduxState } from '../../store';
 
 const contentStyle: React.CSSProperties = {
   height: '260px',
@@ -15,6 +17,8 @@ const contentStyle: React.CSSProperties = {
 };
 
 function Home() {
+  const authenticated = useSelector((state: ReduxState) => state.auth.isAuthenticated);
+
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
       <div className="homePageWrapper">
@@ -29,16 +33,28 @@ function Home() {
             <Row>
               <Col span={10}>
                 <Button type="primary" shape="round" className="navigationButton">
-                  <Link to="/estates" style={{ color: 'white' }}>
-                    RENTS
-                  </Link>
+                  {authenticated ? (
+                    <Link to="/estates" style={{ color: 'white' }}>
+                      RENTS
+                    </Link>
+                  ) : (
+                    <Link to="/login" style={{ color: 'white' }}>
+                      LOGIN
+                    </Link>
+                  )}
                 </Button>
               </Col>
               <Col span={10} offset={1}>
                 <Button type="primary" shape="round" className="navigationButton">
-                  <Link to="/rents" style={{ color: 'white' }}>
-                    ESTATES
-                  </Link>
+                  {authenticated ? (
+                    <Link to="/rents" style={{ color: 'white' }}>
+                      ESTATES
+                    </Link>
+                  ) : (
+                    <Link to="/register" style={{ color: 'white' }}>
+                      REGISTER
+                    </Link>
+                  )}
                 </Button>
               </Col>
             </Row>
