@@ -174,6 +174,7 @@ const App = () => {
         <Footer
           className="footerSection"
           style={{
+            padding: 14,
             position: 'fixed',
             bottom: 0,
             left: 0,
