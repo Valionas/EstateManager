@@ -1,21 +1,15 @@
 .homePageWrapper {
-    height: 100vh;
-    background: url("https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGVzdGF0ZXxlbnwwfHwwfHw%3D&w=1000&q=80");
-    background-size: contain;
-    background-repeat: no-repeat;
-    color: white;
-    padding-top: 15%;
-}
-
-.navigationButtonRow {
-    margin-top: 5%;
-    height: 8vh;
-    margin-bottom: 5%;
+  height: 100vh;
+  background: url('https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGVzdGF0ZXxlbnwwfHwwfHw%3D&w=1000&q=80');
+  background-size: contain;
+  background-repeat: no-repeat;
+  color: white;
+  padding-top: 15%;
 }
 
 .navigationButton {
-    width: 45%;
-    height: 100%;
-    background-color: orange;
-    font-weight: 500;
+  height: 100%;
+  font-weight: 500;
+  width: 100%;
+  text-align: center;
 }

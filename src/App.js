@@ -10,20 +10,13 @@ import { motion } from 'framer-motion';
 
 import 'antd/dist/antd.css';
 import { Breadcrumb, Layout, Menu, Row, Col } from 'antd';
-import {
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
 
 import { AiOutlineUserAdd, AiOutlineUserSwitch, AiOutlineHome } from 'react-icons/ai';
 import { MdOutlinePayment, MdOutlineSell, MdCreate } from 'react-icons/md';
 import { HiOutlineDocumentReport } from 'react-icons/hi';
 import { BiLogOut } from 'react-icons/bi';
 import { GiMoneyStack, GiModernCity } from 'react-icons/gi';
-import { RiMailSendLine } from 'react-icons/ri';
+import { RiMailSendLine, RiInformationLine } from 'react-icons/ri';
 
 import Estates from './pages/estates-for-sale/Estates';
 import Rents from './pages/rents/Rents';
@@ -35,6 +28,7 @@ import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import NotFoundPage from './pages/not-found/NotFoundPage';
+import AboutPage from './pages/about-us/AboutPage';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -43,7 +37,7 @@ const App = () => {
   const authentication = getAuth();
   const navigate = useNavigate();
 
-  const authenticated = useSelector((state) => state.auth.currentUser);
+  const authenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
@@ -90,6 +84,7 @@ const App = () => {
     setMenuItem(<Link to="/register">Register</Link>, '3', <AiOutlineUserAdd />),
     setMenuItem(<Link to="/rents">Rents</Link>, '4', <MdOutlinePayment />),
     setMenuItem(<Link to="/estates">Estates for sale</Link>, '5', <GiModernCity />),
+    setMenuItem(<Link to="/about">About Us</Link>, '6', <RiInformationLine />),
   ];
 
   const authenticatedMenuItems = [
@@ -153,6 +148,7 @@ const App = () => {
                     <Route exact path="/" element={<Home />} />
                     <Route exact path="/login" element={<Login />} />
                     <Route exact path="/register" element={<Register />} />
+                    <Route exact path="/about" element={<AboutPage />} />
                   </>
                 ) : (
                   <>
@@ -174,7 +170,7 @@ const App = () => {
         <Footer
           className="footerSection"
           style={{
-            padding: 14,
+            padding: 8,
             position: 'fixed',
             bottom: 0,
             left: 0,
