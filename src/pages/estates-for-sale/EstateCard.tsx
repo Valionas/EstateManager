@@ -6,13 +6,13 @@ import {
   openApplyForEstateModal,
 } from '../../store/slices/estateSlice';
 
-import { Col, Row, Image, Divider, Button, Carousel } from 'antd';
+import { Col, Row, Image, Divider, Button, Carousel, Badge, Descriptions } from 'antd';
 import { showConfirmationModal } from '../../components/ConfirmationModal';
 import { modalMessage } from '../../globals/messages';
 
 import ApplyForEstateModal from './modals/ApplyForEstateModal';
 
-import { GoLocation } from 'react-icons/go';
+import { AiOutlineLeftCircle, AiOutlineRightCircle } from 'react-icons/ai';
 import './Estates.css';
 
 import { deleteEstate } from '../../services/estates-service';
@@ -47,7 +47,13 @@ function EstateCard({ estateObject }) {
       <div className="estateCard">
         <Row>
           <Col span={24}>
-            <Carousel effect="fade" className="carouselCard">
+            <Carousel
+              effect="fade"
+              className="carouselCard"
+              arrows={true}
+              prevArrow={<AiOutlineLeftCircle />}
+              nextArrow={<AiOutlineRightCircle />}
+            >
               {estateObject?.images.map((image) => (
                 <div
                   style={{
@@ -64,67 +70,44 @@ function EstateCard({ estateObject }) {
             </Carousel>
           </Col>
         </Row>
-        <Row justify="center">
-          <Col>
-            <h1>
-              <b>{estateObject.name}</b>
-            </h1>
-          </Col>
+        <Row justify="center" style={{ display: 'flex', alignItems: 'center', padding: 10 }}>
+          <h1>
+            <b>{estateObject.name}</b>
+          </h1>
         </Row>
-        <Divider></Divider>
-        <Row justify="center" style={{ marginTop: 20 }}>
-          <Col span={10} offset={3}>
-            <p>
-              <b>Starting Price:</b> {estateObject.startingPrice} BGN
-            </p>
-          </Col>
-          <Col span={10} offset={1}>
-            <p>
-              <b>Year:</b> {estateObject.year}
-            </p>
-          </Col>
-        </Row>
-        <Row justify="center" style={{ marginTop: 20 }}>
-          <Col span={10} offset={3}>
-            <p>
-              <b>Bid Step:</b> {estateObject.bidStep} BGN
-            </p>
-          </Col>
-          <Col span={10} offset={1}>
-            <p>
-              <b>Area:</b> {estateObject.area} m^2
-            </p>
-          </Col>
-        </Row>
-        <Row justify="center" style={{ marginTop: 20 }}>
-          <Col span={10} offset={3}>
-            <p>
-              <b>Location:</b> {estateObject.location}
-            </p>
-          </Col>
-        </Row>
-        <Row justify="center" style={{ marginTop: 20 }}>
-          <Col span={10} offset={4}>
-            <p>
-              <b>Status:</b>{' '}
-              <span
-                className={
-                  estateObject.status === 'For Sale' ? 'saleEstateBanner' : 'soldEstateBanner'
-                }
-              >
-                {estateObject.status}
-              </span>
-            </p>
-          </Col>
-        </Row>
-        <Divider></Divider>
-        <Row justify="center">
-          <Col>
-            <p style={{ textAlign: 'justify', height: '25vh', overflow: 'auto' }}>
-              <b>DESCRIPTION:</b> {estateObject.description}
-            </p>
-          </Col>
-        </Row>
+        <Descriptions layout="vertical" bordered>
+          <Descriptions.Item label="Starting Price" labelStyle={{ fontWeight: 900 }}>
+            <span style={{ fontWeight: 500 }}>{estateObject.startingPrice} BGN</span>
+          </Descriptions.Item>
+          <Descriptions.Item label="Year" labelStyle={{ fontWeight: 900 }}>
+            <span style={{ fontWeight: 500 }}>{estateObject.year}</span>
+          </Descriptions.Item>
+          <Descriptions.Item label="Bid Step" labelStyle={{ fontWeight: 900 }}>
+            <span style={{ fontWeight: 500 }}> {estateObject.bidStep} BGN</span>
+          </Descriptions.Item>
+          <Descriptions.Item label="Area" labelStyle={{ fontWeight: 900 }}>
+            <span style={{ fontWeight: 500 }}> {estateObject.area} m^2</span>
+          </Descriptions.Item>
+          <Descriptions.Item label="Location" labelStyle={{ fontWeight: 900 }}>
+            <span style={{ fontWeight: 500 }}> {estateObject.location}</span>
+          </Descriptions.Item>
+          <Descriptions.Item
+            label="Status"
+            labelStyle={{ fontWeight: 900 }}
+            style={{ display: 'flex', alignItems: 'center' }}
+          >
+            <span
+              className={
+                estateObject.status === 'For Sale' ? 'saleEstateBanner' : 'soldEstateBanner'
+              }
+            >
+              {estateObject.status}
+            </span>
+          </Descriptions.Item>
+          <Descriptions.Item label="Description" labelStyle={{ fontWeight: 900 }}>
+            {estateObject.description}
+          </Descriptions.Item>
+        </Descriptions>
         {authenticated && currentUser.email === estateObject.owner && (
           <>
             <Divider></Divider>
