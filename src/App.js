@@ -8,7 +8,6 @@ import { getAuth, signOut } from 'firebase/auth';
 
 import { motion } from 'framer-motion';
 
-import 'antd/dist/antd.css';
 import { Breadcrumb, Layout, Menu, Row, Col } from 'antd';
 
 import { AiOutlineUserAdd, AiOutlineUserSwitch, AiOutlineHome } from 'react-icons/ai';
@@ -39,8 +38,6 @@ const App = () => {
 
   const authenticated = useSelector((state) => state.auth.isAuthenticated);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
   const [menuItems, setMenuItems] = useState();
 
   useEffect(() => {
@@ -49,25 +46,24 @@ const App = () => {
     let email = localStorage.getItem('email');
     if (authToken) {
       dispatch(authenticate({ id: userId, email: email }));
-      setIsLoggedIn(true);
     }
   }, []);
 
   useEffect(() => {
     if (authenticated) {
-      setIsLoggedIn(true);
+      navigate('/rents');
     } else {
-      setIsLoggedIn(false);
+      navigate('/');
     }
   }, [authenticated]);
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (authenticated) {
       setMenuItems(authenticatedMenuItems);
     } else {
       setMenuItems(publicMenuItems);
     }
-  }, [isLoggedIn]);
+  }, [authenticated]);
 
   function setMenuItem(label, key, icon, children) {
     return {
@@ -103,91 +99,77 @@ const App = () => {
       await signOut(authentication);
       localStorage.clear();
       dispatch(authenticate());
-      setIsLoggedIn(false);
-      navigate('/login');
     } catch (err) {
       console.debug(err);
     }
   };
   return (
-    <Layout
-      style={{
-        minHeight: '100vh',
-      }}
-    >
-      <Sider
-        collapsible
-        collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
-        style={{ zIndex: 2 }}
+    <>
+      <Menu
+        theme="dark"
+        defaultSelectedKeys={authenticated ? ['2'] : ['1']}
+        mode="horizontal"
+        items={menuItems}
+        style={{ display: 'flex', justifyContent: 'center' }}
+      />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1 }}
       >
-        <div className="logo" />
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={menuItems} />
-      </Sider>
-      <Layout className="site-layout">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1 }}
-        >
-          <Content
+        <Content>
+          <div
+            className="site-layout-background"
             style={{
-              margin: '0 16px',
+              minHeight: 360,
             }}
           >
-            <div
-              className="site-layout-background"
-              style={{
-                padding: 24,
-                minHeight: 360,
-              }}
-            >
-              <Routes>
-                {!isLoggedIn ? (
-                  <>
-                    <Route exact path="/" element={<Home />} />
-                    <Route exact path="/login" element={<Login />} />
-                    <Route exact path="/register" element={<Register />} />
-                    <Route exact path="/about" element={<AboutPage />} />
-                  </>
-                ) : (
-                  <>
-                    <Route exact path="/" element={<Home />} />
-                    <Route exact path="/estate-offers" element={<EstateApplications />} />
-                    <Route exact path="/rent-requests" element={<RentRequests />} />
-                    <Route exact path="/messages" element={<SentMessages />} />
-                    <Route exact path="/reports" element={<Reports />} />
-                    <Route exact path="/logout" element={<Register />} />
-                  </>
-                )}
-                <Route exact path="/rents" element={<Rents />} />
-                <Route exact path="/estates" element={<Estates />} />
-                <Route exact path="*" element={<NotFoundPage />} />
-              </Routes>
-            </div>
-          </Content>
-        </motion.div>
-        <Footer
-          className="footerSection"
-          style={{
-            padding: 8,
-            position: 'fixed',
-            bottom: 0,
-            left: 0,
-            zIndex: 1,
-            textAlign: 'center',
-            width: '100%',
-            backgroundColor: '#001529',
-            color: 'white',
-          }}
-        >
-          <Row justify="center" style={{ width: '100%' }}>
-            <Col>EstateManager ©2023 Created by Valentin Kolev</Col>
-          </Row>
-        </Footer>
-      </Layout>
+            <Routes>
+              {!authenticated ? (
+                <>
+                  <Route exact path="/" element={<Home />} />
+                  <Route exact path="/login" element={<Login />} />
+                  <Route exact path="/register" element={<Register />} />
+                  <Route exact path="/about" element={<AboutPage />} />
+                </>
+              ) : (
+                <>
+                  <Route exact path="/" element={<Home />} />
+                  <Route exact path="/estate-offers" element={<EstateApplications />} />
+                  <Route exact path="/rent-requests" element={<RentRequests />} />
+                  <Route exact path="/messages" element={<SentMessages />} />
+                  <Route exact path="/reports" element={<Reports />} />
+                  <Route exact path="/logout" element={<Register />} />
+                </>
+              )}
+              <Route exact path="/rents" element={<Rents />} />
+              <Route exact path="/estates" element={<Estates />} />
+              <Route exact path="*" element={<NotFoundPage />} />
+            </Routes>
+          </div>
+        </Content>
+      </motion.div>
+      <Footer
+        className="footerSection"
+        style={{
+          padding: 8,
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          zIndex: 1,
+          textAlign: 'center',
+          width: '100%',
+          backgroundColor: '#001529',
+          color: 'white',
+        }}
+      >
+        <Row justify="center" style={{ width: '100%' }}>
+          <Col>EstateManager ©2023 Created by Valentin Kolev</Col>
+        </Row>
+      </Footer>
+
       <div id="confirmation-modal"></div>
-    </Layout>
+    </>
   );
 };
 

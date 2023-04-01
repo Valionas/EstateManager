@@ -1,13 +1,16 @@
 import { Col, Row, Image } from 'antd';
-
+import './AboutPage.css';
 const rowStyle = {
   display: 'flex',
   alignItems: 'center',
+  paddingTop: '5%',
+  paddingBottom: '5%',
 };
 
 const imageStyle = {
   width: 300,
   height: 200,
+  borderRadius: '5%',
 };
 
 const textStyle = {
@@ -18,7 +21,7 @@ const textStyle = {
 function AboutPage() {
   return (
     <>
-      <div>
+      <div className="homePageWrapper">
         <Row style={rowStyle}>
           <Col span={12} offset={2}>
             <h2>About Us</h2>
@@ -31,7 +34,7 @@ function AboutPage() {
           <Col span={10} style={{ display: 'flex', justifyContent: 'center' }}>
             <Image
               style={imageStyle}
-              src="https://www.scnsoft.com/blog-pictures/software-development-outsourcing/sw-development-teams.png"
+              src="https://miro.medium.com/v2/resize:fit:1400/1*2A_XDZqY9HTzKqCGAn66dg.jpeg"
             />
           </Col>
         </Row>
@@ -51,7 +54,7 @@ function AboutPage() {
           <Col span={10} style={{ display: 'flex', justifyContent: 'center' }}>
             <Image
               style={imageStyle}
-              src="https://media.istockphoto.com/id/1186261767/vector/man-and-thought-bubble.jpg?s=612x612&w=0&k=20&c=YI9WcNH6j3MjcPs8LyL56hI6bY9Cn8JoGVoOtrJNkcA="
+              src="https://imageio.forbes.com/specials-images/dam/imageserve/1176645222/0x0.jpg?format=jpg&width=1200"
             />
           </Col>
         </Row>
@@ -82,7 +85,7 @@ function AboutPage() {
           <Col span={10} style={{ display: 'flex', justifyContent: 'center' }}>
             <Image
               style={imageStyle}
-              src="https://uploads-ssl.webflow.com/5eb8fbee91fb65499c7f5f42/61fbf5b4bbb67863cbb00a12_Roadmaps.png"
+              src="https://imageio.forbes.com/specials-images/dam/imageserve/1194430802/960x0.jpg?format=jpg&width=960"
             />
           </Col>
         </Row>
@@ -118,7 +121,7 @@ function AboutPage() {
           <Col span={10} style={{ display: 'flex', justifyContent: 'center' }}>
             <Image
               style={imageStyle}
-              src="https://media.istockphoto.com/id/872555022/vector/choice-way-concept-decision-business-metaphor-vector-flat-style-design-isolated-on-background.jpg?s=612x612&w=0&k=20&c=FoCdYf_zcYicKRd9x7rSU8Cc9xnSlQo7ho3_2M2Kv7M="
+              src="https://www.searchenginejournal.com/wp-content/uploads/2020/07/how-seos-the-sales-team-can-drive-business-growth-5f0c9b22e8c6d.png"
             />
           </Col>
         </Row>

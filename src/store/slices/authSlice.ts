@@ -15,7 +15,8 @@ export const authSlice = createSlice({
         state.isAuthenticated = true;
         state.currentUser = action.payload;
       } else {
-        state = initialState;
+        state.isAuthenticated = false;
+        state.currentUser = {};
       }
     },
   },

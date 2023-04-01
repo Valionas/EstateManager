@@ -133,7 +133,7 @@ function Reports() {
   return (
     <>
       <Row justify="center">
-        <h2>Reports</h2>
+        <h1>Reports</h1>
       </Row>
       {loading ? (
         <Row justify="center">
@@ -145,8 +145,8 @@ function Reports() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.75 }}
         >
-          <Row>
-            <Col span={11} offset={1}>
+          <Row style={{ paddingBottom: '5%' }}>
+            <Col md={24} lg={11}>
               <Row justify="center">
                 <h2>Rents</h2>
               </Row>
@@ -169,7 +169,7 @@ function Reports() {
                 footer={() => <div style={{ textAlign: 'right' }}>Total: {totalRents}</div>}
               />
             </Col>
-            <Col span={11} offset={1}>
+            <Col md={24} lg={{ span: 11, offset: 1 }}>
               <Row justify="center">
                 <h2>Estates</h2>
               </Row>
