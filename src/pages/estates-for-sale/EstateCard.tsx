@@ -64,7 +64,7 @@ function EstateCard({ estateObject }) {
                     background: '#364d79',
                   }}
                 >
-                  <Image height={'35vh'} width={'100%'} src={image} />
+                  <Image height={'45vh'} width={'100%'} src={image} />
                 </div>
               ))}
             </Carousel>

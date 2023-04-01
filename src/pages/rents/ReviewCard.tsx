@@ -57,7 +57,7 @@ function ReviewCard({ reviewObject, rentObject }) {
       </Divider>
       <div className="reviewCard">
         <Row>
-          <Col span={5} style={{ fontSize: 20 }} offset={1}>
+          <Col md={24} lg={5} style={{ fontSize: 20 }} offset={1}>
             <p>
               <MdOutlineEditCalendar />: {reviewObject.monthsRented} months
             </p>
@@ -72,19 +72,23 @@ function ReviewCard({ reviewObject, rentObject }) {
               <Rate tooltips={rates} disabled value={reviewObject.reviewRate} />
             </p>
           </Col>
-          <Col span={1}>
+          <Col lg={1} md={0}>
             <Divider type="vertical" style={{ height: '100%' }} />
           </Col>
-          <Col span={10}>
+          <Col md={24} lg={10}>
             <div style={{ width: '100%' }}>
               <h1 style={{ textAlign: 'center' }}>Description</h1>
               <span> {reviewObject.description}</span>
             </div>
           </Col>
-          <Col span={1}>
+          <Col lg={1} md={0}>
             <Divider type="vertical" style={{ height: '100%' }} />
           </Col>
-          <Col span={5} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Col
+            md={24}
+            lg={5}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
             {authenticated && currentUser.id === reviewObject.reviewer.id && (
               <Row style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Button
@@ -107,7 +111,7 @@ function ReviewCard({ reviewObject, rentObject }) {
               </Row>
             )}
           </Col>
-          <Col span={1}></Col>
+          <Col lg={1} md={0}></Col>
         </Row>
       </div>
     </>

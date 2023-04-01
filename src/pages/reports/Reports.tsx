@@ -162,6 +162,7 @@ function Reports() {
               </Row>
               <br />
               <Table
+                scroll={{ x: true }}
                 columns={rentColumns}
                 dataSource={rentReports}
                 bordered={true}
@@ -184,6 +185,7 @@ function Reports() {
               </Row>
               <br />
               <Table
+                scroll={{ x: true }}
                 columns={estateColumns}
                 dataSource={estateReports}
                 bordered={true}

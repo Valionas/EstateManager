@@ -208,7 +208,9 @@ function SentMessages() {
         >
           <Row justify="center">
             <Col span={24}>
-              {messages && <Table columns={messagesColumns} dataSource={messages} />}
+              {messages && (
+                <Table scroll={{ x: true }} columns={messagesColumns} dataSource={messages} />
+              )}
             </Col>
           </Row>
         </motion.div>

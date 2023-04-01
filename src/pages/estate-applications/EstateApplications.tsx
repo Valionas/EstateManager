@@ -175,7 +175,13 @@ function EstateApplications() {
         >
           <Row justify="center">
             <Col span={24}>
-              {applications && <Table columns={applicationColumns} dataSource={applications} />}
+              {applications && (
+                <Table
+                  scroll={{ x: true }}
+                  columns={applicationColumns}
+                  dataSource={applications}
+                />
+              )}
             </Col>
           </Row>
         </motion.div>

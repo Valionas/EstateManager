@@ -65,10 +65,14 @@ function RentCard({ rentObject }) {
     <>
       <div className="rentCard">
         <Row>
-          <Col span={6} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Image height={'100%'} src={rentObject.image} />
+          <Col
+            md={24}
+            lg={6}
+            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+          >
+            <Image height={'100%'} width={'100%'} src={rentObject.image} />
           </Col>
-          <Col span={10} offset={1}>
+          <Col md={24} lg={10} offset={1}>
             <h1>{rentObject.name}</h1>
             <p>
               <GoLocation /> {rentObject.location}
@@ -76,7 +80,7 @@ function RentCard({ rentObject }) {
             <h1>Description</h1>
             <p>{rentObject.description}</p>
           </Col>
-          <Col span={5} offset={1}>
+          <Col md={24} lg={5} offset={1}>
             <Row>
               <p style={{ fontSize: '2vh' }}>
                 <b>Status:</b>{' '}
@@ -169,7 +173,7 @@ function RentCard({ rentObject }) {
             </Row>
             <Row>
               {rentObject.reviews.map((review) => (
-                <Col span={24}>
+                <Col md={24} lg={24}>
                   <ReviewCard reviewObject={review} rentObject={rentObject}></ReviewCard>
                 </Col>
               ))}

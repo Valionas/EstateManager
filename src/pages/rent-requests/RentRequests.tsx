@@ -170,7 +170,9 @@ function RentRequests() {
         >
           <Row justify="center">
             <Col span={24}>
-              {requests && <Table columns={requestColumns} dataSource={requests} />}
+              {requests && (
+                <Table scroll={{ x: true }} columns={requestColumns} dataSource={requests} />
+              )}
             </Col>
           </Row>
         </motion.div>
