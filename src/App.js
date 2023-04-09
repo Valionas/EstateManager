@@ -16,6 +16,7 @@ import { HiOutlineDocumentReport } from 'react-icons/hi';
 import { BiLogOut } from 'react-icons/bi';
 import { GiMoneyStack, GiModernCity } from 'react-icons/gi';
 import { RiMailSendLine, RiInformationLine } from 'react-icons/ri';
+import { MdOutlineLock } from 'react-icons/md';
 
 import Estates from './pages/estates-for-sale/Estates';
 import Rents from './pages/rents/Rents';
@@ -26,8 +27,9 @@ import Reports from './pages/reports/Reports';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
+import ResetPassword from './pages/reset-password/ResetPassword';
 import NotFoundPage from './pages/not-found/NotFoundPage';
-import AboutPage from './pages/about-us/AboutPage';
+import TermsAndConditions from './pages/terms-and-conditions/TermsAndConditions';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -78,9 +80,10 @@ const App = () => {
     setMenuItem(<Link to="/">Home</Link>, '1', <AiOutlineHome />),
     setMenuItem(<Link to="/login">Login</Link>, '2', <AiOutlineUserSwitch />),
     setMenuItem(<Link to="/register">Register</Link>, '3', <AiOutlineUserAdd />),
-    setMenuItem(<Link to="/rents">Rents</Link>, '4', <MdOutlinePayment />),
-    setMenuItem(<Link to="/estates">Estates for sale</Link>, '5', <GiModernCity />),
-    setMenuItem(<Link to="/about">About Us</Link>, '6', <RiInformationLine />),
+    setMenuItem(<Link to="/reset-password">Reset Password</Link>, '4', <MdOutlineLock />),
+    setMenuItem(<Link to="/rents">Rents</Link>, '5', <MdOutlinePayment />),
+    setMenuItem(<Link to="/estates">Estates for sale</Link>, '6', <GiModernCity />),
+    setMenuItem(<Link to="/terms">Terms and Conditions</Link>, '7', <RiInformationLine />),
   ];
 
   const authenticatedMenuItems = [
@@ -130,7 +133,8 @@ const App = () => {
                   <Route exact path="/" element={<Home />} />
                   <Route exact path="/login" element={<Login />} />
                   <Route exact path="/register" element={<Register />} />
-                  <Route exact path="/about" element={<AboutPage />} />
+                  <Route exact path="/reset-password" element={<ResetPassword />} />
+                  <Route exact path="/terms" element={<TermsAndConditions />} />
                 </>
               ) : (
                 <>
