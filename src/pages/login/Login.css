@@ -1,7 +1,24 @@
-.loginContainer {
-    margin-top: 25vh;
+.authContainer {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    min-height: 100vh;
+    justify-content: center;
+}
+.ant-form-item-required::before{
+    color: rgb(159, 29, 29) !important;
+    font-size: 25px !important;
 }
 
+.ant-form-item-explain-error{
+    font-size: 25px;
+    font-family: 'Contrail One', cursive !important;
+
+}
 .submitBtn {
     width: 100%;
+}
+
+label::after{
+    visibility: hidden;
 }

@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import './Home.css';
 import { useSelector } from 'react-redux';
 import { ReduxState } from '../../store';
+import PieChartCustomers from './components/PieChartCustomers';
 
 function Home() {
   const authenticated = useSelector((state: ReduxState) => state.auth.isAuthenticated);
@@ -82,7 +83,7 @@ function Home() {
         </Row>
         <br />
         <Row style={rowStyle}>
-          <Col span={20} offset={2}>
+          <Col md={24} lg={{ span: 11, offset: 2 }}>
             <p style={textStyle}>
               This inspired us to create a solution that would simplify estate management for the
               average user. Our estate management application is designed to make your life easier
@@ -90,6 +91,9 @@ function Home() {
               With real-time updates, 24/7 access, and secure data storage, our app makes it easy
               for you to keep track of everything from anywhere, at any time.
             </p>
+          </Col>
+          <Col md={24} lg={{ span: 8, offset: 1 }}>
+            <PieChartCustomers />
           </Col>
         </Row>
         <br />

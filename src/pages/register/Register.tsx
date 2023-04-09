@@ -54,12 +54,12 @@ function Register() {
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
-      <div className="registerContainer">
+      <div className="authContainer">
         <Row justify="center">
           <Form
             name="basic"
             labelCol={{
-              span: 10,
+              span: 12,
             }}
             wrapperCol={{
               span: 14,
@@ -72,7 +72,7 @@ function Register() {
             autoComplete="off"
           >
             <Form.Item
-              label="Email"
+              label={<span className="authLabel authSpan">Email</span>}
               name="email"
               rules={[
                 {
@@ -87,9 +87,8 @@ function Register() {
             >
               <Input />
             </Form.Item>
-
             <Form.Item
-              label="Password"
+              label={<span className="authLabel authSpan">Password</span>}
               name="password"
               rules={[
                 {
@@ -105,7 +104,7 @@ function Register() {
               <Input.Password />
             </Form.Item>
             <Form.Item
-              label="Repeat Password"
+              label={<span className="authLabel authSpan">Repeat Password</span>}
               name="repeatPassword"
               rules={[
                 {
@@ -129,12 +128,7 @@ function Register() {
             >
               <Input.Password />
             </Form.Item>
-            <Form.Item
-              wrapperCol={{
-                offset: 10,
-                span: 14,
-              }}
-            >
+            <Form.Item label={<span></span>}>
               <Button type="primary" htmlType="submit" className="submitBtn">
                 Register
               </Button>

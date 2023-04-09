@@ -169,7 +169,7 @@ function Reports() {
                 footer={() => <div style={{ textAlign: 'right' }}>Total: {totalRents}</div>}
               />
             </Col>
-            <Col md={24} lg={{ span: 11, offset: 1 }}>
+            <Col md={24} lg={{ span: 12, offset: 1 }}>
               <Row justify="center">
                 <h2>Estates</h2>
               </Row>

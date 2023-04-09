@@ -53,7 +53,7 @@ function ResetPassword() {
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
-      <div className="resetPasswordContainer">
+      <div className="authContainer">
         <Row justify="center">
           <Form
             name="basic"
@@ -71,7 +71,7 @@ function ResetPassword() {
             autoComplete="off"
           >
             <Form.Item
-              label="Email"
+              label={<span className="authLabel authSpan">Email</span>}
               name="email"
               rules={[
                 {
@@ -86,14 +86,9 @@ function ResetPassword() {
             >
               <Input />
             </Form.Item>
-            <Form.Item
-              wrapperCol={{
-                offset: 10,
-                span: 14,
-              }}
-            >
-              <Button type="primary" htmlType="submit" className="submitBtn">
-                Send
+            <Form.Item label={<span></span>}>
+              <Button type="primary" htmlType="submit" className="submitBtn authSpan">
+                Reset Password
               </Button>
             </Form.Item>
           </Form>

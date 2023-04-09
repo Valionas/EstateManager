@@ -2,6 +2,17 @@
     border: 4px solid rgb(225, 204, 204);
     border-radius: 1%;
     margin: 50px;
+    background-color: rgba(254, 254, 254, 0.89);
+    color: black;
+}
+
+h1{
+    color: white;
+    font-family: 'Abril Fatface', cursive;
+}
+
+p{
+    font-family: 'Abril Fatface', cursive;
 }
 
 .approvedRentBanner {

@@ -32,6 +32,7 @@ import NotFoundPage from './pages/not-found/NotFoundPage';
 import TermsAndConditions from './pages/terms-and-conditions/TermsAndConditions';
 
 const { Header, Content, Footer, Sider } = Layout;
+import './App.css';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -121,35 +122,37 @@ const App = () => {
         transition={{ duration: 1 }}
       >
         <Content>
-          <div
-            className="site-layout-background"
-            style={{
-              minHeight: 360,
-            }}
-          >
-            <Routes>
-              {!authenticated ? (
-                <>
-                  <Route exact path="/" element={<Home />} />
-                  <Route exact path="/login" element={<Login />} />
-                  <Route exact path="/register" element={<Register />} />
-                  <Route exact path="/reset-password" element={<ResetPassword />} />
-                  <Route exact path="/terms" element={<TermsAndConditions />} />
-                </>
-              ) : (
-                <>
-                  <Route exact path="/" element={<Home />} />
-                  <Route exact path="/estate-offers" element={<EstateApplications />} />
-                  <Route exact path="/rent-requests" element={<RentRequests />} />
-                  <Route exact path="/messages" element={<SentMessages />} />
-                  <Route exact path="/reports" element={<Reports />} />
-                  <Route exact path="/logout" element={<Register />} />
-                </>
-              )}
-              <Route exact path="/rents" element={<Rents />} />
-              <Route exact path="/estates" element={<Estates />} />
-              <Route exact path="*" element={<NotFoundPage />} />
-            </Routes>
+          <div className="pageBackgroundWrapper">
+            <div
+              className="site-layout-background"
+              style={{
+                minHeight: 360,
+              }}
+            >
+              <Routes>
+                {!authenticated ? (
+                  <>
+                    <Route exact path="/" element={<Home />} />
+                    <Route exact path="/login" element={<Login />} />
+                    <Route exact path="/register" element={<Register />} />
+                    <Route exact path="/reset-password" element={<ResetPassword />} />
+                    <Route exact path="/terms" element={<TermsAndConditions />} />
+                  </>
+                ) : (
+                  <>
+                    <Route exact path="/" element={<Home />} />
+                    <Route exact path="/estate-offers" element={<EstateApplications />} />
+                    <Route exact path="/rent-requests" element={<RentRequests />} />
+                    <Route exact path="/messages" element={<SentMessages />} />
+                    <Route exact path="/reports" element={<Reports />} />
+                    <Route exact path="/logout" element={<Register />} />
+                  </>
+                )}
+                <Route exact path="/rents" element={<Rents />} />
+                <Route exact path="/estates" element={<Estates />} />
+                <Route exact path="*" element={<NotFoundPage />} />
+              </Routes>
+            </div>
           </div>
         </Content>
       </motion.div>
