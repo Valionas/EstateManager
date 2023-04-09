@@ -1,24 +1,13 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-import { useSelector, useDispatch } from 'react-redux';
-import { authenticate } from '../../store/slices/authSlice';
-
 import { motion } from 'framer-motion';
 
-import { Col, Row, Button, Checkbox, Form, Input, notification } from 'antd';
-import { Space, Table, Tag } from 'antd';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { Row, Button, Form, Input, notification } from 'antd';
+
+import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 
 import './ResetPassword.css';
-import React from 'react';
 
 function ResetPassword() {
-  const dispatch = useDispatch();
   const authentication = getAuth();
-  const navigate = useNavigate();
-
-  const [rents, setRents] = useState();
 
   const openWrongCredentialsNotification = (type) => {
     notification[type]({
@@ -28,20 +17,10 @@ function ResetPassword() {
   };
 
   const onFinish = async (values) => {
-    const { email, password } = values;
+    const { email } = values;
 
     try {
-      let user = await signInWithEmailAndPassword(authentication, email, password);
-      let tokenResult = await user.user.getIdTokenResult();
-      localStorage.setItem('Auth Token', JSON.stringify(tokenResult.token));
-      localStorage.setItem('userId', user.user.uid);
-      localStorage.setItem('email', user.user.email ? user.user.email : '');
-      let currentUser = {
-        id: user.user.uid,
-        email: user.user.email,
-      };
-      dispatch(authenticate(currentUser));
-      navigate('/rents');
+      await sendPasswordResetEmail(authentication, email);
     } catch (error) {
       openWrongCredentialsNotification('error');
     }

@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 
 import { Col, Row, Button, Checkbox, Form, Input, notification } from 'antd';
 import { Space, Table, Tag } from 'antd';
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 
 import './Register.css';
 import React from 'react';
