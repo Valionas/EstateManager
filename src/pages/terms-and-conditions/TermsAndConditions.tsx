@@ -21,7 +21,7 @@ const textStyle = {
 function TermsAndConditions() {
   return (
     <>
-      <div className="homePageWrapper">
+      <div className="termsPageWrapper">
         <Row style={{ height: '70%' }}>
           <Col
             md={24}

@@ -36,19 +36,7 @@ function Home() {
         <Row justify="center" style={{ display: 'flex', alignItems: 'center' }}>
           <Col md={24} lg={8} style={{ fontSize: 32 }} offset={1}>
             <h1 style={{ textAlign: 'center' }}>
-              <img
-                style={{ width: 50, height: 50 }}
-                src="https://icon-library.com/images/estate-icon/estate-icon-23.jpg"
-              />
-              <b>
-                {' '}
-                Estate{' '}
-                <img
-                  style={{ width: 50, height: 50 }}
-                  src="https://icon-library.com/images/estate-icon/estate-icon-23.jpg"
-                />{' '}
-                Manager
-              </b>
+              <b>Estate Manager</b>
             </h1>
             <p style={{ textAlign: 'center' }}>
               <b>Helping people with their estate needs</b>
