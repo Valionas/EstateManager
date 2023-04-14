@@ -11,7 +11,7 @@
 }
 
 .ant-form-item-explain-error{
-    font-size: 25px;
+    font-size: 16px !important;
     font-family: 'Contrail One', cursive !important;
 
 }
@@ -20,4 +20,10 @@
 }
 label::after{
     visibility: hidden;
+}
+
+.formRow{
+    background-color: rgba(0, 0, 0, 0.798);
+    padding: 1%;
+    border-radius: 5%;
 }

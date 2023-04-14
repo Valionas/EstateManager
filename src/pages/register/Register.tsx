@@ -55,7 +55,7 @@ function Register() {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
       <div className="authContainer">
-        <Row justify="center">
+        <Row justify="center" className="formRow">
           <Form
             name="basic"
             labelCol={{
