@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { authenticate } from '../../store/slices/authSlice';
 
 import { motion } from 'framer-motion';
 
 import { Col, Row, Button, Checkbox, Form, Input, notification } from 'antd';
-import { Space, Table, Tag } from 'antd';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
+import { useTranslation } from 'react-i18next';
 import './Login.css';
-import React from 'react';
 
 function Login() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const authentication = getAuth();
   const navigate = useNavigate();
@@ -71,28 +71,28 @@ function Login() {
             autoComplete="off"
           >
             <Form.Item
-              label={<span className="authLabel authSpan">Email</span>}
+              label={<span className="authLabel authSpan">{t('email')}</span>}
               name="email"
               rules={[
                 {
                   required: true,
-                  message: 'Please input your email!',
+                  message: `${t('missing_email_error')}`,
                 },
                 {
                   type: 'email',
-                  message: 'Email format is incorrect.',
+                  message: `${t('wrong_email_format')}`,
                 },
               ]}
             >
               <Input />
             </Form.Item>
             <Form.Item
-              label={<span className="authLabel authSpan">Password</span>}
+              label={<span className="authLabel authSpan">{t('password')}</span>}
               name="password"
               rules={[
                 {
                   required: true,
-                  message: 'Please input your password!',
+                  message: `${t('missing_password_error')}`,
                 },
               ]}
             >
@@ -100,7 +100,7 @@ function Login() {
             </Form.Item>
             <Form.Item label={<span></span>}>
               <Button type="primary" htmlType="submit" className="submitBtn authSpan">
-                Login
+                {t('login_menu_label')}
               </Button>
             </Form.Item>
           </Form>

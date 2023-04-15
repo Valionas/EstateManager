@@ -20,10 +20,12 @@ import {
 } from 'react-icons/md';
 import { showConfirmationModal } from '../../components/ConfirmationModal';
 import { modalMessage } from '../../globals/messages';
-import React from 'react';
+
 import { ReduxState } from '../../store';
+import { useTranslation } from 'react-i18next';
 
 function ReviewCard({ reviewObject, rentObject }) {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const rates = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
   const currentUser = useSelector((state: ReduxState) => state.auth.currentUser);
@@ -59,7 +61,7 @@ function ReviewCard({ reviewObject, rentObject }) {
         <Row>
           <Col md={24} lg={5} style={{ fontSize: 20 }} offset={1}>
             <p>
-              <MdOutlineEditCalendar />: {reviewObject.monthsRented} months
+              <MdOutlineEditCalendar />: {reviewObject.monthsRented} <span>{t('months')}</span>
             </p>
             <p>
               <MdOutlineRealEstateAgent />: {reviewObject.rentState}
@@ -77,7 +79,7 @@ function ReviewCard({ reviewObject, rentObject }) {
           </Col>
           <Col md={24} lg={10}>
             <div style={{ width: '100%' }}>
-              <h1 style={{ textAlign: 'center' }}>Description</h1>
+              <h1 style={{ textAlign: 'center' }}>{t('rent_description')}</h1>
               <span> {reviewObject.description}</span>
             </div>
           </Col>
@@ -97,7 +99,7 @@ function ReviewCard({ reviewObject, rentObject }) {
                   style={{ width: '100%', marginBottom: '5%' }}
                   onClick={updateReviewHandler}
                 >
-                  UPDATE REVIEW
+                  {t('update_review')}
                 </Button>
                 <Button
                   type="primary"
@@ -106,7 +108,7 @@ function ReviewCard({ reviewObject, rentObject }) {
                   onClick={() => deleteReviewHandler(rentObject.id)}
                   danger
                 >
-                  DELETE REVIEW
+                  {t('delete_review')}
                 </Button>
               </Row>
             )}

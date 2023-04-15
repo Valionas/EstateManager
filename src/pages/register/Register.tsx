@@ -1,19 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { authenticate } from '../../store/slices/authSlice';
 
 import { motion } from 'framer-motion';
 
-import { Col, Row, Button, Checkbox, Form, Input, notification } from 'antd';
-import { Space, Table, Tag } from 'antd';
+import { Row, Button, Form, Input, notification } from 'antd';
+
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 
 import './Register.css';
-import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 function Register() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const authentication = getAuth();
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ function Register() {
           <Form
             name="basic"
             labelCol={{
-              span: 12,
+              span: 13,
             }}
             wrapperCol={{
               span: 14,
@@ -72,48 +73,48 @@ function Register() {
             autoComplete="off"
           >
             <Form.Item
-              label={<span className="authLabel authSpan">Email</span>}
+              label={<span className="authLabel authSpan">{t('email')}</span>}
               name="email"
               rules={[
                 {
                   required: true,
-                  message: 'Please input your email!',
+                  message: `${t('missing_email_error')}`,
                 },
                 {
                   type: 'email',
-                  message: 'Email format is incorrect.',
+                  message: `${t('wrong_email_format')}`,
                 },
               ]}
             >
               <Input />
             </Form.Item>
             <Form.Item
-              label={<span className="authLabel authSpan">Password</span>}
+              label={<span className="authLabel authSpan">{t('password')}</span>}
               name="password"
               rules={[
                 {
                   required: true,
-                  message: 'Please input your password!',
+                  message: `${t('missing_password_error')}`,
                 },
                 {
                   min: 6,
-                  message: 'Password cannot be shorter than 6 symbols.',
+                  message: `${t('password_length_error')}`,
                 },
               ]}
             >
               <Input.Password />
             </Form.Item>
             <Form.Item
-              label={<span className="authLabel authSpan">Repeat Password</span>}
+              label={<span className="authLabel authSpan">{t('repeat_password')}</span>}
               name="repeatPassword"
               rules={[
                 {
                   required: true,
-                  message: 'Please input your password!',
+                  message: `${t('missing_password_error')}`,
                 },
                 {
                   min: 6,
-                  message: 'Password cannot be shorter than 6 symbols.',
+                  message: `${t('password_length_error')}`,
                 },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
@@ -121,7 +122,7 @@ function Register() {
                       return Promise.resolve();
                     }
 
-                    return Promise.reject(new Error('The two passwords do not match!'));
+                    return Promise.reject(new Error(`${t('passwords_miss_match')}`));
                   },
                 }),
               ]}
@@ -130,7 +131,7 @@ function Register() {
             </Form.Item>
             <Form.Item label={<span></span>}>
               <Button type="primary" htmlType="submit" className="submitBtn">
-                Register
+                {t('register_menu_label')}
               </Button>
             </Form.Item>
           </Form>

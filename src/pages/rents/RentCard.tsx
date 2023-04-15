@@ -8,7 +8,7 @@ import {
 } from '../../store/slices/rentSlice';
 
 import { Col, Row, Image, Divider } from 'antd';
-import { Space, Table, Tag, Button } from 'antd';
+import { Button } from 'antd';
 import { showConfirmationModal } from '../../components/ConfirmationModal';
 import { modalMessage } from '../../globals/messages';
 
@@ -17,15 +17,17 @@ import './Rents.css';
 
 import RequestRentModal from './modals/RequestRentModal';
 import ReviewRentModal from './modals/ReviewRentModal';
-import AddEditRentModal from './modals/AddEditRentModal';
+
 import ReviewCard from './ReviewCard';
 
 import { deleteRent, updateRent } from '../../services/rents-service';
-import React from 'react';
+
 import { ReduxState } from '../../store';
-import { auth } from '../../firebase';
+
+import { useTranslation } from 'react-i18next';
 
 function RentCard({ rentObject }) {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const currentUser = useSelector((state: ReduxState) => state.auth.currentUser);
   const authenticated = useSelector((state: ReduxState) => state.auth.isAuthenticated);
@@ -77,30 +79,33 @@ function RentCard({ rentObject }) {
             <p>
               <GoLocation /> {rentObject.location}
             </p>
-            <h1>Description</h1>
+            <h1>{t('rent_description')}</h1>
             <p>{rentObject.description}</p>
           </Col>
           <Col md={24} lg={5} offset={1}>
             <Row>
               <p style={{ fontSize: '2vh' }}>
-                <b>Status:</b>{' '}
+                <b>{t('rent_status')}:</b>{' '}
                 <span
                   className={
                     rentObject.status === 'Occupied' ? 'approvedRentBanner' : 'rentableRentBanner'
                   }
                 >
-                  {rentObject.status}
+                  {rentObject.status === 'Occupied'
+                    ? t('rent_status_occupied')
+                    : t('rent_status_rentable')}
                 </span>
               </p>
             </Row>
             <Row>
               <p style={{ fontSize: '2vh' }}>
-                <b>Price:</b> ${rentObject.rent}/monthly
+                <b>{t('price')}:</b> ${rentObject.rent}/{t('monthly')}
               </p>
             </Row>
             <Row>
               <p style={{ fontSize: '2vh' }}>
-                <b>Minimal rental time:</b> {rentObject.minimalRentalTime} months
+                <b>{t('rent_status_minimal_rent_time')}:</b> {rentObject.minimalRentalTime}{' '}
+                {t('months')}
               </p>
             </Row>
             {authenticated && currentUser.email !== rentObject.owner && (
@@ -125,7 +130,7 @@ function RentCard({ rentObject }) {
                     style={{ width: '100%' }}
                     onClick={openReviewRentModalHandler}
                   >
-                    REVIEW
+                    {t('rent_reviews')}
                   </Button>
                 )}
               </Row>
@@ -139,7 +144,7 @@ function RentCard({ rentObject }) {
                     style={{ width: '100%', marginBottom: '5%' }}
                     onClick={() => renewRentHandler(rentObject)}
                   >
-                    RENEW RENT
+                    {t('rent_renew')}
                   </Button>
                 )}
                 <Button
@@ -148,7 +153,7 @@ function RentCard({ rentObject }) {
                   style={{ width: '100%', marginBottom: '5%' }}
                   onClick={updateRentHandler}
                 >
-                  UPDATE RENT
+                  {t('rent_update')}
                 </Button>
                 <Button
                   type="primary"
@@ -157,7 +162,7 @@ function RentCard({ rentObject }) {
                   onClick={() => deleteRentHandler(rentObject.id)}
                   danger
                 >
-                  DELETE RENT
+                  {t('rent_delete')}
                 </Button>
               </Row>
             )}
@@ -168,7 +173,7 @@ function RentCard({ rentObject }) {
           <>
             <Row justify="center">
               <h1>
-                <b>REVIEWS</b>
+                <b>{t('reviews')}</b>
               </h1>
             </Row>
             <Row>

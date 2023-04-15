@@ -6,7 +6,10 @@ import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 
 import './ResetPassword.css';
 
+import { useTranslation } from 'react-i18next';
+
 function ResetPassword() {
+  const { t } = useTranslation();
   const authentication = getAuth();
 
   const openWrongCredentialsNotification = (type) => {
@@ -50,16 +53,16 @@ function ResetPassword() {
             autoComplete="off"
           >
             <Form.Item
-              label={<span className="authLabel authSpan">Email</span>}
+              label={<span className="authLabel authSpan">{t('email')}</span>}
               name="email"
               rules={[
                 {
                   required: true,
-                  message: 'Please input your email!',
+                  message: `${t('missing_email_error')}`,
                 },
                 {
                   type: 'email',
-                  message: 'Email format is incorrect.',
+                  message: `${t('wrong_email_format')}`,
                 },
               ]}
             >
@@ -67,7 +70,7 @@ function ResetPassword() {
             </Form.Item>
             <Form.Item label={<span></span>}>
               <Button type="primary" htmlType="submit" className="submitBtn authSpan">
-                Reset Password
+                {t('reset_pass_menu_label')}
               </Button>
             </Form.Item>
           </Form>

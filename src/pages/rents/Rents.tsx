@@ -6,17 +6,19 @@ import { openRentModal, closeRentModal, setUpdatePage } from '../../store/slices
 import { motion } from 'framer-motion';
 
 import { Col, Row } from 'antd';
-import { Space, Table, Tag, Modal, Button, Spin } from 'antd';
+import { Button, Spin } from 'antd';
 
 import RentCard from './RentCard';
 import AddEditRentModal from './modals/AddEditRentModal';
 
 import { getRents } from '../../services/rents-service';
-import React from 'react';
 import { ReduxState } from '../../store';
 import Rent from '../../models/rents/Rent';
 
+import { useTranslation } from 'react-i18next';
+
 function Rents() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const updatePageTrigger = useSelector((state: ReduxState) => state.rent.triggeredUpdate);
   const authenticated = useSelector((state: ReduxState) => state.auth.isAuthenticated);
@@ -42,7 +44,7 @@ function Rents() {
   return (
     <>
       <Row justify="center">
-        <h1>Rents</h1>
+        <h1>{t('rents_menu_label')}</h1>
       </Row>
       {loading ? (
         <Row justify="center">
@@ -53,7 +55,7 @@ function Rents() {
           {authenticated && (
             <Row justify="center" style={{ marginBottom: '10px' }}>
               <Button type="primary" onClick={openRentModalHandler}>
-                Add Rentable Estate
+                {t('rent_add_button')}
               </Button>
             </Row>
           )}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Route, Routes, Link, useNavigate } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -6,9 +6,7 @@ import { authenticate } from './store/slices/authSlice';
 
 import { getAuth, signOut } from 'firebase/auth';
 
-import { motion } from 'framer-motion';
-
-import { Breadcrumb, Layout, Menu, Row, Col } from 'antd';
+import { Layout, Menu, Row, Col, Dropdown, Button } from 'antd';
 
 import { AiOutlineUserAdd, AiOutlineUserSwitch, AiOutlineHome } from 'react-icons/ai';
 import { MdOutlinePayment, MdOutlineSell, MdCreate } from 'react-icons/md';
@@ -17,7 +15,7 @@ import { BiLogOut } from 'react-icons/bi';
 import { GiMoneyStack, GiModernCity } from 'react-icons/gi';
 import { RiMailSendLine, RiInformationLine } from 'react-icons/ri';
 import { MdOutlineLock } from 'react-icons/md';
-
+import { GlobalOutlined } from '@ant-design/icons';
 import Estates from './pages/estates-for-sale/Estates';
 import Rents from './pages/rents/Rents';
 import RentRequests from './pages/rent-requests/RentRequests';
@@ -31,16 +29,19 @@ import ResetPassword from './pages/reset-password/ResetPassword';
 import NotFoundPage from './pages/not-found/NotFoundPage';
 import TermsAndConditions from './pages/terms-and-conditions/TermsAndConditions';
 
+import { useTranslation } from 'react-i18next';
 const { Header, Content, Footer, Sider } = Layout;
 import './App.css';
 
 const App = () => {
+  const { t, i18n } = useTranslation();
+
   const dispatch = useDispatch();
   const authentication = getAuth();
   const navigate = useNavigate();
 
   const authenticated = useSelector((state) => state.auth.isAuthenticated);
-
+  const [language, setLanguage] = useState();
   const [menuItems, setMenuItems] = useState();
 
   useEffect(() => {
@@ -66,7 +67,7 @@ const App = () => {
     } else {
       setMenuItems(publicMenuItems);
     }
-  }, [authenticated]);
+  }, [authenticated, i18n.language]);
 
   function setMenuItem(label, key, icon, children) {
     return {
@@ -77,25 +78,86 @@ const App = () => {
     };
   }
 
+  const items = [
+    {
+      key: 'bg',
+      label: (
+        <a target="_blank" onClick={() => i18n.changeLanguage('bg')}>
+          {t('language_bulgarian')}
+        </a>
+      ),
+    },
+    {
+      key: 'en',
+      label: (
+        <a target="_blank" onClick={() => i18n.changeLanguage('en')}>
+          {t('language_english')}
+        </a>
+      ),
+    },
+  ];
+
   const publicMenuItems = [
-    setMenuItem(<Link to="/">Home</Link>, '1', <AiOutlineHome />),
-    setMenuItem(<Link to="/login">Login</Link>, '2', <AiOutlineUserSwitch />),
-    setMenuItem(<Link to="/register">Register</Link>, '3', <AiOutlineUserAdd />),
-    setMenuItem(<Link to="/reset-password">Reset Password</Link>, '4', <MdOutlineLock />),
-    setMenuItem(<Link to="/rents">Rents</Link>, '5', <MdOutlinePayment />),
-    setMenuItem(<Link to="/estates">Estates for sale</Link>, '6', <GiModernCity />),
-    setMenuItem(<Link to="/terms">Terms and Conditions</Link>, '7', <RiInformationLine />),
+    setMenuItem(<Link to="/">{t('home_menu_label')}</Link>, '1', <AiOutlineHome />),
+    setMenuItem(<Link to="/login">{t('login_menu_label')}</Link>, '2', <AiOutlineUserSwitch />),
+    setMenuItem(<Link to="/register">{t('register_menu_label')}</Link>, '3', <AiOutlineUserAdd />),
+    setMenuItem(
+      <Link to="/reset-password">{t('reset_pass_menu_label')}</Link>,
+      '4',
+      <MdOutlineLock />
+    ),
+    setMenuItem(<Link to="/rents">{t('rents_menu_label')}</Link>, '5', <MdOutlinePayment />),
+    setMenuItem(
+      <Link to="/estates">{t('estates_for_sale_menu_label')}</Link>,
+      '6',
+      <GiModernCity />
+    ),
+    setMenuItem(<Link to="/terms">{t('terms_menu_label')}</Link>, '7', <RiInformationLine />),
+    setMenuItem(
+      <Dropdown menu={{ items }}>
+        <span>
+          <Button shape="circle" icon={<GlobalOutlined />} /> Language
+        </span>
+      </Dropdown>
+    ),
   ];
 
   const authenticatedMenuItems = [
-    setMenuItem(<Link to="/">Home</Link>, '1', <AiOutlineHome />),
-    setMenuItem(<Link to="/rents">Rents</Link>, '2', <MdOutlinePayment />),
-    setMenuItem(<Link to="/rent-requests">My Rent Requests</Link>, '3', <GiMoneyStack />),
-    setMenuItem(<Link to="/estates">Estates for sale</Link>, '4', <GiModernCity />),
-    setMenuItem(<Link to="/estate-offers">My Estate Offers</Link>, '5', <MdOutlineSell />),
-    setMenuItem(<Link to="/messages">My Sent messages</Link>, '6', <RiMailSendLine />),
-    setMenuItem(<Link to="/reports">Reports</Link>, '7', <HiOutlineDocumentReport />),
-    setMenuItem(<a onClick={() => logoutHandler()}>Logout</a>, '8', <BiLogOut />),
+    setMenuItem(<Link to="/">{t('home_menu_label')}</Link>, '1', <AiOutlineHome />),
+    setMenuItem(<Link to="/rents">{t('rents_menu_label')}</Link>, '2', <MdOutlinePayment />),
+    setMenuItem(
+      <Link to="/rent-requests">{t('my_rent_requests_menu_label')}</Link>,
+      '3',
+      <GiMoneyStack />
+    ),
+    setMenuItem(
+      <Link to="/estates">{t('estates_for_sale_menu_label')}</Link>,
+      '4',
+      <GiModernCity />
+    ),
+    setMenuItem(
+      <Link to="/estate-offers">{t('my_estate_offers_menu_label')}</Link>,
+      '5',
+      <MdOutlineSell />
+    ),
+    setMenuItem(
+      <Link to="/messages">{t('my_sent_messages_menu_label')}</Link>,
+      '6',
+      <RiMailSendLine />
+    ),
+    setMenuItem(
+      <Link to="/reports">{t('reports_menu_label')}</Link>,
+      '7',
+      <HiOutlineDocumentReport />
+    ),
+    setMenuItem(<a onClick={() => logoutHandler()}>{t('logout_menu_label')}</a>, '8', <BiLogOut />),
+    setMenuItem(
+      <Dropdown menu={{ items }}>
+        <span>
+          <Button shape="circle" icon={<GlobalOutlined />} /> {t('language')}
+        </span>
+      </Dropdown>
+    ),
   ];
 
   const logoutHandler = async () => {

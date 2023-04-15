@@ -2,22 +2,22 @@ import { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  openReviewRentModal,
   closeReviewRentModal,
   setCurrentRent,
   setUpdatePage,
   setCurrentRentReview,
 } from '../../../store/slices/rentSlice';
 
-import { AiOutlineUpload } from 'react-icons/ai';
-
-import { Space, Table, Tag, Row, Modal, Button, Form, Input, Select, Rate } from 'antd';
+import { Row, Modal, Form, Input, Select, Rate } from 'antd';
 
 import { updateRent } from '../../../services/rents-service';
-import React from 'react';
+
 import { ReduxState } from '../../../store';
 
+import { useTranslation } from 'react-i18next';
+
 function ReviewRentModal() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const isOpened = useSelector((state: ReduxState) => state.rent.isOpenedReviewRentModal);
   const currentUser = useSelector((state: ReduxState) => state.auth.currentUser);
@@ -28,7 +28,13 @@ function ReviewRentModal() {
   const [form] = Form.useForm();
 
   const [currentRate, setCurrentRate] = useState(3);
-  const rates = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
+  const rates = [
+    t('rent_review_star_1'),
+    t('rent_review_star_2'),
+    t('rent_review_star_3'),
+    t('rent_review_star_4'),
+    t('rent_review_star_5'),
+  ];
 
   useEffect(() => {
     if (currentRentReview) {
@@ -94,10 +100,12 @@ function ReviewRentModal() {
 
   return (
     <Modal
-      title="Drop your review..."
-      visible={isOpened}
+      title={t('rent_modal_header')}
+      open={isOpened}
       onOk={() => form.submit()}
       onCancel={onCancelHandler}
+      okText={t('rent_modal_ok_btn')}
+      cancelText={t('rent_modal_cancel_btn')}
     >
       <Form
         form={form}
@@ -114,7 +122,7 @@ function ReviewRentModal() {
         autoComplete="off"
       >
         <Form.Item
-          label="Months rented"
+          label={t('rent_months_label')}
           name="monthsRented"
           rules={[
             {
@@ -139,7 +147,7 @@ function ReviewRentModal() {
           <Input />
         </Form.Item>
         <Form.Item
-          label="Description"
+          label={t('rent_description_label')}
           name="description"
           rules={[
             {
@@ -155,7 +163,7 @@ function ReviewRentModal() {
           <Input.TextArea />
         </Form.Item>
         <Form.Item
-          label="State of rent"
+          label={t('rent_state_label')}
           name="rentState"
           rules={[
             {
@@ -165,15 +173,15 @@ function ReviewRentModal() {
           ]}
         >
           <Select>
-            <Select.Option value={'Poor'}>Poor </Select.Option>
-            <Select.Option value={'Neutral'}>Neutral</Select.Option>
-            <Select.Option value={'Good'}>Good</Select.Option>
-            <Select.Option value={'Very Good'}>Very Good</Select.Option>
-            <Select.Option value={'Excellent'}>Excellent</Select.Option>
+            <Select.Option value={'Poor'}>{t('rent_state_poor')}</Select.Option>
+            <Select.Option value={'Neutral'}>{t('rent_state_neutral')}</Select.Option>
+            <Select.Option value={'Good'}>{t('rent_state_good')}</Select.Option>
+            <Select.Option value={'Very Good'}>{t('rent_state_very_good')}</Select.Option>
+            <Select.Option value={'Excellent'}>{t('rent_state_excellent')}</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item
-          label="Location factor"
+          label={t('rent_location_label')}
           name="locationFactor"
           rules={[
             {
@@ -183,10 +191,10 @@ function ReviewRentModal() {
           ]}
         >
           <Select>
-            <Select.Option value={'Desolate'}>Desolate</Select.Option>
-            <Select.Option value={'Neutral'}>Neutral</Select.Option>
-            <Select.Option value={'Lively'}>Lively</Select.Option>
-            <Select.Option value={'Very Busy'}>Very Busy</Select.Option>
+            <Select.Option value={'Desolate'}>{t('rent_location_desolate')}</Select.Option>
+            <Select.Option value={'Neutral'}>{t('rent_location_neutral')}</Select.Option>
+            <Select.Option value={'Lively'}>{t('rent_location_lively')}</Select.Option>
+            <Select.Option value={'Very Busy'}>{t('rent_location_very_busy')}</Select.Option>
           </Select>
         </Form.Item>
         <Row justify="center">
