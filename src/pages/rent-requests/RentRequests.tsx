@@ -116,6 +116,11 @@ function RentRequests() {
       key: 'renter',
     },
     {
+      title: 'Date',
+      dataIndex: 'date',
+      key: 'date',
+    },
+    {
       title: 'Message',
       dataIndex: 'message',
       key: 'message',
@@ -127,8 +132,9 @@ function RentRequests() {
       render: (item, record) => (
         <>
           <Row>
-            <Col span={12}>
+            <Col md={24} lg={{ span: 11 }} style={{ marginBottom: 5 }}>
               <Button
+                style={{ width: '100%' }}
                 type="primary"
                 shape="round"
                 onClick={(e) => approveRequestHandler(record.renter, record.id, record)}
@@ -136,9 +142,9 @@ function RentRequests() {
                 Approve
               </Button>
             </Col>
-            <Divider></Divider>
-            <Col>
+            <Col md={24} lg={{ span: 11, offset: 1 }}>
               <Button
+                style={{ width: '100%' }}
                 type="primary"
                 shape="round"
                 onClick={(e) => declineRequestHandler(record.renter, record.id, record)}
@@ -171,7 +177,12 @@ function RentRequests() {
           <Row justify="center">
             <Col span={24}>
               {requests && (
-                <Table scroll={{ x: true }} columns={requestColumns} dataSource={requests} />
+                <Table
+                  scroll={{ x: true }}
+                  columns={requestColumns}
+                  dataSource={requests}
+                  style={{ verticalAlign: 'inherit', marginBottom: 15 }}
+                />
               )}
             </Col>
           </Row>

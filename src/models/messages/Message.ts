@@ -11,6 +11,7 @@ interface Message {
   price?: number;
   sender: string;
   status: string;
+  date: string;
   type: 'rent' | 'estate';
 }
 

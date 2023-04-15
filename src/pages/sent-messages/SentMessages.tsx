@@ -137,6 +137,11 @@ function SentMessages() {
       key: 'message',
     },
     {
+      title: 'Date',
+      dataIndex: 'date',
+      key: 'date',
+    },
+    {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
@@ -150,8 +155,9 @@ function SentMessages() {
           <Row>
             {record.status === 'Pending' ? (
               <>
-                <Col span={12}>
+                <Col md={24} lg={{ span: 11 }} style={{ marginBottom: 5 }}>
                   <Button
+                    style={{ width: '100%' }}
                     type="primary"
                     shape="round"
                     onClick={(e) => updateMessageHandler(record)}
@@ -159,9 +165,9 @@ function SentMessages() {
                     Update
                   </Button>
                 </Col>
-                <Divider></Divider>
-                <Col>
+                <Col md={24} lg={{ span: 11, offset: 1 }}>
                   <Button
+                    style={{ width: '100%' }}
                     type="primary"
                     shape="round"
                     onClick={(e) => deleteMessageHandler(record.id, record)}
@@ -173,8 +179,9 @@ function SentMessages() {
               </>
             ) : (
               <>
-                <Col>
+                <Col md={24} lg={{ span: 20 }} style={{ marginBottom: 5 }}>
                   <Button
+                    style={{ width: '100%' }}
                     type="primary"
                     shape="round"
                     onClick={(e) => deleteMessageHandler(record.id, record)}

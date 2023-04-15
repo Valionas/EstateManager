@@ -6,6 +6,7 @@ interface RentRequest {
   location: string;
   renter: string;
   rent: number;
+  date: string;
   message: string;
   owner: string;
 }

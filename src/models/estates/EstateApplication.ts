@@ -7,6 +7,7 @@ interface EstateApplication {
   buyer: string;
   offeredPrice: number;
   message: string;
+  date: string;
   owner: string;
 }
 export default EstateApplication;

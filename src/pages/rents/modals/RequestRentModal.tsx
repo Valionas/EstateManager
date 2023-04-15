@@ -22,6 +22,7 @@ import { ReduxState } from '../../../store';
 import React from 'react';
 import RentRequest from '../../../models/rents/RentRequest';
 import Message from '../../../models/messages/Message';
+import { format } from 'date-fns';
 
 function RequestRentModal() {
   const dispatch = useDispatch();
@@ -59,6 +60,7 @@ function RequestRentModal() {
         renter: currentUser.email!,
         rent: Number(currentRent.rent),
         message: values.message,
+        date: format(new Date(), 'dd-mm-yyyy HH:mm'),
         owner: currentRent.owner,
       };
 
@@ -72,6 +74,7 @@ function RequestRentModal() {
         sender: currentUser.email!,
         rent: Number(currentRent.rent),
         type: 'rent',
+        date: format(new Date(), 'dd-mm-yyyy HH:mm'),
         message: values.message,
         status: 'Pending',
       };

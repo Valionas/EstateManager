@@ -8,9 +8,7 @@ import {
   setCurrentEstateApplication,
 } from '../../../store/slices/estateSlice';
 
-import { AiOutlineUpload } from 'react-icons/ai';
-
-import { Space, Table, Tag, Row, Modal, Button, Form, Input, Select, Upload } from 'antd';
+import { Modal, Form, Input } from 'antd';
 
 import {
   addEstateApplication,
@@ -19,10 +17,10 @@ import {
 } from '../../../services/estate-applications-service';
 import { addMessage, updateMessage } from '../../../services/messages-service';
 import { updateEstate } from '../../../services/estates-service';
-import React from 'react';
 import { ReduxState } from '../../../store';
 import Message from '../../../models/messages/Message';
 import EstateApplication from '../../../models/estates/EstateApplication';
+import { format } from 'date-fns';
 
 function ApplyForEstateModal() {
   const dispatch = useDispatch();
@@ -69,6 +67,7 @@ function ApplyForEstateModal() {
         buyer: currentUser.email!,
         offeredPrice: Number(values.offerPrice),
         message: values.message,
+        date: format(new Date(), 'dd-mm-yyyy HH:mm'),
         owner: currentEstate.owner,
       };
 
@@ -83,6 +82,7 @@ function ApplyForEstateModal() {
         price: values.offerPrice,
         message: values.message,
         type: 'estate',
+        date: format(new Date(), 'dd-mm-yyyy HH:mm'),
         status: 'Pending',
       };
 

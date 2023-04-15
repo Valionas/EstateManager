@@ -121,6 +121,11 @@ function EstateApplications() {
       key: 'buyer',
     },
     {
+      title: 'Date',
+      dataIndex: 'date',
+      key: 'date',
+    },
+    {
       title: 'Message',
       dataIndex: 'message',
       key: 'message',

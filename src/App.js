@@ -93,7 +93,7 @@ const App = () => {
     setMenuItem(<Link to="/rent-requests">My Rent Requests</Link>, '3', <GiMoneyStack />),
     setMenuItem(<Link to="/estates">Estates for sale</Link>, '4', <GiModernCity />),
     setMenuItem(<Link to="/estate-offers">My Estate Offers</Link>, '5', <MdOutlineSell />),
-    setMenuItem(<Link to="/messages">My messages</Link>, '6', <RiMailSendLine />),
+    setMenuItem(<Link to="/messages">My Sent messages</Link>, '6', <RiMailSendLine />),
     setMenuItem(<Link to="/reports">Reports</Link>, '7', <HiOutlineDocumentReport />),
     setMenuItem(<a onClick={() => logoutHandler()}>Logout</a>, '8', <BiLogOut />),
   ];
@@ -116,46 +116,40 @@ const App = () => {
         items={menuItems}
         style={{ display: 'flex', justifyContent: 'center' }}
       />
-      <motion.div
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1 }}
-      >
-        <Content>
-          <div className="pageBackgroundWrapper">
-            <div
-              className="site-layout-background"
-              style={{
-                minHeight: 360,
-              }}
-            >
-              <Routes>
-                {!authenticated ? (
-                  <>
-                    <Route exact path="/" element={<Home />} />
-                    <Route exact path="/login" element={<Login />} />
-                    <Route exact path="/register" element={<Register />} />
-                    <Route exact path="/reset-password" element={<ResetPassword />} />
-                    <Route exact path="/terms" element={<TermsAndConditions />} />
-                  </>
-                ) : (
-                  <>
-                    <Route exact path="/" element={<Home />} />
-                    <Route exact path="/estate-offers" element={<EstateApplications />} />
-                    <Route exact path="/rent-requests" element={<RentRequests />} />
-                    <Route exact path="/messages" element={<SentMessages />} />
-                    <Route exact path="/reports" element={<Reports />} />
-                    <Route exact path="/logout" element={<Register />} />
-                  </>
-                )}
-                <Route exact path="/rents" element={<Rents />} />
-                <Route exact path="/estates" element={<Estates />} />
-                <Route exact path="*" element={<NotFoundPage />} />
-              </Routes>
-            </div>
+      <Content>
+        <div className="pageBackgroundWrapper">
+          <div
+            className="site-layout-background"
+            style={{
+              minHeight: 360,
+            }}
+          >
+            <Routes>
+              {!authenticated ? (
+                <>
+                  <Route exact path="/" element={<Home />} />
+                  <Route exact path="/login" element={<Login />} />
+                  <Route exact path="/register" element={<Register />} />
+                  <Route exact path="/reset-password" element={<ResetPassword />} />
+                  <Route exact path="/terms" element={<TermsAndConditions />} />
+                </>
+              ) : (
+                <>
+                  <Route exact path="/" element={<Home />} />
+                  <Route exact path="/estate-offers" element={<EstateApplications />} />
+                  <Route exact path="/rent-requests" element={<RentRequests />} />
+                  <Route exact path="/messages" element={<SentMessages />} />
+                  <Route exact path="/reports" element={<Reports />} />
+                  <Route exact path="/logout" element={<Register />} />
+                </>
+              )}
+              <Route exact path="/rents" element={<Rents />} />
+              <Route exact path="/estates" element={<Estates />} />
+              <Route exact path="*" element={<NotFoundPage />} />
+            </Routes>
           </div>
-        </Content>
-      </motion.div>
+        </div>
+      </Content>
       <Footer
         className="footerSection"
         style={{
