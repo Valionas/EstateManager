@@ -18,7 +18,6 @@ import { motion } from 'framer-motion';
 import { Col, Row } from 'antd';
 import { Table, Button, Spin, Image, Divider } from 'antd';
 import { showConfirmationModal } from '../../components/ConfirmationModal';
-import { modalMessage } from '../../globals/messages';
 
 import { getMessagesBySender, deleteMessage } from '../../services/messages-service';
 import { getEstateById, updateEstate } from '../../services/estates-service';
@@ -31,10 +30,11 @@ import { getRentRequestById, deleteRequest } from '../../services/rent-requests-
 
 import RequestRentModal from '../rents/modals/RequestRentModal';
 import ApplyForEstateModal from '../estates-for-sale/modals/ApplyForEstateModal';
-import React from 'react';
 import { ReduxState } from '../../store';
+import { useTranslation } from 'react-i18next';
 
 function SentMessages() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const updatePageTrigger = useSelector((state: ReduxState) => state.rent.triggeredUpdate);
   const currentUser = useSelector((state: ReduxState) => state.auth.currentUser);
@@ -54,7 +54,7 @@ function SentMessages() {
   }, [updatePageTrigger]);
 
   const deleteMessageHandler = (id, record) => {
-    showConfirmationModal(modalMessage, async function (answer) {
+    showConfirmationModal(t('confirmation_text'), async function (answer) {
       if (answer) {
         switch (record.type) {
           case 'estate':
@@ -111,43 +111,43 @@ function SentMessages() {
 
   const messagesColumns = [
     {
-      title: 'Image',
+      title: t('table_image'),
       dataIndex: 'image',
       key: 'image',
       render: (image) => <Image height={'5vh'} width={'100%'} src={image} />,
     },
     {
-      title: 'Name',
+      title: t('table_name'),
       dataIndex: 'name',
       key: 'name',
     },
     {
-      title: 'Location',
+      title: t('table_location'),
       dataIndex: 'location',
       key: 'location',
     },
     {
-      title: 'Receiver',
+      title: t('table_receiver'),
       dataIndex: 'receiver',
       key: 'receiver',
     },
     {
-      title: 'Message',
+      title: t('table_message'),
       dataIndex: 'message',
       key: 'message',
     },
     {
-      title: 'Date',
+      title: t('table_date'),
       dataIndex: 'date',
       key: 'date',
     },
     {
-      title: 'Status',
+      title: t('table_status'),
       dataIndex: 'status',
       key: 'status',
     },
     {
-      title: 'Actions',
+      title: t('table_actions'),
       dataIndex: 'actions',
       key: 'actions',
       render: (item, record) => (
@@ -162,7 +162,7 @@ function SentMessages() {
                     shape="round"
                     onClick={(e) => updateMessageHandler(record)}
                   >
-                    Update
+                    {t('table_update')}
                   </Button>
                 </Col>
                 <Col md={24} lg={{ span: 11, offset: 1 }}>
@@ -173,7 +173,7 @@ function SentMessages() {
                     onClick={(e) => deleteMessageHandler(record.id, record)}
                     danger
                   >
-                    Delete
+                    {t('table_delete')}
                   </Button>
                 </Col>
               </>
@@ -187,7 +187,7 @@ function SentMessages() {
                     onClick={(e) => deleteMessageHandler(record.id, record)}
                     danger
                   >
-                    Delete
+                    {t('table_delete')}
                   </Button>
                 </Col>
               </>
@@ -201,7 +201,7 @@ function SentMessages() {
   return (
     <>
       <Row justify="center">
-        <h1>Sent Messages</h1>
+        <h1>{t('my_sent_messages_menu_label')}</h1>
       </Row>
       {loading ? (
         <Row justify="center">
@@ -216,7 +216,12 @@ function SentMessages() {
           <Row justify="center">
             <Col span={24}>
               {messages && (
-                <Table scroll={{ x: true }} columns={messagesColumns} dataSource={messages} />
+                <Table
+                  scroll={{ x: true }}
+                  columns={messagesColumns}
+                  dataSource={messages}
+                  locale={{ emptyText: t('table_no_data') }}
+                />
               )}
             </Col>
           </Row>

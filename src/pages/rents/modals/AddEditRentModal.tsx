@@ -3,16 +3,14 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { closeRentModal, setCurrentRent, setUpdatePage } from '../../../store/slices/rentSlice';
 
-import { AiOutlineUpload } from 'react-icons/ai';
-
-import { Space, Table, Tag, Row, Modal, Button, Form, Input, Select, Upload } from 'antd';
+import { Modal, Form, Input, Select, Upload } from 'antd';
 
 import { addRent, updateRent } from '../../../services/rents-service';
-import { serverTimestamp } from 'firebase/firestore';
-import React from 'react';
-import { ReduxState } from '../../../store';
 
+import { ReduxState } from '../../../store';
+import { useTranslation } from 'react-i18next';
 function AddEditRentModal() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const isOpened = useSelector((state: ReduxState) => state.rent.isOpenedRentModal);
   const currentUser = useSelector((state: ReduxState) => state.auth.currentUser);
@@ -90,8 +88,10 @@ function AddEditRentModal() {
 
   return (
     <Modal
-      title="Add the following information..."
-      visible={isOpened}
+      title={t('rent_modal_add_header')}
+      open={isOpened}
+      okText={t('rent_modal_ok_btn')}
+      cancelText={t('rent_modal_cancel_btn')}
       onOk={() => form.submit()}
       onCancel={onCancelHandler}
     >
@@ -110,7 +110,7 @@ function AddEditRentModal() {
         autoComplete="off"
       >
         <Form.Item
-          label="Estate name"
+          label={t('rent_estate_name')}
           name="name"
           rules={[
             {
@@ -126,7 +126,7 @@ function AddEditRentModal() {
           <Input />
         </Form.Item>
         <Form.Item
-          label="Location"
+          label={t('rent_location')}
           name="location"
           rules={[
             {
@@ -151,7 +151,7 @@ function AddEditRentModal() {
           <Input />
         </Form.Item>
         <Form.Item
-          label="Rent / month"
+          label={t('rent_per_month')}
           name="rent"
           rules={[
             {
@@ -176,7 +176,7 @@ function AddEditRentModal() {
           <Input />
         </Form.Item>
         <Form.Item
-          label="Description"
+          label={t('rent_description')}
           name="description"
           rules={[
             {
@@ -192,7 +192,7 @@ function AddEditRentModal() {
           <Input.TextArea />
         </Form.Item>
         <Form.Item
-          label="Minimum rental time"
+          label={t('rent_minimal_rent_time')}
           name="minimalRentalTime"
           rules={[
             {
@@ -202,15 +202,15 @@ function AddEditRentModal() {
           ]}
         >
           <Select>
-            <Select.Option value={3}>3 months</Select.Option>
-            <Select.Option value={6}>6 months</Select.Option>
-            <Select.Option value={9}>9 months</Select.Option>
-            <Select.Option value={12}>12 months</Select.Option>
-            <Select.Option value={24}>24 months</Select.Option>
+            <Select.Option value={3}>3 {t('months')}</Select.Option>
+            <Select.Option value={6}>6 {t('months')}</Select.Option>
+            <Select.Option value={9}>9 {t('months')}</Select.Option>
+            <Select.Option value={12}>12 {t('months')}</Select.Option>
+            <Select.Option value={24}>24 {t('months')}</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item
-          label="Image link"
+          label={t('rent_minimal_rent_time')}
           name="image"
           rules={[
             {

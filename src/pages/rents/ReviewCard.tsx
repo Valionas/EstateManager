@@ -19,7 +19,6 @@ import {
   MdOutlineStarRate,
 } from 'react-icons/md';
 import { showConfirmationModal } from '../../components/ConfirmationModal';
-import { modalMessage } from '../../globals/messages';
 
 import { ReduxState } from '../../store';
 import { useTranslation } from 'react-i18next';
@@ -27,12 +26,18 @@ import { useTranslation } from 'react-i18next';
 function ReviewCard({ reviewObject, rentObject }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const rates = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
+  const rates = [
+    t('rent_review_star_1'),
+    t('rent_review_star_2'),
+    t('rent_review_star_3'),
+    t('rent_review_star_4'),
+    t('rent_review_star_5'),
+  ];
   const currentUser = useSelector((state: ReduxState) => state.auth.currentUser);
   const authenticated = useSelector((state: ReduxState) => state.auth.isAuthenticated);
 
   const deleteReviewHandler = async (id) => {
-    showConfirmationModal(modalMessage, async function (answer) {
+    showConfirmationModal(t('confirmation_text'), async function (answer) {
       if (answer) {
         let rentToUpdate = { ...rentObject };
         let tempReviews = [...rentToUpdate.reviews];
@@ -52,6 +57,37 @@ function ReviewCard({ reviewObject, rentObject }) {
     dispatch(openReviewRentModal());
   };
 
+  const renderTranslatedRentState = (rentState) => {
+    switch (rentState) {
+      case 'Poor':
+        return t('rent_state_poor');
+      case 'Neutral':
+        return t('rent_state_neutral');
+      case 'Good':
+        return t('rent_state_good');
+      case 'Very Good':
+        return t('rent_state_very_good');
+      case 'Excellent':
+        return t('rent_state_excellent');
+      default:
+        break;
+    }
+  };
+
+  const renderTranslatedRentLocationFactor = (location) => {
+    switch (location) {
+      case 'Desolate':
+        return t('rent_location_desolate');
+      case 'Neutral':
+        return t('rent_location_neutral');
+      case 'Lively':
+        return t('rent_location_lively');
+      case 'Very Busy':
+        return t('rent_location_very_busy');
+      default:
+        break;
+    }
+  };
   return (
     <>
       <Divider orientation="left" style={{ fontSize: 20 }}>
@@ -64,10 +100,11 @@ function ReviewCard({ reviewObject, rentObject }) {
               <MdOutlineEditCalendar />: {reviewObject.monthsRented} <span>{t('months')}</span>
             </p>
             <p>
-              <MdOutlineRealEstateAgent />: {reviewObject.rentState}
+              <MdOutlineRealEstateAgent />: {renderTranslatedRentState(reviewObject.rentState)}
             </p>
             <p>
-              <MdOutlineEditLocationAlt />: {reviewObject.locationFactor}
+              <MdOutlineEditLocationAlt />:{' '}
+              {renderTranslatedRentLocationFactor(reviewObject.locationFactor)}
             </p>
             <p>
               <MdOutlineStarRate />:{' '}

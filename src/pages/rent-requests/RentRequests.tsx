@@ -8,7 +8,6 @@ import { motion } from 'framer-motion';
 import { Col, Row } from 'antd';
 import { Space, Table, Tag, Modal, Button, Spin, Image, Divider } from 'antd';
 import { showConfirmationModal } from '../../components/ConfirmationModal';
-import { declineMessage, approveMessage } from '../../globals/messages';
 
 import { getRequestsByOwner, deleteRequest } from '../../services/rent-requests-service';
 import {
@@ -20,8 +19,10 @@ import { addReport } from '../../services/reports-service';
 import { getRentById, updateRent } from '../../services/rents-service';
 import React from 'react';
 import { ReduxState } from '../../store';
+import { useTranslation } from 'react-i18next';
 
 function RentRequests() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const updatePageTrigger = useSelector((state: ReduxState) => state.rent.triggeredUpdate);
   const currentUser = useSelector((state: ReduxState) => state.auth.currentUser);
@@ -41,7 +42,7 @@ function RentRequests() {
   }, [updatePageTrigger]);
 
   const approveRequestHandler = (sender, id, request) => {
-    showConfirmationModal(approveMessage, async function (answer) {
+    showConfirmationModal(t('approve_message'), async function (answer) {
       if (answer) {
         let rent = await getRentById(request.rentId);
         if (rent) {
@@ -70,7 +71,7 @@ function RentRequests() {
   };
 
   const declineRequestHandler = (sender, id, request) => {
-    showConfirmationModal(declineMessage, async function (answer) {
+    showConfirmationModal(t('decline_message'), async function (answer) {
       if (answer) {
         let rent = await getRentById(request.rentId);
         if (rent) {
@@ -90,43 +91,43 @@ function RentRequests() {
 
   const requestColumns = [
     {
-      title: 'Image',
+      title: t('table_image'),
       dataIndex: 'image',
       key: 'image',
       render: (image) => <Image height={'5vh'} width={'100%'} src={image} />,
     },
     {
-      title: 'Name',
+      title: t('table_name'),
       dataIndex: 'name',
       key: 'name',
     },
     {
-      title: 'Location',
+      title: t('table_location'),
       dataIndex: 'location',
       key: 'location',
     },
     {
-      title: 'Rent',
+      title: t('table_rent'),
       dataIndex: 'rent',
       key: 'rent',
     },
     {
-      title: 'Renter',
+      title: t('table_renter'),
       dataIndex: 'renter',
       key: 'renter',
     },
     {
-      title: 'Date',
+      title: t('table_date'),
       dataIndex: 'date',
       key: 'date',
     },
     {
-      title: 'Message',
+      title: t('table_message'),
       dataIndex: 'message',
       key: 'message',
     },
     {
-      title: 'Actions',
+      title: t('table_actions'),
       dataIndex: 'actions',
       key: 'actions',
       render: (item, record) => (
@@ -139,7 +140,7 @@ function RentRequests() {
                 shape="round"
                 onClick={(e) => approveRequestHandler(record.renter, record.id, record)}
               >
-                Approve
+                {t('table_approve')}
               </Button>
             </Col>
             <Col md={24} lg={{ span: 11, offset: 1 }}>
@@ -150,7 +151,7 @@ function RentRequests() {
                 onClick={(e) => declineRequestHandler(record.renter, record.id, record)}
                 danger
               >
-                Decline
+                {t('table_decline')}
               </Button>
             </Col>
           </Row>
@@ -162,7 +163,7 @@ function RentRequests() {
   return (
     <>
       <Row justify="center">
-        <h1>Rent Requests</h1>
+        <h1>{t('my_rent_requests_menu_label')}</h1>
       </Row>
       {loading ? (
         <Row justify="center">
@@ -181,6 +182,7 @@ function RentRequests() {
                   scroll={{ x: true }}
                   columns={requestColumns}
                   dataSource={requests}
+                  locale={{ emptyText: t('table_no_data') }}
                   style={{ verticalAlign: 'inherit', marginBottom: 15 }}
                 />
               )}

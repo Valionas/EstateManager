@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 
 import { Button, Modal } from 'antd';
-
+import { useTranslation } from 'react-i18next';
 var update = false;
 
 export const showConfirmationModal = (message, onResponse) => {
@@ -21,6 +21,7 @@ export const showConfirmationModal = (message, onResponse) => {
 };
 
 function ConfirmationModal(props) {
+  const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -39,8 +40,8 @@ function ConfirmationModal(props) {
 
   return (
     <Modal
-      visible={showModal}
-      title="Confirmation"
+      open={showModal}
+      title={t('confirmation')}
       onOk={handleOk}
       onCancel={handleCancel}
       footer={[

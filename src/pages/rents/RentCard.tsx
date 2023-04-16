@@ -10,7 +10,6 @@ import {
 import { Col, Row, Image, Divider } from 'antd';
 import { Button } from 'antd';
 import { showConfirmationModal } from '../../components/ConfirmationModal';
-import { modalMessage } from '../../globals/messages';
 
 import { GoLocation } from 'react-icons/go';
 import './Rents.css';
@@ -43,7 +42,7 @@ function RentCard({ rentObject }) {
   };
 
   const deleteRentHandler = async (id) => {
-    showConfirmationModal(modalMessage, async function (answer) {
+    showConfirmationModal(t('confirmation_text'), async function (answer) {
       if (answer) {
         await deleteRent(id);
         dispatch(setUpdatePage());

@@ -8,7 +8,6 @@ import {
 
 import { Col, Row, Image, Divider, Button, Carousel, Badge, Descriptions } from 'antd';
 import { showConfirmationModal } from '../../components/ConfirmationModal';
-import { modalMessage } from '../../globals/messages';
 
 import ApplyForEstateModal from './modals/ApplyForEstateModal';
 
@@ -17,14 +16,16 @@ import './Estates.css';
 
 import { deleteEstate } from '../../services/estates-service';
 import { ReduxState } from '../../store';
+import { useTranslation } from 'react-i18next';
 
 function EstateCard({ estateObject }) {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const currentUser = useSelector((state: ReduxState) => state.auth.currentUser);
   const authenticated = useSelector((state: ReduxState) => state.auth.isAuthenticated);
 
   const deleteEstateHandler = async (id) => {
-    showConfirmationModal(modalMessage, async function (answer) {
+    showConfirmationModal(t('confirmation_text'), async function (answer) {
       if (answer) {
         await deleteEstate(id);
         dispatch(setUpdatePage());

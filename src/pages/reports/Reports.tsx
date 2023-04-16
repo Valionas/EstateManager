@@ -11,10 +11,11 @@ import { Table, Button, Spin, Image } from 'antd';
 import { RiFileExcel2Line } from 'react-icons/ri';
 
 import { getReports } from '../../services/reports-service';
-import React from 'react';
 import { ReduxState } from '../../store';
+import { useTranslation } from 'react-i18next';
 
 function Reports() {
+  const { t } = useTranslation();
   const currentUser = useSelector((state: ReduxState) => state.auth.currentUser);
 
   const [loading, setLoading] = useState(false);
@@ -48,28 +49,28 @@ function Reports() {
 
   const rentColumns = [
     {
-      title: 'Image',
+      title: t('table_image'),
       dataIndex: 'image',
       key: 'image',
       render: (image) => <Image height={'5vh'} width={'100%'} src={image} />,
     },
     {
-      title: 'Name',
+      title: t('table_name'),
       dataIndex: 'name',
       key: 'name',
     },
     {
-      title: 'Location',
+      title: t('table_location'),
       dataIndex: 'location',
       key: 'location',
     },
     {
-      title: 'Renter',
+      title: t('table_renter'),
       dataIndex: 'renter',
       key: 'renter',
     },
     {
-      title: 'Rent',
+      title: t('table_rent'),
       dataIndex: 'rent',
       key: 'rent',
     },
@@ -77,28 +78,28 @@ function Reports() {
 
   const estateColumns = [
     {
-      title: 'Image',
+      title: t('table_image'),
       dataIndex: 'image',
       key: 'image',
       render: (image) => <Image height={'5vh'} width={'100%'} src={image} />,
     },
     {
-      title: 'Name',
+      title: t('table_name'),
       dataIndex: 'name',
       key: 'name',
     },
     {
-      title: 'Location',
+      title: t('table_location'),
       dataIndex: 'location',
       key: 'location',
     },
     {
-      title: 'Sold to',
+      title: t('table_sold_to'),
       dataIndex: 'buyer',
       key: 'buyer',
     },
     {
-      title: 'Price',
+      title: t('table_price'),
       dataIndex: 'price',
       key: 'price',
     },
@@ -133,7 +134,7 @@ function Reports() {
   return (
     <>
       <Row justify="center">
-        <h1>Reports</h1>
+        <h1>{t('reports_header')}</h1>
       </Row>
       {loading ? (
         <Row justify="center">
@@ -148,7 +149,7 @@ function Reports() {
           <Row style={{ paddingBottom: '5%' }}>
             <Col md={24} lg={11}>
               <Row justify="center">
-                <h2>Rents</h2>
+                <h2>{t('reports_rents')}</h2>
               </Row>
               <Row justify="center">
                 <Button
@@ -156,7 +157,7 @@ function Reports() {
                   style={{ display: 'flex', alignItems: 'center', marginRight: 5 }}
                 >
                   <CSVLink {...csvRentReport} separator={';'}>
-                    Export
+                    {t('reports_export')}
                   </CSVLink>
                 </Button>
               </Row>
@@ -166,12 +167,16 @@ function Reports() {
                 columns={rentColumns}
                 dataSource={rentReports}
                 bordered={true}
-                footer={() => <div style={{ textAlign: 'right' }}>Total: {totalRents}</div>}
+                footer={() => (
+                  <div style={{ textAlign: 'right' }}>
+                    {t('reports_total')}: {totalRents}
+                  </div>
+                )}
               />
             </Col>
             <Col md={24} lg={{ span: 12, offset: 1 }}>
               <Row justify="center">
-                <h2>Estates</h2>
+                <h2>{t('reports_estates')}</h2>
               </Row>
               <Row justify="center">
                 <Button
@@ -179,7 +184,7 @@ function Reports() {
                   style={{ display: 'flex', alignItems: 'center' }}
                 >
                   <CSVLink {...csvEstateReport} separator={';'}>
-                    Export
+                    {t('reports_export')}
                   </CSVLink>
                 </Button>
               </Row>
@@ -189,7 +194,11 @@ function Reports() {
                 columns={estateColumns}
                 dataSource={estateReports}
                 bordered={true}
-                footer={() => <div style={{ textAlign: 'right' }}>Total: {totalEstateSales}</div>}
+                footer={() => (
+                  <div style={{ textAlign: 'right' }}>
+                    {t('reports_total')}: {totalEstateSales}
+                  </div>
+                )}
               />
             </Col>
           </Row>
