@@ -16,10 +16,9 @@ function Home() {
   const rowStyle = {
     display: 'flex',
     alignItems: 'center',
-    paddingTop: '5%',
-    paddingBottom: '5%',
+    paddingBottom: '2.5%',
+    paddingTop: '2.5%',
     backgroundColor: 'rgba(0, 21, 41, 0.89)',
-    margin: '0 1% 0 1%',
   };
 
   const imageStyle = {
@@ -37,7 +36,7 @@ function Home() {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
       <div className="homePageWrapper">
         <Row justify="center" style={{ display: 'flex', alignItems: 'center' }}>
-          <Col md={24} lg={8} style={{ fontSize: 32 }} offset={1}>
+          <Col md={24} lg={8} style={{ fontSize: 26 }} offset={1}>
             <h1 style={{ textAlign: 'center' }}>
               <b>Estate Manager</b>
             </h1>
@@ -46,7 +45,6 @@ function Home() {
             </p>
           </Col>
         </Row>
-        <br />
         <Row style={rowStyle}>
           <Col md={24} lg={{ span: 11, offset: 2 }}>
             <Image
@@ -59,7 +57,6 @@ function Home() {
             <p style={textStyle}>{t('about_us_text')}</p>
           </Col>
         </Row>
-        <br />
         <Row style={rowStyle}>
           <Col md={24} lg={{ span: 11, offset: 2 }}>
             <h2>{t('the_idea_behind')}</h2>
@@ -73,6 +70,7 @@ function Home() {
           </Col>
         </Row>
         <br />
+        <br />
         <Row style={rowStyle}>
           <Col md={24} lg={{ span: 11, offset: 2 }}>
             <p style={textStyle}>{t('inspired_solution_text')}</p>
@@ -81,6 +79,7 @@ function Home() {
             <PieChartCustomers />
           </Col>
         </Row>
+        <br />
         <br />
         <Row style={rowStyle}>
           <Col md={24} lg={{ span: 11, offset: 2 }}>
@@ -94,7 +93,6 @@ function Home() {
             <p style={textStyle}>{t('our_mission_text')}</p>
           </Col>
         </Row>
-        <br />
         <Row style={rowStyle}>
           <Col md={24} lg={{ span: 11, offset: 2 }}>
             <h2>{t('why_choose')}</h2>
@@ -116,11 +114,14 @@ function Home() {
           </Col>
         </Row>
         <br />
+        <br />
         <Row style={rowStyle}>
           <Col span={20} offset={2}>
             <p style={textStyle}>{t('conclusion')}</p>
           </Col>
         </Row>
+        <br />
+        <br />
       </div>
     </motion.div>
   );

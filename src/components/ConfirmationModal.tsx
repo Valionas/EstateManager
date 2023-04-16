@@ -42,14 +42,16 @@ function ConfirmationModal(props) {
     <Modal
       open={showModal}
       title={t('confirmation')}
+      okText={t('confirmation_submit_btn')}
+      cancelText={t('confirmation_cancel_btn')}
       onOk={handleOk}
       onCancel={handleCancel}
       footer={[
-        <Button key="submit" type="primary" onClick={handleOk}>
-          Submit
-        </Button>,
         <Button key="back" onClick={handleCancel}>
-          Cancel
+          {t('confirmation_cancel_btn')}
+        </Button>,
+        <Button key="submit" type="primary" onClick={handleOk}>
+          {t('confirmation_submit_btn')}
         </Button>,
       ]}
     >

@@ -84,11 +84,12 @@
 }
 
 h1, h2, h3, h4, h5, h6{
-  text-shadow: 1px 3px 25px #000000;
+  text-shadow: 1px 3px 8px #000000;
   font-family: 'Contrail One', cursive !important;
 }
 p, span{
   font-family: 'Contrail One', cursive !important;
+  text-shadow: 0.5px 0.5px 0.5px #eee8e8;
 }
 
 .authLabel{
