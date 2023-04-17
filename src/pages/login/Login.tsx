@@ -22,8 +22,8 @@ function Login() {
 
   const openWrongCredentialsNotification = (type) => {
     notification[type]({
-      message: 'Oops something wrong...',
-      description: 'Please check your email or password input',
+      message: `${t('auth_something_wrong')}`,
+      description: `${t('auth_error_description')}`,
     });
   };
 

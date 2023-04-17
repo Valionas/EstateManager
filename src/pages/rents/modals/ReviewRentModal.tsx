@@ -127,16 +127,16 @@ function ReviewRentModal() {
           rules={[
             {
               required: true,
-              message: 'Please input your rent time!',
+              message: `${t('rent_review_months_required')}`,
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
                 if (isNaN(value)) {
-                  return Promise.reject(new Error('Use only numerical values'));
+                  return Promise.reject(new Error(`${t('rent_review_numerical')}`));
                 }
 
                 if (value < 0) {
-                  return Promise.reject(new Error('Use only positive values'));
+                  return Promise.reject(new Error(`${t('rent_review_positive')}`));
                 }
 
                 return Promise.resolve();
@@ -152,11 +152,11 @@ function ReviewRentModal() {
           rules={[
             {
               required: true,
-              message: 'Please input your description!',
+              message: `${t('rent_description_required')}`,
             },
             {
-              min: 20,
-              message: 'Description cannot be shorter than 20 symbols.',
+              min: 10,
+              message: `${t('rent_description_short')}`,
             },
           ]}
         >
@@ -168,7 +168,7 @@ function ReviewRentModal() {
           rules={[
             {
               required: true,
-              message: 'Please set your minimum rental time!',
+              message: `${t('rent_review_state_required')}`,
             },
           ]}
         >
@@ -186,7 +186,7 @@ function ReviewRentModal() {
           rules={[
             {
               required: true,
-              message: 'Please set your minimum rental time!',
+              message: `${t('rent_review_location_factor')}`,
             },
           ]}
         >

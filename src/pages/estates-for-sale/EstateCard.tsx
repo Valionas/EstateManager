@@ -43,6 +43,13 @@ function EstateCard({ estateObject }) {
     dispatch(openApplyForEstateModal());
   };
 
+  const renderTranslatedEstateStatus = (status) => {
+    if (status === 'For Sale') {
+      return t('estate_status_for_sale');
+    } else {
+      return t('estate_status_sold');
+    }
+  };
   return (
     <>
       <div className="estateCard">
@@ -77,23 +84,23 @@ function EstateCard({ estateObject }) {
           </h1>
         </Row>
         <Descriptions layout="vertical" bordered>
-          <Descriptions.Item label="Starting Price" labelStyle={{ fontWeight: 900 }}>
+          <Descriptions.Item label={t('estate_starting_price')} labelStyle={{ fontWeight: 900 }}>
             <span style={{ fontWeight: 500 }}>{estateObject.startingPrice} BGN</span>
           </Descriptions.Item>
-          <Descriptions.Item label="Year" labelStyle={{ fontWeight: 900 }}>
+          <Descriptions.Item label={t('estate_year')} labelStyle={{ fontWeight: 900 }}>
             <span style={{ fontWeight: 500 }}>{estateObject.year}</span>
           </Descriptions.Item>
-          <Descriptions.Item label="Bid Step" labelStyle={{ fontWeight: 900 }}>
+          <Descriptions.Item label={t('estate_bid_step')} labelStyle={{ fontWeight: 900 }}>
             <span style={{ fontWeight: 500 }}> {estateObject.bidStep} BGN</span>
           </Descriptions.Item>
-          <Descriptions.Item label="Area" labelStyle={{ fontWeight: 900 }}>
+          <Descriptions.Item label={t('estate_area')} labelStyle={{ fontWeight: 900 }}>
             <span style={{ fontWeight: 500 }}> {estateObject.area} m^2</span>
           </Descriptions.Item>
-          <Descriptions.Item label="Location" labelStyle={{ fontWeight: 900 }}>
+          <Descriptions.Item label={t('estate_location')} labelStyle={{ fontWeight: 900 }}>
             <span style={{ fontWeight: 500 }}> {estateObject.location}</span>
           </Descriptions.Item>
           <Descriptions.Item
-            label="Status"
+            label={t('estate_status')}
             labelStyle={{ fontWeight: 900 }}
             style={{ display: 'flex', alignItems: 'center' }}
           >
@@ -102,10 +109,10 @@ function EstateCard({ estateObject }) {
                 estateObject.status === 'For Sale' ? 'saleEstateBanner' : 'soldEstateBanner'
               }
             >
-              {estateObject.status}
+              {renderTranslatedEstateStatus(estateObject.status)}
             </span>
           </Descriptions.Item>
-          <Descriptions.Item label="Description" labelStyle={{ fontWeight: 900 }}>
+          <Descriptions.Item label={t('estate_year')} labelStyle={{ fontWeight: 900 }}>
             {estateObject.description}
           </Descriptions.Item>
         </Descriptions>
@@ -119,7 +126,7 @@ function EstateCard({ estateObject }) {
                 onClick={updateEstateHandler}
                 style={{ marginRight: 20 }}
               >
-                EDIT
+                {t('estate_edit')}
               </Button>
               <Button
                 type="primary"
@@ -127,7 +134,7 @@ function EstateCard({ estateObject }) {
                 onClick={() => deleteEstateHandler(estateObject.id)}
                 danger
               >
-                DELETE
+                {t('estate_delete')}
               </Button>
             </Row>
           </>
@@ -143,7 +150,7 @@ function EstateCard({ estateObject }) {
                   style={{ width: '80%', marginBottom: '5%' }}
                   onClick={openEstateApplicationModalHandler}
                 >
-                  Apply to buy
+                  {t('estate_apply_to_buy')}
                 </Button>
               )}
           </Row>

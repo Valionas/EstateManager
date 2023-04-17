@@ -115,11 +115,11 @@ function AddEditRentModal() {
           rules={[
             {
               required: true,
-              message: "Please input your estate's name!",
+              message: `${t('rent_name_required')}`,
             },
             {
               min: 3,
-              message: 'Name cannot be shorter than 3 symbols',
+              message: `${t('rent_name_short')}`,
             },
           ]}
         >
@@ -131,11 +131,11 @@ function AddEditRentModal() {
           rules={[
             {
               required: true,
-              message: "Please input your estate's location!",
+              message: `${t('rent_location_required')}`,
             },
             {
               min: 5,
-              message: 'Location cannot be shorter than 5 symbols',
+              message: `${t('rent_location_short')}`,
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
@@ -143,7 +143,7 @@ function AddEditRentModal() {
                   return Promise.resolve();
                 }
 
-                return Promise.reject(new Error('Check your location once again.'));
+                return Promise.reject(new Error(`${t('rent_location_invalid')}`));
               },
             }),
           ]}
@@ -156,16 +156,16 @@ function AddEditRentModal() {
           rules={[
             {
               required: true,
-              message: 'Please input your rent!',
+              message: `${t('rent_rent_required')}`,
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
                 if (isNaN(value)) {
-                  return Promise.reject(new Error('Use only numerical values'));
+                  return Promise.reject(new Error(`${t('rent_numerical')}`));
                 }
 
                 if (value < 0) {
-                  return Promise.reject(new Error('Use only positive values'));
+                  return Promise.reject(new Error(`${t('rent_positive')}`));
                 }
 
                 return Promise.resolve();
@@ -181,11 +181,11 @@ function AddEditRentModal() {
           rules={[
             {
               required: true,
-              message: 'Please input your description!',
+              message: `${t('rent_description_required')}`,
             },
             {
-              min: 20,
-              message: 'Description cannot be shorter than 20 symbols.',
+              min: 10,
+              message: `${t('rent_description_short')}`,
             },
           ]}
         >
@@ -197,7 +197,7 @@ function AddEditRentModal() {
           rules={[
             {
               required: true,
-              message: 'Please set your minimum rental time!',
+              message: `${t('rent_minimal')}`,
             },
           ]}
         >
@@ -210,19 +210,17 @@ function AddEditRentModal() {
           </Select>
         </Form.Item>
         <Form.Item
-          label={t('rent_minimal_rent_time')}
+          label={t('rent_image_link')}
           name="image"
           rules={[
             {
               required: true,
-              message: 'Please set your image link!',
+              message: `${t('rent_image_link')}`,
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
                 if (!value.includes('https://')) {
-                  return Promise.reject(
-                    new Error('Use a valid image link, starting with https://')
-                  );
+                  return Promise.reject(new Error(`${t('rent_image_link_invalid')}`));
                 }
 
                 return Promise.resolve();

@@ -21,8 +21,10 @@ import { ReduxState } from '../../../store';
 import Message from '../../../models/messages/Message';
 import EstateApplication from '../../../models/estates/EstateApplication';
 import { format } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 
 function ApplyForEstateModal() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const isOpened = useSelector((state: ReduxState) => state.estate.isOpenedApplyForEstateModal);
   const currentUser = useSelector((state: ReduxState) => state.auth.currentUser);
@@ -133,8 +135,8 @@ function ApplyForEstateModal() {
 
   return (
     <Modal
-      title="Fill your application..."
-      visible={isOpened}
+      title={t('estate_application_text')}
+      open={isOpened}
       onOk={() => form.submit()}
       onCancel={onCancelHandler}
     >
@@ -153,37 +155,37 @@ function ApplyForEstateModal() {
         autoComplete="off"
       >
         <Form.Item
-          label="Message"
+          label={t('estate_message')}
           name="message"
           rules={[
             {
               required: true,
-              message: 'Please input your motivational message!',
+              message: `${t('estate_message_required')}`,
             },
             {
               min: 10,
-              message: 'Message cannot be shorter than 10 symbols',
+              message: `${t('estate_message_short')}`,
             },
           ]}
         >
           <Input.TextArea />
         </Form.Item>
         <Form.Item
-          label="Offer Price"
+          label={t('estate_offer_price')}
           name="offerPrice"
           rules={[
             {
               required: true,
-              message: 'Please input your offer!',
+              message: `${t('estate_offer_price_required')}`,
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
                 if (isNaN(value)) {
-                  return Promise.reject(new Error('Use only numerical values'));
+                  return Promise.reject(new Error(`${t('estate_offer_price_numerical')}`));
                 }
 
                 if (value < 0) {
-                  return Promise.reject(new Error('Use only positive values'));
+                  return Promise.reject(new Error(`${t('estate_offer_price_positive')}`));
                 }
 
                 return Promise.resolve();

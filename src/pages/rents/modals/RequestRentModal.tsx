@@ -23,8 +23,9 @@ import React from 'react';
 import RentRequest from '../../../models/rents/RentRequest';
 import Message from '../../../models/messages/Message';
 import { format } from 'date-fns';
-
+import { useTranslation } from 'react-i18next';
 function RequestRentModal() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const isOpened = useSelector((state: ReduxState) => state.rent.isOpenedRequestRentModal);
   const currentUser = useSelector((state: ReduxState) => state.auth.currentUser);
@@ -122,7 +123,7 @@ function RequestRentModal() {
 
   return (
     <Modal
-      title="Fill your request..."
+      title={t('rent_request_header')}
       visible={isOpened}
       onOk={() => form.submit()}
       onCancel={onCancelHandler}
@@ -142,16 +143,16 @@ function RequestRentModal() {
         autoComplete="off"
       >
         <Form.Item
-          label="Message"
+          label={t('rent_request_modal_message')}
           name="message"
           rules={[
             {
               required: true,
-              message: 'Please input your motivational message!',
+              message: `${t('rent_request_message_required')}`,
             },
             {
               min: 10,
-              message: 'Message cannot be shorter than 10 symbols',
+              message: `${t('rent_request_message_short')}`,
             },
           ]}
         >

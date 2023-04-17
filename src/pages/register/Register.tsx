@@ -22,8 +22,8 @@ function Register() {
 
   const userAlreadyExists = (type) => {
     notification[type]({
-      message: 'Oops something wrong...',
-      description: 'Someone is already using this email, please try a different one',
+      Oopmessage: `${t('auth_something_wrong')}`,
+      description: `${t('auth_error_email_used')}`,
     });
   };
 

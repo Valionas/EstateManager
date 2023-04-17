@@ -16,8 +16,10 @@ import { addEstate, updateEstate } from '../../../services/estates-service';
 import { serverTimestamp } from 'firebase/firestore';
 import React from 'react';
 import { ReduxState } from '../../../store';
+import { useTranslation } from 'react-i18next';
 
 function AddEditEstateModal() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const isOpened = useSelector((state: ReduxState) => state.estate.isOpenedEstateModal);
   const currentUser = useSelector((state: ReduxState) => state.auth.currentUser);
@@ -97,8 +99,8 @@ function AddEditEstateModal() {
 
   return (
     <Modal
-      title="Add the following information..."
-      visible={isOpened}
+      title={t('estate_add_info')}
+      open={isOpened}
       onOk={() => form.submit()}
       onCancel={onCancelHandler}
     >
@@ -117,53 +119,53 @@ function AddEditEstateModal() {
         autoComplete="off"
       >
         <Form.Item
-          label="Estate name"
+          label={t('estate_name')}
           name="name"
           rules={[
             {
               required: true,
-              message: "Please input your estate's name!",
+              message: `${t('estate_name_required')}`,
             },
             {
               min: 3,
-              message: 'Name cannot be less than 3 symbols.',
+              message: `${t('estate_name_short')}`,
             },
           ]}
         >
           <Input />
         </Form.Item>
         <Form.Item
-          label="Location"
+          label={t('estate_location')}
           name="location"
           rules={[
             {
               required: true,
-              message: "Please input your estate's location!",
+              message: `${t('estate_location_required')}`,
             },
             {
               min: 3,
-              message: 'Location cannot be less than 5 symbols.',
+              message: `${t('estate_location_short')}`,
             },
           ]}
         >
           <Input />
         </Form.Item>
         <Form.Item
-          label="Starting Price"
+          label={t('estate_starting_price')}
           name="startingPrice"
           rules={[
             {
               required: true,
-              message: 'Please input your starting price!',
+              message: `${t('estate_starting_price_required')}`,
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
                 if (isNaN(value)) {
-                  return Promise.reject(new Error('Use only numerical values'));
+                  return Promise.reject(new Error(`${t('estate_numerical')}`));
                 }
 
                 if (value < 0) {
-                  return Promise.reject(new Error('Use only positive values'));
+                  return Promise.reject(new Error(`${t('estate_positive')}`));
                 }
 
                 return Promise.resolve();
@@ -174,21 +176,21 @@ function AddEditEstateModal() {
           <Input />
         </Form.Item>
         <Form.Item
-          label="Bid Step"
+          label={t('estate_bid_step')}
           name="bidStep"
           rules={[
             {
               required: true,
-              message: "Please input your bid's step!",
+              message: `${t('estate_bid_step_required')}`,
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
                 if (isNaN(value)) {
-                  return Promise.reject(new Error('Use only numerical values'));
+                  return Promise.reject(new Error(`${t('estate_numerical')}`));
                 }
 
                 if (value < 0) {
-                  return Promise.reject(new Error('Use only positive values'));
+                  return Promise.reject(new Error(`${t('estate_positive')}`));
                 }
 
                 return Promise.resolve();
@@ -199,27 +201,25 @@ function AddEditEstateModal() {
           <Input />
         </Form.Item>
         <Form.Item
-          label="Year"
+          label={t('estate_year')}
           name="year"
           rules={[
             {
               required: true,
-              message: 'Please input your date of construction!',
+              message: `${t('estate_year')}`,
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
                 if (isNaN(value)) {
-                  return Promise.reject(new Error('Use only numerical values'));
+                  return Promise.reject(new Error(`${t('estate_numerical')}`));
                 }
 
                 if (value < 0) {
-                  return Promise.reject(new Error('Use only positive values'));
+                  return Promise.reject(new Error(`${t('estate_positive')}`));
                 }
 
-                if (value < 1800 || value > 2022) {
-                  return Promise.reject(
-                    new Error('Year cannot be less than 1800 and greater than current year (2022)')
-                  );
+                if (value < 1800 || value > 2023) {
+                  return Promise.reject(new Error(`${t('estate_year_ga[')}`));
                 }
 
                 return Promise.resolve();
@@ -230,21 +230,21 @@ function AddEditEstateModal() {
           <Input />
         </Form.Item>
         <Form.Item
-          label="Area (m^2)"
+          label={`${t('estate_area')} (m^2)`}
           name="area"
           rules={[
             {
               required: true,
-              message: "Please input your estate's area!",
+              message: `${t('estate_area_required')}`,
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
                 if (isNaN(value)) {
-                  return Promise.reject(new Error('Use only numerical values'));
+                  return Promise.reject(new Error(`${t('estate_numerical')}`));
                 }
 
                 if (value < 0) {
-                  return Promise.reject(new Error('Use only positive values'));
+                  return Promise.reject(new Error(`${t('estate_positive')}`));
                 }
 
                 return Promise.resolve();
@@ -255,16 +255,16 @@ function AddEditEstateModal() {
           <Input />
         </Form.Item>
         <Form.Item
-          label="Description"
+          label={t('estate_description')}
           name="description"
           rules={[
             {
               required: true,
-              message: 'Please input your description!',
+              message: `${t('estate_description_required')}`,
             },
             {
               min: 10,
-              message: 'Description cannot be shorter than 10 symbols',
+              message: `${t('estate_description_short')}`,
             },
           ]}
         >
@@ -278,7 +278,7 @@ function AddEditEstateModal() {
                 {
                   validator: async (_, images) => {
                     if (!images || images.length < 1) {
-                      return Promise.reject(new Error('At least 1 image'));
+                      return Promise.reject(new Error(`${t('estate_one_image')}`));
                     }
                   },
                 },
@@ -289,7 +289,7 @@ function AddEditEstateModal() {
                   {fields.map((field, index) => (
                     <Form.Item
                       style={{ marginLeft: '-57px' }}
-                      label="Image Url"
+                      label={t('estate_image_url')}
                       required={false}
                       key={field.key}
                     >
@@ -300,7 +300,7 @@ function AddEditEstateModal() {
                           {
                             required: true,
                             whitespace: true,
-                            message: "Please input image's url.",
+                            message: `${t('estate_image_url_required')}`,
                           },
                         ]}
                         noStyle
@@ -328,7 +328,7 @@ function AddEditEstateModal() {
                       }}
                       icon={<PlusOutlined />}
                     >
-                      Add image
+                      {t('esate_add_image')}
                     </Button>
                     <Form.ErrorList errors={errors} />
                   </Form.Item>
