@@ -116,7 +116,7 @@ const App = () => {
     setMenuItem(
       <Dropdown menu={{ items }}>
         <span>
-          <Button shape="circle" icon={<GlobalOutlined />} /> Language
+          <Button shape="circle" icon={<GlobalOutlined />} /> {t('language')}
         </span>
       </Dropdown>
     ),
