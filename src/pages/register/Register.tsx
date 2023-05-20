@@ -118,7 +118,7 @@ function Register() {
                 },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
-                    if (!value || getFieldValue('password') === value) {
+                    if (value && getFieldValue('password') === value) {
                       return Promise.resolve();
                     }
 
