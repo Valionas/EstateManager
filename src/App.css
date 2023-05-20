@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Contrail+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,500&display=swap');
 .App {
   text-align: center;
 }
@@ -85,10 +86,10 @@
 
 h1, h2, h3, h4, h5, h6{
   text-shadow: 1px 3px 8px #000000;
-  font-family: 'Contrail One', cursive !important;
+  font-family: 'Montserrat', cursive !important;
 }
 p, span{
-  font-family: 'Contrail One', cursive !important;
+  font-family: 'Montserrat', cursive !important;
   text-shadow: 0.5px 0.5px 0.5px #eee8e8;
 }
 
