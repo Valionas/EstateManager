@@ -61,6 +61,7 @@ function RequestRentModal() {
         renter: currentUser.email!,
         rent: Number(currentRent.rent),
         message: values.message,
+        months: Number(values.minimalRentalTime),
         date: format(new Date(), 'dd-mm-yyyy HH:mm'),
         owner: currentRent.owner,
       };
@@ -157,6 +158,24 @@ function RequestRentModal() {
           ]}
         >
           <Input.TextArea />
+        </Form.Item>
+        <Form.Item
+          label={t('rent_minimal_rent_time')}
+          name="minimalRentalTime"
+          rules={[
+            {
+              required: true,
+              message: `${t('rent_minimal')}`,
+            },
+          ]}
+        >
+          <Select>
+            <Select.Option value={3}>3 {t('months')}</Select.Option>
+            <Select.Option value={6}>6 {t('months')}</Select.Option>
+            <Select.Option value={9}>9 {t('months')}</Select.Option>
+            <Select.Option value={12}>12 {t('months')}</Select.Option>
+            <Select.Option value={24}>24 {t('months')}</Select.Option>
+          </Select>
         </Form.Item>
       </Form>
     </Modal>

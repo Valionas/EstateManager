@@ -98,7 +98,7 @@ function RentCard({ rentObject }) {
             </Row>
             <Row>
               <p style={{ fontSize: '2vh' }}>
-                <b>{t('price')}:</b> ${rentObject.rent}/{t('monthly')}
+                <b>{t('price')}:</b> {rentObject.rent} BGN/{t('monthly')}
               </p>
             </Row>
             <Row>
@@ -118,7 +118,7 @@ function RentCard({ rentObject }) {
                       style={{ width: '100%', marginBottom: '5%' }}
                       onClick={openRequestRentModalHandler}
                     >
-                      REQUEST RENT
+                      {t('rent_apply')}
                     </Button>
                   )}
                 {rentObject.reviews.find((review) => review.reviewer.id === currentUser.id) ===

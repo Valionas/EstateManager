@@ -28,8 +28,13 @@ function Reports() {
     setLoading(true);
     const data = await getReports(currentUser.email);
     const rentReports = data.filter((x) => x.type === 'rent');
-    let totalRents = rentReports.reduce(function (sum, value) {
-      return sum + value.rent;
+    const calculatedRentReports = rentReports.map((report) => {
+      report.totalRent = report.rent * report.months;
+      return report;
+    });
+
+    let totalRents = calculatedRentReports.reduce(function (sum, value) {
+      return sum + value.totalRent;
     }, 0);
     const estateReports = data.filter((x) => x.type === 'estate');
     let totalEstateSales = estateReports.reduce(function (sum, value) {
@@ -53,26 +58,44 @@ function Reports() {
       dataIndex: 'image',
       key: 'image',
       render: (image) => <Image height={'5vh'} width={'100%'} src={image} />,
+      width: 100,
     },
     {
       title: t('table_name'),
       dataIndex: 'name',
       key: 'name',
+      width: 100,
     },
     {
       title: t('table_location'),
       dataIndex: 'location',
       key: 'location',
+      width: 100,
     },
     {
       title: t('table_renter'),
       dataIndex: 'renter',
       key: 'renter',
+      width: 60,
     },
     {
       title: t('table_rent'),
       dataIndex: 'rent',
       key: 'rent',
+      width: 80,
+    },
+    {
+      title: t('rent_minimal_rent_time'),
+      dataIndex: 'months',
+      key: 'months',
+      width: 30,
+      align: 'center' as const,
+    },
+    {
+      title: 'Rent * months:',
+      dataIndex: 'totalRent',
+      key: 'totalRent',
+      align: 'center' as const,
     },
   ];
 
@@ -110,6 +133,8 @@ function Reports() {
     { label: 'Rent', key: 'rent' },
     { label: 'Location', key: 'location' },
     { label: 'Renter', key: 'renter' },
+    { label: 'Minimal period', key: 'months' },
+    { label: 'Total rent', key: 'totalRent' },
   ];
 
   const csvEstateReportHeaders = [
@@ -147,7 +172,7 @@ function Reports() {
           transition={{ duration: 0.75 }}
         >
           <Row style={{ paddingBottom: '5%' }}>
-            <Col md={24} lg={11}>
+            <Col md={24} lg={13}>
               <Row justify="center">
                 <h2>{t('reports_rents')}</h2>
               </Row>
@@ -174,7 +199,7 @@ function Reports() {
                 )}
               />
             </Col>
-            <Col md={24} lg={{ span: 12, offset: 1 }}>
+            <Col md={24} lg={{ span: 10, offset: 1 }}>
               <Row justify="center">
                 <h2>{t('reports_estates')}</h2>
               </Row>

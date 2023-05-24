@@ -57,6 +57,7 @@ function RentRequests() {
             location: request.location,
             rent: Number(request.rent),
             owner: currentUser.email,
+            months: request.months,
             type: 'rent',
           };
           let message = await getMessageByRequestId(sender, id);
@@ -94,7 +95,11 @@ function RentRequests() {
       title: t('table_image'),
       dataIndex: 'image',
       key: 'image',
-      render: (image) => <Image height={'5vh'} width={'100%'} src={image} />,
+      render: (image) => (
+        <div style={{ maxWidth: '200px', maxHeight: '160px' }}>
+          <Image width={'100%'} src={image} />
+        </div>
+      ),
     },
     {
       title: t('table_name'),
@@ -112,6 +117,11 @@ function RentRequests() {
       key: 'rent',
     },
     {
+      title: t('rent_minimal_rent_time'),
+      dataIndex: 'months',
+      key: 'months',
+    },
+    {
       title: t('table_renter'),
       dataIndex: 'renter',
       key: 'renter',
@@ -125,6 +135,9 @@ function RentRequests() {
       title: t('table_message'),
       dataIndex: 'message',
       key: 'message',
+      render: (message) => (
+        <div style={{ maxWidth: '200px', maxHeight: '200px', overflowY: 'auto' }}>{message}</div>
+      ),
     },
     {
       title: t('table_actions'),

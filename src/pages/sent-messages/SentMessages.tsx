@@ -114,7 +114,11 @@ function SentMessages() {
       title: t('table_image'),
       dataIndex: 'image',
       key: 'image',
-      render: (image) => <Image height={'5vh'} width={'100%'} src={image} />,
+      render: (image) => (
+        <div style={{ maxWidth: '200px', maxHeight: '100px' }}>
+          <Image width={'100%'} src={image} />
+        </div>
+      ),
     },
     {
       title: t('table_name'),
@@ -135,6 +139,9 @@ function SentMessages() {
       title: t('table_message'),
       dataIndex: 'message',
       key: 'message',
+      render: (message) => (
+        <div style={{ maxWidth: '200px', maxHeight: '200px', overflowY: 'auto' }}>{message}</div>
+      ),
     },
     {
       title: t('table_date'),
