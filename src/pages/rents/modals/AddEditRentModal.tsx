@@ -47,12 +47,14 @@ function AddEditRentModal() {
           value: currentRent.image,
         },
       ]);
+    } else {
+      setFields([]);
     }
   }, [currentRent]);
 
   const onCancelHandler = () => {
     dispatch(closeRentModal());
-    dispatch(setCurrentRent(null));
+    dispatch(setCurrentRent(undefined));
     form.resetFields();
   };
 
@@ -74,7 +76,7 @@ function AddEditRentModal() {
         const result = await addRent(values);
       }
       dispatch(setUpdatePage());
-      dispatch(setCurrentRent(null));
+      dispatch(setCurrentRent(undefined));
       dispatch(closeRentModal());
       form.resetFields();
     } catch (err) {

@@ -62,6 +62,7 @@ function ReviewRentModal() {
 
   const onCancelHandler = () => {
     form.resetFields();
+    dispatch(setCurrentRent(null));
     dispatch(setCurrentRentReview(undefined));
     dispatch(closeReviewRentModal());
   };
