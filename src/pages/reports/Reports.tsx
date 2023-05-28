@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, CSSProperties } from 'react';
 
 import { useSelector } from 'react-redux';
 
 import { motion } from 'framer-motion';
 
 import { CSVLink } from 'react-csv';
-import { Col, Row } from 'antd';
+import { Col, Row, Tooltip } from 'antd';
 import { Table, Button, Spin, Image } from 'antd';
 
 import { RiFileExcel2Line } from 'react-icons/ri';
@@ -52,50 +52,83 @@ function Reports() {
     fetchData();
   }, []);
 
+  const cellStyle: CSSProperties = {
+    maxHeight: '68px', // or any value that suits your needs
+    overflow: 'hidden',
+    display: 'inline-block',
+    whiteSpace: 'nowrap',
+    maxWidth: '100px',
+    textOverflow: 'ellipsis',
+  };
+
   const rentColumns = [
     {
       title: t('table_image'),
       dataIndex: 'image',
       key: 'image',
       render: (image) => <Image height={'5vh'} width={'100%'} src={image} />,
-      width: 100,
     },
     {
       title: t('table_name'),
       dataIndex: 'name',
       key: 'name',
-      width: 100,
+      render: (value) => (
+        <Tooltip title={value}>
+          <div style={cellStyle}>{value}</div>
+        </Tooltip>
+      ),
     },
     {
       title: t('table_location'),
       dataIndex: 'location',
       key: 'location',
-      width: 100,
+      render: (value) => (
+        <Tooltip title={value}>
+          <div style={cellStyle}>{value}</div>
+        </Tooltip>
+      ),
     },
     {
       title: t('table_renter'),
       dataIndex: 'renter',
       key: 'renter',
-      width: 60,
+      render: (value) => (
+        <Tooltip title={value}>
+          <div style={cellStyle}>{value}</div>
+        </Tooltip>
+      ),
     },
     {
       title: t('table_rent'),
       dataIndex: 'rent',
       key: 'rent',
-      width: 80,
+      render: (value) => (
+        <Tooltip title={value}>
+          <div style={cellStyle}>{value}</div>
+        </Tooltip>
+      ),
     },
     {
       title: t('rent_minimal_rent_time'),
       dataIndex: 'months',
       key: 'months',
-      width: 30,
       align: 'center' as const,
+      render: (value) => (
+        <Tooltip title={value}>
+          <div style={cellStyle}>{value}</div>
+        </Tooltip>
+      ),
     },
     {
-      title: 'Rent * months:',
+      title: 'Rent * months',
       dataIndex: 'totalRent',
       key: 'totalRent',
       align: 'center' as const,
+      render: (value) => (
+        <Tooltip title={value}>
+          <div style={cellStyle}>{value}</div>
+        </Tooltip>
+      ),
     },
   ];
 
@@ -110,21 +143,41 @@ function Reports() {
       title: t('table_name'),
       dataIndex: 'name',
       key: 'name',
+      render: (value) => (
+        <Tooltip title={value}>
+          <div style={cellStyle}>{value}</div>
+        </Tooltip>
+      ),
     },
     {
       title: t('table_location'),
       dataIndex: 'location',
       key: 'location',
+      render: (value) => (
+        <Tooltip title={value}>
+          <div style={cellStyle}>{value}</div>
+        </Tooltip>
+      ),
     },
     {
       title: t('table_sold_to'),
       dataIndex: 'buyer',
       key: 'buyer',
+      render: (value) => (
+        <Tooltip title={value}>
+          <div style={cellStyle}>{value}</div>
+        </Tooltip>
+      ),
     },
     {
       title: t('table_price'),
       dataIndex: 'price',
       key: 'price',
+      render: (value) => (
+        <Tooltip title={value}>
+          <div style={cellStyle}>{value}</div>
+        </Tooltip>
+      ),
     },
   ];
 
@@ -172,7 +225,7 @@ function Reports() {
           transition={{ duration: 0.75 }}
         >
           <Row style={{ paddingBottom: '5%' }}>
-            <Col md={24} lg={13}>
+            <Col lg={24} xl={13}>
               <Row justify="center">
                 <h2>{t('reports_rents')}</h2>
               </Row>
@@ -192,6 +245,7 @@ function Reports() {
                 columns={rentColumns}
                 dataSource={rentReports}
                 bordered={true}
+                pagination={false}
                 footer={() => (
                   <div style={{ textAlign: 'right' }}>
                     {t('reports_total')}: {totalRents}
@@ -199,7 +253,7 @@ function Reports() {
                 )}
               />
             </Col>
-            <Col md={24} lg={{ span: 10, offset: 1 }}>
+            <Col lg={24} xl={{ span: 10, offset: 1 }}>
               <Row justify="center">
                 <h2>{t('reports_estates')}</h2>
               </Row>
@@ -215,6 +269,7 @@ function Reports() {
               </Row>
               <br />
               <Table
+                pagination={false}
                 scroll={{ x: true }}
                 columns={estateColumns}
                 dataSource={estateReports}
