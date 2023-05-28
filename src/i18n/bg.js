@@ -102,7 +102,7 @@ const translations = {
   delete_review: 'Изтрий Ревю',
 
   //Table headers
-  table_image: 'Изображение',
+  table_image: 'Снимка',
   table_name: 'Име',
   table_location: 'Локация',
   table_rent: 'Наем',
@@ -128,6 +128,7 @@ const translations = {
   reports_total: 'Общо',
   reports_rents: 'Наеми',
   reports_estates: 'Имоти',
+  reports_period: 'Период',
 
   //Terms:
   terms_header: 'Условия за ползване на приложението Estate Manager',
@@ -164,7 +165,7 @@ const translations = {
   //Estates
   estate_starting_price: 'Начална Цена',
   estate_name: 'Наименование',
-  esate_year: 'Година',
+  estate_year: 'Година',
   estate_bid_step: 'Наддаване',
   estate_area: 'Площ',
   estate_location: 'Локация',
@@ -185,6 +186,7 @@ const translations = {
   estate_offer_price_positive: 'Използвайте само положителни числа!',
   estate_add_info: 'Въведете следната информация...',
   estate_image_url: 'Линк',
+  estate_publish_offer: 'Публикувай обява',
 
   //Error messages
   estate_name_required: 'Моля въведете наименование',
@@ -195,7 +197,7 @@ const translations = {
   estate_numerical: 'Ползвайте само числови стойности',
   estate_positive: 'Ползваите само положителни стойности',
   estate_bid_step_required: 'Въведете стъпка на наддаване',
-  estate_year: 'Въведете дата на застрояване',
+  estate_year_error: 'Въведете дата на застрояване',
   estate_year_gap:
     'Годината не може да бъде по-малка от 1800 и по-голяма от сегашната година (2023)',
   estate_area_required: 'Въведете площ',

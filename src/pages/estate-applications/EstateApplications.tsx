@@ -98,7 +98,11 @@ function EstateApplications() {
       title: t('table_image'),
       dataIndex: 'image',
       key: 'image',
-      render: (image) => <Image height={'5vh'} width={'100%'} src={image} />,
+      render: (image) => (
+        <div style={{ maxWidth: '200px', maxHeight: '160px' }}>
+          <Image width={'100%'} src={image} />
+        </div>
+      ),
     },
     {
       title: t('table_name'),
@@ -129,6 +133,9 @@ function EstateApplications() {
       title: t('table_message'),
       dataIndex: 'message',
       key: 'message',
+      render: (message) => (
+        <div style={{ maxWidth: '200px', maxHeight: '200px', overflowY: 'auto' }}>{message}</div>
+      ),
     },
     {
       title: t('table_actions'),
@@ -137,8 +144,9 @@ function EstateApplications() {
       render: (item, record) => (
         <>
           <Row>
-            <Col span={12}>
+            <Col md={24} lg={{ span: 11 }} style={{ marginBottom: 5 }}>
               <Button
+                style={{ width: '100%' }}
                 type="primary"
                 shape="round"
                 onClick={(e) => approveApplicationHandler(record.buyer, record.id, record)}
@@ -146,9 +154,9 @@ function EstateApplications() {
                 {t('table_approve')}
               </Button>
             </Col>
-            <Divider></Divider>
-            <Col>
+            <Col md={24} lg={{ span: 11, offset: 1 }}>
               <Button
+                style={{ width: '100%' }}
                 type="primary"
                 shape="round"
                 onClick={(e) => declineApplicationHandler(record.buyer, record.id, record)}

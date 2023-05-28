@@ -128,6 +128,7 @@ const translations = {
   reports_total: 'Total',
   reports_rents: 'Rents',
   reports_estates: 'Estates',
+  reports_period: 'Period',
 
   //Terms
   terms_header: 'Terms and Conditions for Estate Manager Web Application',
@@ -164,7 +165,7 @@ const translations = {
   //Estates
   estate_starting_price: 'Starting Price',
   estate_name: 'Estate Name',
-  esate_year: 'Year',
+  estate_year: 'Year',
   estate_bid_step: 'Bid Step',
   estate_area: 'Area',
   estate_location: 'Location',
@@ -185,6 +186,7 @@ const translations = {
   estate_offer_price_positive: 'Use only positive values',
   estate_add_info: 'Add the following information...',
   estate_image_url: 'Image URL',
+  estate_publish_offer: 'Publish offer',
 
   //Error messages
   estate_name_required: "Please input your estate's name",
@@ -195,7 +197,7 @@ const translations = {
   estate_numerical: 'Use only numerical values',
   estate_positive: 'Use only positive values',
   estate_bid_step_required: 'Please input bid step',
-  estate_year: 'Please input date of construction',
+  estate_year_error: 'Please input date of construction',
   estate_year_gap: 'Year cannot be less than 1800 and greater than current year (2022)',
   estate_area_required: 'Please input area',
   estate_description_required: 'Please input description',

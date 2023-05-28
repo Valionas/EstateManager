@@ -112,7 +112,7 @@ function EstateCard({ estateObject }) {
               {renderTranslatedEstateStatus(estateObject.status)}
             </span>
           </Descriptions.Item>
-          <Descriptions.Item label={t('estate_year')} labelStyle={{ fontWeight: 900 }}>
+          <Descriptions.Item label={t('estate_description')} labelStyle={{ fontWeight: 900 }}>
             {estateObject.description}
           </Descriptions.Item>
         </Descriptions>

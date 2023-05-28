@@ -125,7 +125,7 @@ function RequestRentModal() {
   return (
     <Modal
       title={t('rent_request_header')}
-      visible={isOpened}
+      open={isOpened}
       onOk={() => form.submit()}
       onCancel={onCancelHandler}
     >

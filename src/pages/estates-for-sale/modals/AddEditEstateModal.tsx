@@ -206,7 +206,7 @@ function AddEditEstateModal() {
           rules={[
             {
               required: true,
-              message: `${t('estate_year')}`,
+              message: `${t('estate_year_error')}`,
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
@@ -219,7 +219,7 @@ function AddEditEstateModal() {
                 }
 
                 if (value < 1800 || value > 2023) {
-                  return Promise.reject(new Error(`${t('estate_year_ga[')}`));
+                  return Promise.reject(new Error(`${t('estate_year_gap')}`));
                 }
 
                 return Promise.resolve();
@@ -328,7 +328,7 @@ function AddEditEstateModal() {
                       }}
                       icon={<PlusOutlined />}
                     >
-                      {t('esate_add_image')}
+                      {t('estate_add_image')}
                     </Button>
                     <Form.ErrorList errors={errors} />
                   </Form.Item>

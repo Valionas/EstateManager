@@ -14,12 +14,13 @@ import { getEstates } from '../../services/estates-service';
 import React from 'react';
 import { ReduxState } from '../../store';
 import Estate from '../../models/estates/Estate';
+import { useTranslation } from 'react-i18next';
 
 function Estates() {
   const dispatch = useDispatch();
   const updatePageTrigger = useSelector((state: ReduxState) => state.estate.triggeredUpdate);
   const authenticated = useSelector((state: ReduxState) => state.auth.isAuthenticated);
-
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [estates, setEstates] = useState<Estate[]>();
 
@@ -41,7 +42,7 @@ function Estates() {
   return (
     <>
       <Row justify="center">
-        <h1>Estates</h1>
+        <h1>{t('estates_for_sale_menu_label')}</h1>
       </Row>
       {loading ? (
         <Row justify="center">
@@ -52,7 +53,7 @@ function Estates() {
           {authenticated && (
             <Row justify="center" style={{ marginBottom: '10px' }}>
               <Button type="primary" onClick={openEstateModalHandler}>
-                Publish for sale
+                {t('estate_publish_offer')}
               </Button>
             </Row>
           )}
