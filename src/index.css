@@ -16,3 +16,26 @@ code {
     monospace;
 }
 
+/* Styling for Google Chrome, Safari */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6280e3; /* Color of the scroll thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #162e85; /* Color of the scroll thumb when hovered */ 
+}
+
+/* Styling for Firefox */
+body {
+  scrollbar-width: thin; /* "auto" or "thin"  */
+  scrollbar-color: #888 #f1f1f1; /* thumb and track color */
+}
+
