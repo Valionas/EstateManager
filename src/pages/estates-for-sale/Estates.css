@@ -2,7 +2,10 @@
     border: 4px solid rgb(225, 204, 204);
     border-radius: 1%;
     margin: 50px;
-    background-color: rgba(254, 254, 254, 0.89)
+    background-color: rgba(254, 254, 254, 0.89);
+    width: 80vh; /* set your desired width */
+    height: 110vh; /* set your desired height */
+    overflow: auto; /* add scroll if content overflows */
 }
 
 .carouselCard {

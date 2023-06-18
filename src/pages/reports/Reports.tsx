@@ -225,7 +225,7 @@ function Reports() {
           transition={{ duration: 0.75 }}
         >
           <Row style={{ paddingBottom: '5%' }}>
-            <Col lg={24} xl={13}>
+            <Col xl={13} lg={24} md={24}>
               <Row justify="center">
                 <h2>{t('reports_rents')}</h2>
               </Row>
@@ -253,7 +253,7 @@ function Reports() {
                 )}
               />
             </Col>
-            <Col lg={24} xl={{ span: 10, offset: 1 }}>
+            <Col xl={{ span: 10, offset: 1 }} lg={24} md={24}>
               <Row justify="center">
                 <h2>{t('reports_estates')}</h2>
               </Row>
