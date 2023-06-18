@@ -4,6 +4,9 @@
     margin: 50px;
     background-color: rgba(166, 215, 227, 0.942);
     color: black;
+    width: 90%; /* set your desired width */
+    height: 110vh; /* set your desired height */
+    overflow: auto; /* add scroll if content overflows */
 }
 
 h1{
