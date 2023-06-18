@@ -129,6 +129,7 @@ const translations = {
   reports_rents: 'Rents',
   reports_estates: 'Estates',
   reports_period: 'Period',
+  reports_multiply: 'Rents*months',
 
   //Terms
   terms_header: 'Terms and Conditions for Estate Manager Web Application',

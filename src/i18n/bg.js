@@ -129,6 +129,7 @@ const translations = {
   reports_rents: 'Наеми',
   reports_estates: 'Имоти',
   reports_period: 'Период',
+  reports_multiply: 'Наем*месеци',
 
   //Terms:
   terms_header: 'Условия за ползване на приложението Estate Manager',

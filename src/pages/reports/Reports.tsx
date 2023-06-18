@@ -120,7 +120,7 @@ function Reports() {
       ),
     },
     {
-      title: 'Rent * months',
+      title: t('reports_multiply'),
       dataIndex: 'totalRent',
       key: 'totalRent',
       align: 'center' as const,
