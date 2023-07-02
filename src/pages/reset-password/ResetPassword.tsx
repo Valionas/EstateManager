@@ -7,11 +7,12 @@ import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 import './ResetPassword.css';
 
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 function ResetPassword() {
   const { t } = useTranslation();
   const authentication = getAuth();
-
+  const navigate = useNavigate();
   const openWrongCredentialsNotification = (type) => {
     notification[type]({
       message: `${t('auth_something_wrong')}`,
@@ -24,6 +25,10 @@ function ResetPassword() {
 
     try {
       await sendPasswordResetEmail(authentication, email);
+      notification['success']({
+        message: `${t('reset_pass_message')}`,
+        description: `${t('reset_pass_description')}`,
+      });
     } catch (error) {
       openWrongCredentialsNotification('error');
     }

@@ -52,6 +52,8 @@ const translations = {
   missing_password_error: 'Моля въведете парола!',
   password_length_error: 'Паролата не може да бъде по-къса от 6 символа',
   passwords_miss_match: 'Паролите не съвпадат',
+  reset_pass_message: 'Заявката е успешна',
+  reset_pass_description: 'Проверете електронната си поща за изпратено съобщение от Estate Manager',
 
   //Rents
   rent_request_header: 'Въведете вашата заявка...',

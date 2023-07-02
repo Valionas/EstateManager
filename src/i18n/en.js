@@ -52,7 +52,8 @@ const translations = {
   missing_password_error: 'Please input your password!',
   password_length_error: 'Password cannot be shorter than 6 symbols!',
   passwords_miss_match: 'The passwords do not match!',
-
+  reset_pass_message: 'Action successful',
+  reset_pass_description: 'Check your email for a message from Estate Manager',
   //Rents
   rent_request_header: 'Fill your request...',
   rent_request_modal_message: 'Message',
