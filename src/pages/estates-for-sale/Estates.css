@@ -8,6 +8,14 @@
     overflow: auto; /* add scroll if content overflows */
 }
 
+@media only screen and (max-width: 768px) {
+    .estateCard {
+      margin: 0px;
+      margin-bottom: 25px;
+      width: 100%;
+    }
+  }
+
 .carouselCard {
     border: 1px solid black;
     display: flex;
