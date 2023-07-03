@@ -89,7 +89,7 @@ const translations = {
   rent_estate_name: 'Име на имота',
   rent_location: 'Локация',
   rent_per_month: 'Наем / месец',
-  rent_minimal_rent_time: 'Минимален период',
+  rent_minimal_rent_time: 'Мин. период',
   rent_image_link: 'Изображение',
   rent_add_button: 'Добави имот за наем',
   rent_apply: 'Заяви наем',
