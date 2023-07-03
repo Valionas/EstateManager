@@ -42,6 +42,10 @@ function RequestRentModal() {
           name: ['message'],
           value: currentRentRequest.message,
         },
+        {
+          name: ['minimalRentalTime'],
+          value: currentRentRequest.months,
+        },
       ]);
     }
   }, [currentRentRequest]);
@@ -78,6 +82,7 @@ function RequestRentModal() {
         type: 'rent',
         date: format(new Date(), 'dd-mm-yyyy HH:mm'),
         message: values.message,
+        months: Number(values.minimalRentalTime),
         status: 'Pending',
       };
 
@@ -101,11 +106,13 @@ function RequestRentModal() {
     } else {
       let currentMessage = { ...currentRentRequest };
       currentMessage.message = values.message;
+      currentMessage.months = values.minimalRentalTime;
       try {
         await updateMessage(currentMessage, currentMessage.id);
         let rentRequestToUpdate = await getRentRequestById(currentMessage.relatedOfferId);
         if (rentRequestToUpdate) {
           rentRequestToUpdate.message = values.message;
+          rentRequestToUpdate.months = values.minimalRentalTime;
           await updateRequest(rentRequestToUpdate, rentRequestToUpdate.id);
           dispatch(setUpdatePage());
           dispatch(setCurrentRent({}));

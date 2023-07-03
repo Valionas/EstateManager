@@ -13,6 +13,7 @@ interface Message {
   status: string;
   date: string;
   type: 'rent' | 'estate';
+  months?: number;
 }
 
 export default Message;
