@@ -120,14 +120,17 @@ function EstateCard({ estateObject }) {
           <>
             <Divider></Divider>
             <Row style={{ justifyContent: 'center', marginBottom: 20 }}>
-              <Button
-                type="primary"
-                shape="round"
-                onClick={updateEstateHandler}
-                style={{ marginRight: 20 }}
-              >
-                {t('estate_edit')}
-              </Button>
+              {estateObject.status !== 'Sold' && (
+                <Button
+                  type="primary"
+                  shape="round"
+                  onClick={updateEstateHandler}
+                  style={{ marginRight: 20 }}
+                >
+                  {t('estate_edit')}
+                </Button>
+              )}
+
               <Button
                 type="primary"
                 shape="round"
