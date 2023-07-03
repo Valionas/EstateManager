@@ -41,7 +41,7 @@ function TermsAndConditions() {
                 fontWeight: 'bold',
               }}
             >
-              <h1>{t('terms_header')}</h1>
+              <h1 style={{ textShadow: 'none', color: 'black' }}>{t('terms_header')}</h1>
               <ol>
                 <li>{t('term_1')}</li>
                 <li>{t('term_2')}</li>
