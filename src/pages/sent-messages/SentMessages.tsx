@@ -164,7 +164,6 @@ function SentMessages() {
               <>
                 <Col md={24} lg={{ span: 11 }} style={{ marginBottom: 5 }}>
                   <Button
-                    style={{ width: '100%' }}
                     type="primary"
                     shape="round"
                     onClick={(e) => updateMessageHandler(record)}
@@ -172,9 +171,8 @@ function SentMessages() {
                     {t('table_update')}
                   </Button>
                 </Col>
-                <Col md={24} lg={{ span: 11, offset: 1 }}>
+                <Col md={24} lg={{ span: 11, offset: 2 }}>
                   <Button
-                    style={{ width: '100%' }}
                     type="primary"
                     shape="round"
                     onClick={(e) => deleteMessageHandler(record.id, record)}
@@ -188,7 +186,6 @@ function SentMessages() {
               <>
                 <Col md={24} lg={{ span: 20 }} style={{ marginBottom: 5 }}>
                   <Button
-                    style={{ width: '100%' }}
                     type="primary"
                     shape="round"
                     onClick={(e) => deleteMessageHandler(record.id, record)}
